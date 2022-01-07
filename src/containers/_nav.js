@@ -26,6 +26,11 @@ const _nav =  [
       },
       {
         _tag: 'CSidebarNavItem',
+        name: 'Master Dermaga',
+        to: '/master-dermaga',
+      },
+      {
+        _tag: 'CSidebarNavItem',
         name: 'Master Rute',
         to: '/master-rute',
       },
