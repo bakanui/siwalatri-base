@@ -1,9 +1,198 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import {
+  CBadge,
+  CCardBody,
+  CCardFooter,
+  CCol,
+  CHeader,
+  CDataTable,
+  CLink,
+  CWidgetIcon,
+  CRow
+
+} from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import useToken from '../../../src/useToken';
+import { apiUrl } from './../../reusable/constants'
+import Penumpangs from './../../components/Penumpangs'
 
 const Dashboard = () => {
+  const postArmada = [
+    {
+      "id_armada": 1,
+      "id_user": "",
+      "nama_armada": " ",
+      "kontak": "",
+      "alamat": "",
+      "description": "",
+      "created_at": "2021-05-23T07:18:25.000000Z",
+      "updated_at": "2021-05-23T07:18:25.000000Z",
+      "deleted_at": null,
+      "armada_to_user": [
+          {
+              "id": 36,
+              "email": "",
+              "type": "",
+              "created_at": "2021-05-23T07:18:24.000000Z",
+              "updated_at": "2021-05-23T07:18:24.000000Z",
+              "deleted_at": null
+          }
+      ]
+  },
+  ]
+
+  const postJadwal = [
+    {
+      "nama_armada": "Gangga Express",
+      "jadwal": "06:30:00",
+      "nama_kapal": "Gangga Exspress 8",
+      "status": "Nyandar",
+      "tujuan_awal": "Tribuana",
+      "lokasi_awal": "Kusamba",
+      "tujuan_akhir": "Sampalan",
+      "lokasi_akhir": "Batununggul"
+    }
+  ]
+
+  
+  const { token } = useToken();
+  const [armadas, setArmada] = useState({data : postArmada});
+  const [jadwals, setJadwals] = useState({data : postJadwal});
+  const headers = {
+    headers: {
+      'Authorization': "bearer " + token 
+    }
+  }
+  useEffect(() => {
+    fetchData()
+    // eslint-disable-next-line
+  }, [])
+
+  const getBadge = (status)=>{
+    switch (status) {
+      case 'Berlayar': return 'success'
+      case 'Nyandar': return 'secondary'
+      case 'Persiapan': return 'warning'
+      default: return 'primary'
+    }
+  }
+
+
+  const fetchData = async () => {
+    const result = await axios.get(apiUrl + 'armada', headers)
+    .catch(function (error) {
+      if(error.response?.status === 401){
+          localStorage.removeItem('access_token')
+          window.location.reload()
+      }
+    })
+    setArmada(result)
+
+    const jadwals = await axios.get(apiUrl + 'jadwal_keberangkatan', headers)
+    setJadwals(jadwals)
+    // console.log(jadwals)
+  }
+
+  function getCardArmadas(datas){
+    const listItems = 
+        datas.map((data, i) =>
+          {
+            if(data.nama_armada !== 'Padang Bai' && data.nama_armada !== 'El Rey'){
+              return(
+                      <div className={"card cards-custom card-"+i}>
+                        <div className="card__icon"><CIcon name="cil-scrubber" className="mfe-2" /></div>
+                        <h4 className="card__title">{data.nama_armada}</h4>
+                        <h5 className="card__title_2">{data.kontak}</h5>
+                        <p className="card__apply">
+                          <a className="card__link" >Lihat Jadwal <CIcon name="cil-arrow-right" className="mfe-2" /></a>
+                        </p>
+                      </div>
+              )
+            }
+          }
+      );
+      return listItems;
+  }
+
   return (
     <>
-
+      <div className='conteiner-operator'>
+        <CRow>
+            <div className='col-lg-6 col-xs-12 col-sm-12 col-md-6'>
+                <h5 className="heading-text">List Armada</h5>
+                <div className="cards">
+                    {armadas?.data ? getCardArmadas(armadas.data) : ''}
+                </div>
+            </div>
+            <div className='col-lg-6 col-xs-12 col-sm-12 col-md-6'>
+            <h5 className="heading-text">List Keberangkatan</h5>
+              <div className='card blue-thead'>
+                      <CDataTable
+                      items={jadwals.data}
+                      fields={[
+                        { key: 'nama_armada', _style: { width: '15%'}},
+                        { key: 'jadwal', _style: { width: '10%'} },
+                        { key: 'nama_kapal', _style: { width: '10%'} },
+                        { key: 'tujuan_awal', _style: { width: '20%'} },
+                        { key: 'tujuan_akhir', _style: { width: '10%'} },
+                        { key: 'status', _style: { width: '10%'} },
+                      ]}
+                      columnFilter
+                      // tableFilter
+                      button
+                      hover
+                      pagination
+                      bordered
+                      striped
+                      size="sm"
+                      itemsPerPage={5}
+                      scopedSlots = {{
+                          'nama_armada':
+                            (item)=>(
+                              <td>
+                                {item.nama_armada}
+                              </td>
+                            ),
+                            'jadwal':
+                            (item)=>(
+                              <td>
+                                {item.jadwal}
+                              </td>
+                            ),
+                            'nama_kapal': 
+                            (item)=> (
+                              <td>
+                                {item.nama_kapal}
+                              </td>
+                            ),
+                            'tujuan_awal': 
+                            (item)=> (
+                              <td>
+                                {item.tujuan_awal} - {item.lokasi_awal}
+                              </td>
+                            ),
+                            'tujuan_akhir': 
+                            (item)=> (
+                              <td>
+                                {item.tujuan_akhir} - {item.lokasi_akhir}
+                              </td>
+                            ),
+                            'status': 
+                            (item)=> (
+                              <td>
+                                <CBadge color={getBadge(item.status)}>
+                                  {item.status}
+                                </CBadge>
+                              </td>
+                            ),
+                      }}
+                    />
+              </div>
+            </div>
+        </CRow>
+        <Penumpangs />
+      </div>
     </>
   )
 }

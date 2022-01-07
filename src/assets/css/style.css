@@ -1,0 +1,121 @@
+
+
+
+/* CARDS */
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .cards-custom {
+    margin: 0 20px;
+    padding: 20px;
+    width: 100%;
+    min-height: 200px;
+    display: grid;
+    grid-template-rows: 20px 50px 1fr 50px;
+    border-radius: 10px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s;
+  }
+  
+  .cards-custom:hover {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+    transform: scale(1.01);
+  }
+  
+  .card__link,
+  .card__exit,
+  .card__icon {
+    position: relative;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .card__link::after {
+    position: absolute;
+    top: 25px;
+    left: 0;
+    content: "";
+    width: 0%;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: all 0.5s;
+  }
+  
+  .card__link:hover::after {
+    width: 100%;
+  }
+  
+  .card__exit {
+    grid-row: 1/2;
+    justify-self: end;
+  }
+  
+  .card__icon {
+    grid-row: 2/3;
+    font-size: 30px;
+  }
+  
+  .card__title {
+    grid-row: 3/4;
+    font-weight: 400;
+    color: #ffffff;
+    font-weight: 700;
+  }
+  .card__title_2{
+    grid-row: 4/4;
+    font-weight: 400;
+    color: #ffffff;
+  }
+  
+  .card__apply {
+    grid-row: 5/5;
+    align-self: center;
+  }
+  
+  /* CARD BACKGROUNDS */
+  
+  .card-1 {
+    background: radial-gradient(#1fe4f5, #3fbafe);
+    margin-left: 0;
+  }
+  
+  .card-2 {
+    background: radial-gradient(#60efbc, #58d5c9);
+  }
+
+  .card-4 {
+    background: radial-gradient(#ef60d7, #b858d5);
+  }
+/*   
+  .primary{
+    background-color: blue;
+  }
+  .danger{
+    background-color: rgb(255, 0, 0);
+  }
+  .warning{
+    background-color: rgb(255, 102, 0);
+  } */
+  .pagination{
+    padding: 0 10px;
+    float: right;
+  }
+  .blue-thead > .position-relative > table > thead{
+    background: #39f;
+    color: white;
+  }
+  .c-sidebar{
+    background: #2278ff;
+  }
+  .grey-thead > .position-relative > table > thead{
+    background: rgb(50, 117, 241);
+    color: white;
+  }
+
+  .left-right-component{
+    display: flex;
+    justify-content: space-between;
+}

@@ -13,7 +13,7 @@ import {
 } from '@coreui/react'
 
 import CIcon from '@coreui/icons-react'
-
+import logos from './../assets/logo.png';
 // sidebar nav config
 import navigation from './_nav'
 
@@ -26,17 +26,8 @@ const TheSidebar = () => {
       show={show}
       onShowChange={(val) => dispatch({type: 'set', sidebarShow: val })}
     >
-      <CSidebarBrand className="d-md-down-none" to="/">
-        <CIcon
-          className="c-sidebar-brand-full"
-          name="logo-negative"
-          height={35}
-        />
-        <CIcon
-          className="c-sidebar-brand-minimized"
-          name="sygnet"
-          height={35}
-        />
+      <CSidebarBrand className="d-md-down-none" to="/" style={{padding:'1rem 3.2rem'}}>
+        <img src={logos} style={{width:'100%',height:'auto'}}/>
       </CSidebarBrand>
       <CSidebarNav>
 

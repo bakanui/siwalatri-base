@@ -5,7 +5,7 @@ export default function useToken() {
     if(localStorage.getItem('access_token')){
       const tokenString = localStorage.getItem('access_token');
       const userToken = JSON.parse(tokenString);
-      return userToken?.access_token
+      return userToken?.token
     }
     
   };
@@ -19,42 +19,41 @@ export default function useToken() {
     
   };
 
-  const getName = () => {
+  const getType = () => {
     if(localStorage.getItem('access_token')){
       const tokenString = localStorage.getItem('access_token');
       const userToken = JSON.parse(tokenString);
-      return userToken?.user.admin.name
+      return userToken?.user.type
     }
     
   };
 
-  const getId = () => {
-    if(localStorage.getItem('access_token')){
-      const tokenString = localStorage.getItem('access_token');
-      const userToken = JSON.parse(tokenString);
-      return userToken?.user.id
-    }
+//   const getId = () => {
+//     if(localStorage.getItem('access_token')){
+//       const tokenString = localStorage.getItem('access_token');
+//       const userToken = JSON.parse(tokenString);
+//       return userToken?.user.id
+//     }
     
-  };
+//   };
 
   const [token, setToken] = useState(getToken());
   const [email, setEmail] = useState(getEmail());
-  const [name, setName] = useState(getName())
-  const [id, setId] = useState(getId())
+  const [type, setType] = useState(getType())
+//   const [id, setId] = useState(getId())
 
   const saveToken = userToken => {
     localStorage.setItem('access_token', JSON.stringify(userToken));
-    setToken(userToken.access_token);
+    setToken(userToken.token);
     setEmail(userToken.user.email)
-    setName(userToken.user.admin.name)
-    setId(userToken.user.id)
+    setType(userToken.user.type)
   };
 
   return {
     setToken: saveToken,
     token,
     email,
-    name,
-    id
+    type,
+    // id
   }
 }
