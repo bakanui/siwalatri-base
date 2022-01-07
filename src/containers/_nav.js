@@ -63,7 +63,13 @@ const _nav =  [
           to: '/user-operator',
         }
     ]
-  }
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Pengumuman',
+    to: '/pengumuman',
+    icon: <CIcon name="cil-bullhorn" customClasses="c-sidebar-nav-icon"/>
+  },
 ]
 
 export default _nav
