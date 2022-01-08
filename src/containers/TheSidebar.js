@@ -12,7 +12,7 @@ import {
   CSidebarNavItem,
 } from '@coreui/react'
 
-import CIcon from '@coreui/icons-react'
+// import CIcon from '@coreui/icons-react'
 import logos from './../assets/logo.png';
 // sidebar nav config
 import navigation from './_nav'
@@ -27,7 +27,7 @@ const TheSidebar = () => {
       onShowChange={(val) => dispatch({type: 'set', sidebarShow: val })}
     >
       <CSidebarBrand className="d-md-down-none" to="/" style={{padding:'1rem 3.2rem'}}>
-        <img src={logos} style={{width:'100%',height:'auto'}}/>
+        <img alt="SIWALATRI" src={logos} style={{width:'100%',height:'auto'}}/>
       </CSidebarBrand>
       <CSidebarNav>
 

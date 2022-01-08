@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  CBadge,
-  CCardBody,
-  CCardFooter,
+//   CBadge,
+//   CCardBody,
+//   CCardFooter,
   CCol,
-  CHeader,
+//   CHeader,
   CDataTable,
-  CLink,
-  CWidgetIcon,
-  CRow,
+//   CLink,
+//   CWidgetIcon,
+//   CRow,
   CButton,
   CModal, 
   CModalHeader, 
@@ -19,7 +19,7 @@ import {
   CForm, 
   CFormGroup, 
   CLabel, 
-  CInput, 
+//   CInput, 
   CTextarea, 
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
@@ -27,7 +27,7 @@ import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
@@ -47,6 +47,7 @@ const MasterSOP = () => {
     }
     useEffect(() => {
         fetchData()
+        // eslint-disable-next-line
     }, [])
 
     const [sops, setSOP] = useState();
@@ -64,7 +65,7 @@ const MasterSOP = () => {
     }
 
     const delSubmit = (e) => {
-        const form = new FormData(e.target);
+        // const form = new FormData(e.target);
         e.preventDefault();
         axios.get(apiUrl + 'sop/delete/'+id, headers)
           .then((res) => {

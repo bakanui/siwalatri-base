@@ -70,6 +70,12 @@ const _nav =  [
     to: '/pengumuman',
     icon: <CIcon name="cil-bullhorn" customClasses="c-sidebar-nav-icon"/>
   },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Wisata',
+    to: '/wisata',
+    icon: <CIcon name="cil-globe-alt" customClasses="c-sidebar-nav-icon"/>
+  },
 ]
 
 export default _nav

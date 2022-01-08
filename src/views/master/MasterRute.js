@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   CBadge,
-  CCardBody,
-  CCardFooter,
+//   CCardBody,
+//   CCardFooter,
   CCol,
-  CHeader,
+//   CHeader,
   CDataTable,
-  CLink,
-  CWidgetIcon,
-  CRow,
+//   CLink,
+//   CWidgetIcon,
+//   CRow,
   CButton,
   CModal, 
   CModalHeader, 
@@ -20,7 +20,7 @@ import {
   CFormGroup, 
   CLabel, 
   CInput, 
-  CTextarea, 
+//   CTextarea, 
   CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
@@ -28,7 +28,7 @@ import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
@@ -50,6 +50,7 @@ const MasterRute = () => {
     }
     useEffect(() => {
         fetchData()
+        // eslint-disable-next-line
     }, [])
 
     const fetchData = async () => {
@@ -234,7 +235,7 @@ const MasterRute = () => {
                                     <CSelect custom name="tujuan_awal" id={"statusLabel"} onChange={(e) => { setTujuanAwal(e.target.value); }}>
                                         {
                                             dermaga.data.map((data) => {
-                                                if(awal && awal == data.id_dermaga){
+                                                if(awal && awal === data.id_dermaga){
                                                     return(
                                                         <option selected value={data.id_dermaga}>{data.nama_dermaga} - {data.lokasi}</option>
                                                     )
@@ -257,7 +258,7 @@ const MasterRute = () => {
                                     <CSelect custom name="tujuan_akhir" id={"statusLabel"} onChange={(e) => { setTujuanAkhir(e.target.value); }}>
                                         {
                                             dermaga.data.map((data) => {
-                                                if(akhir && akhir == data.id_dermaga){
+                                                if(akhir && akhir === data.id_dermaga){
                                                     return(
                                                         <option selected value={data.id_dermaga}>{data.nama_dermaga} - {data.lokasi}</option>
                                                     )

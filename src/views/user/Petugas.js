@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  CBadge,
-  CCardBody,
-  CCardFooter,
+  // CBadge,
+  // CCardBody,
+  // CCardFooter,
   CCol,
-  CHeader,
+  // CHeader,
   CDataTable,
-  CLink,
-  CWidgetIcon,
-  CRow,
+  // CLink,
+  // CWidgetIcon,
+  // CRow,
   CButton,
   CModal, 
   CModalHeader, 
@@ -20,7 +20,7 @@ import {
   CFormGroup, 
   CLabel, 
   CInput, 
-  CTextarea, 
+  // CTextarea, 
   CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
@@ -28,16 +28,18 @@ import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
 const Petugas = () => {
       const { token } = useToken();
       const [modal, setModal] = useState(false)
+      // eslint-disable-next-line
       const [id, setId] = useState(0)
       const [email, setEmail] = useState('')
       const [password, setPassword] = useState('')
+      // eslint-disable-next-line
       const [type, setType] = useState('')
       const [typeModal, setTypeModal] = useState()  
       const headers = {
@@ -48,6 +50,7 @@ const Petugas = () => {
 
       useEffect(() => {
           fetchData()
+          // eslint-disable-next-line
       }, [])
 
       const [petugas, setPetugas] = useState();

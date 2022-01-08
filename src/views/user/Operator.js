@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  CBadge,
-  CCardBody,
-  CCardFooter,
+  // CBadge,
+  // CCardBody,
+  // CCardFooter,
   CCol,
-  CHeader,
+  // CHeader,
   CDataTable,
-  CLink,
-  CWidgetIcon,
-  CRow,
+  // CLink,
+  // CWidgetIcon,
+  // CRow,
   CButton,
   CModal, 
   CModalHeader, 
@@ -27,7 +27,7 @@ import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
@@ -35,6 +35,7 @@ const Operator = () => {
 
     const { token } = useToken();
     const [modal, setModal] = useState(false)
+    // eslint-disable-next-line
     const [id, setId] = useState(0)
     const [nama, setNama] = useState('')
     const [email, setEmail] = useState('')
@@ -51,6 +52,7 @@ const Operator = () => {
 
     useEffect(() => {
         fetchData()
+        // eslint-disable-next-line
     }, [])
 
     const [operator, setOperator] = useState();

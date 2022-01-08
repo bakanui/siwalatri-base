@@ -10,6 +10,7 @@ const MasterSOP = React.lazy(() => import('./views/master/MasterSOP'));
 const Operator = React.lazy(() => import('./views/user/Operator'));
 const Petugas = React.lazy(() => import('./views/user/Petugas'));
 const Pengumuman = React.lazy(() => import('./views/Pengumuman'));
+const Wisata = React.lazy(() => import('./views/wisata/Wisata'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -22,7 +23,8 @@ const routes = [
   { path: '/master-sop', name: 'Master SOP', component: MasterSOP },
   { path: '/user-operator', name: 'User Operator', component: Operator },
   { path: '/user-petugas', name: 'User Petugas', component: Petugas },
-  { path: '/pengumuman', name: 'Pengumuman', component: Pengumuman }
+  { path: '/pengumuman', name: 'Pengumuman', component: Pengumuman },
+  { path: '/wisata', name: 'Wisata', component: Wisata }
 
 ];
 

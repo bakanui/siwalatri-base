@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  CBadge,
-  CCardBody,
-  CCardFooter,
+//   CBadge,
+//   CCardBody,
+//   CCardFooter,
   CCol,
-  CHeader,
+//   CHeader,
   CDataTable,
   CLink,
   CWidgetIcon,
   CRow,
   CCard,
-  CCardHeader,
+//   CCardHeader,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../../src/useToken';
@@ -106,7 +106,7 @@ const Penumpangs = () => {
         var date = new Date();
         var today = dayjs(date).format('YYYY-MM-DD')
 
-        const result = await axios.get(apiUrl + 'get-penumpang-tanggal/'+'2021-12-20', headers)
+        const result = await axios.get(apiUrl + 'get-penumpang-tanggal/2021-12-20', headers)
         .catch(function (error) {
             if(error.response?.status === 401){
                 localStorage.removeItem('access_token')
