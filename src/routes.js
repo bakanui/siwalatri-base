@@ -15,6 +15,7 @@ const BulananOpetor = React.lazy(() => import('./views/report/BulananOperator'))
 const PenumpangHarian = React.lazy(() => import('./views/report/PenumpangHarian'));
 const PenumpangBulanan = React.lazy(() => import('./views/report/PenumpangBulanan'));
 const Wisata = React.lazy(() => import('./views/wisata/Wisata'));
+const Approval = React.lazy(() => import('./views/data/Approval'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -32,8 +33,8 @@ const routes = [
   { path: '/bulanan-operator', name: 'Bulanan Operator', component: BulananOpetor },
   { path: '/laporan-harian-penumpang', name: 'Laporan Harian Penumpang', component: PenumpangHarian },
   { path: '/laporan-bulanan-penumpang', name: 'Laporan Bulanan Penumpang', component: PenumpangBulanan },
-  { path: '/wisata', name: 'Wisata', component: Wisata }
-
+  { path: '/wisata', name: 'Wisata', component: Wisata },
+  { path: '/approval', name: 'Approval', component: Approval }
 ];
 
 export default routes;

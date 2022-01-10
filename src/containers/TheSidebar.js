@@ -17,6 +17,8 @@ import logos from './../assets/logo.png';
 // sidebar nav config
 import navigation from './_nav'
 import wisata_navigation from './_nav_wisata'
+import syahbandar_navigation from './_nav_syahbandar'
+
 import useToken from '../useToken';
 
 const TheSidebar = () => {
@@ -41,6 +43,18 @@ const TheSidebar = () => {
       return(
         <CCreateElement
           items={navigation}
+          components={{
+            CSidebarNavDivider,
+            CSidebarNavDropdown,
+            CSidebarNavItem,
+            CSidebarNavTitle
+          }}
+        />
+      )
+    }else if(type === 'syahbandar'){
+      return(
+        <CCreateElement
+          items={syahbandar_navigation}
           components={{
             CSidebarNavDivider,
             CSidebarNavDropdown,
