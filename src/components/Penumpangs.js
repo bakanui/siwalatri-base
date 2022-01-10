@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  CBadge,
-  CCardBody,
-  CCardFooter,
+//   CBadge,
+//   CCardBody,
+//   CCardFooter,
   CCol,
-  CHeader,
+//   CHeader,
   CDataTable,
   CLink,
   CWidgetIcon,
   CRow,
   CCard,
-  CCardHeader,
+//   CCardHeader,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../../src/useToken';

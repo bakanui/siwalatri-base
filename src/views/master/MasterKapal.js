@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  CBadge,
-  CCardBody,
-  CCardFooter,
+  // CBadge,
+  // CCardBody,
+  // CCardFooter,
   CCol,
-  CHeader,
+  // CHeader,
   CDataTable,
-  CLink,
-  CWidgetIcon,
-  CRow,
+  // CLink,
+  // CWidgetIcon,
+  // CRow,
   CButton,
   CModal, 
   CModalHeader, 
@@ -27,7 +27,7 @@ import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
@@ -46,6 +46,7 @@ const MasterKapal = () => {
 
     useEffect(() => {
         fetchData()
+        // eslint-disable-next-line
     }, [])
 
     const [jenisKapal, setJenisKapal] = useState();

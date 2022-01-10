@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  CBadge,
-  CCardBody,
-  CCardFooter,
+//   CBadge,
+//   CCardBody,
+//   CCardFooter,
   CCol,
-  CHeader,
+//   CHeader,
   CDataTable,
-  CLink,
-  CWidgetIcon,
-  CRow,
+//   CLink,
+//   CWidgetIcon,
+//   CRow,
   CButton,
   CModal, 
   CModalHeader, 
@@ -20,7 +20,7 @@ import {
   CFormGroup, 
   CLabel, 
   CInput, 
-  CTextarea, 
+//   CTextarea, 
   CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
@@ -28,7 +28,7 @@ import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
@@ -49,6 +49,7 @@ const MasterDermaga = () => {
     }
     useEffect(() => {
         fetchData()
+        // eslint-disable-next-line
     }, [])
 
     const [dermagas, setDermaga] = useState([]);
@@ -235,7 +236,7 @@ const MasterDermaga = () => {
                                     <CSelect custom name="id_petugas" id={"statusLabel"} onChange={(e) => { setIdPetugas(e.target.value); }} required>
                                         {
                                             petugas.map((data) => {
-                                                if(id_petugas && id_petugas == data.id){
+                                                if(id_petugas && id_petugas === data.id){
                                                     return(
                                                         <option selected value={data.id}>{data.email}</option>
                                                     )

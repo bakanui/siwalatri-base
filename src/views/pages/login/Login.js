@@ -67,7 +67,7 @@ export default function Login({ setToken }) {
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" onChange={(e) => { setEmail(e.target.value); }} id="email" placeholder="example@bago.co.id" autoComplete="email" />
+                      <CInput type="text" onChange={(e) => { setEmail(e.target.value); }} id="email" placeholder="example@mail.com" autoComplete="email" />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>

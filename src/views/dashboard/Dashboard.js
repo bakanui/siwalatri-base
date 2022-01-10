@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   CBadge,
-  CCardBody,
-  CCardFooter,
-  CCol,
-  CHeader,
+  // CCardBody,
+  // CCardFooter,
+  // CCol,
+  // CHeader,
   CDataTable,
-  CLink,
-  CWidgetIcon,
+  // CLink,
+  // CWidgetIcon,
   CRow
 
 } from '@coreui/react'
@@ -105,12 +105,15 @@ const Dashboard = () => {
                         <h4 className="card__title">{data.nama_armada}</h4>
                         <h5 className="card__title_2">{data.kontak}</h5>
                         <p className="card__apply">
-                          <a className="card__link" >Lihat Jadwal <CIcon name="cil-arrow-right" className="mfe-2" /></a>
+                          <a href="/#" className="card__link" >Lihat Jadwal <CIcon name="cil-arrow-right" className="mfe-2" /></a>
                         </p>
                       </div>
               )
+            }else{
+              return ( <></> )
             }
           }
+          
       );
       return listItems;
   }
