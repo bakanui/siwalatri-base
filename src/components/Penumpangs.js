@@ -106,7 +106,7 @@ const Penumpangs = () => {
         var date = new Date();
         var today = dayjs(date).format('YYYY-MM-DD')
 
-        const result = await axios.get(apiUrl + 'get-penumpang-tanggal/'+'2021-12-20', headers)
+        const result = await axios.get(apiUrl + 'get-penumpang-tanggal/'+today, headers)
         .catch(function (error) {
             if(error.response?.status === 401){
                 localStorage.removeItem('access_token')

@@ -10,6 +10,9 @@ const MasterSOP = React.lazy(() => import('./views/master/MasterSOP'));
 const Operator = React.lazy(() => import('./views/user/Operator'));
 const Petugas = React.lazy(() => import('./views/user/Petugas'));
 const Pengumuman = React.lazy(() => import('./views/Pengumuman'));
+const HarianOperator = React.lazy(() => import('./views/report/HarianOperator'));
+const BulananOpetor = React.lazy(() => import('./views/report/BulananOperator'));
+const PenumpangHarian = React.lazy(() => import('./views/report/PenumpangHarian'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -22,7 +25,12 @@ const routes = [
   { path: '/master-sop', name: 'Master SOP', component: MasterSOP },
   { path: '/user-operator', name: 'User Operator', component: Operator },
   { path: '/user-petugas', name: 'User Petugas', component: Petugas },
-  { path: '/pengumuman', name: 'Pengumuman', component: Pengumuman }
+  { path: '/pengumuman', name: 'Pengumuman', component: Pengumuman },
+  { path: '/harian-operator', name: 'Harian Operator', component: HarianOperator },
+  { path: '/bulanan-operator', name: 'Bulanan Operator', component: BulananOpetor },
+  { path: '/laporan-harian-penumpang', name: 'Laporan Harian Penumpang', component: PenumpangHarian },
+
+
 
 ];
 
