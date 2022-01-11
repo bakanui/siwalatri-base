@@ -15,6 +15,9 @@ const BulananOpetor = React.lazy(() => import('./views/report/BulananOperator'))
 const PenumpangHarian = React.lazy(() => import('./views/report/PenumpangHarian'));
 const PenumpangBulanan = React.lazy(() => import('./views/report/PenumpangBulanan'));
 const Wisata = React.lazy(() => import('./views/wisata/Wisata'));
+const MasterKapalArmada = React.lazy(() => import('./views/armada/MasterKapalArmada'));
+const MasterNahkodaArmada = React.lazy(() => import('./views/armada/MasterNahkodaArmada'));
+const MasterLoket = React.lazy(() => import('./views/armada/MasterLoket'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -32,7 +35,10 @@ const routes = [
   { path: '/bulanan-operator', name: 'Bulanan Operator', component: BulananOpetor },
   { path: '/laporan-harian-penumpang', name: 'Laporan Harian Penumpang', component: PenumpangHarian },
   { path: '/laporan-bulanan-penumpang', name: 'Laporan Bulanan Penumpang', component: PenumpangBulanan },
-  { path: '/wisata', name: 'Wisata', component: Wisata }
+  { path: '/wisata', name: 'Wisata', component: Wisata },
+  { path: '/master-kapal-armada', name: 'Master Kapal Armada', component: MasterKapalArmada },
+  { path: '/master-nahkoda-armada', name: 'Master Nahkoda Armada', component: MasterNahkodaArmada },
+  { path: '/master-loket-armada', name: 'Master Loket Armada', component: MasterLoket },
 
 ];
 

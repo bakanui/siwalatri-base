@@ -107,12 +107,13 @@
     background: #39f;
     color: white;
   }
+
+  .grey-thead > .position-relative > table > thead{
+    background: rgb(80, 106, 131);
+    color: white;
+  }
   .c-sidebar{
     background: #2278ff;
-  }
-  .grey-thead > .position-relative > table > thead{
-    background: rgb(50, 117, 241);
-    color: white;
   }
 
   .left-right-component{
