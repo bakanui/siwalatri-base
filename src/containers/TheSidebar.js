@@ -18,6 +18,8 @@ import logos from './../assets/logo.png';
 import navigation from './_nav'
 import wisata_navigation from './_nav_wisata'
 import armada_navigation from './_nav_armada'
+import syahbandar_navigation from './_nav_syahbandar'
+
 import useToken from '../useToken';
 
 const TheSidebar = () => {
@@ -54,6 +56,18 @@ const TheSidebar = () => {
       return(
         <CCreateElement
           items={armada_navigation}
+          components={{
+            CSidebarNavDivider,
+            CSidebarNavDropdown,
+            CSidebarNavItem,
+            CSidebarNavTitle
+          }}
+        />
+      )
+    }else if(type === 'syahbandar'){
+      return(
+        <CCreateElement
+          items={syahbandar_navigation}
           components={{
             CSidebarNavDivider,
             CSidebarNavDropdown,

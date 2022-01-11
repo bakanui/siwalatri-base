@@ -18,6 +18,7 @@ const Wisata = React.lazy(() => import('./views/wisata/Wisata'));
 const MasterKapalArmada = React.lazy(() => import('./views/armada/MasterKapalArmada'));
 const MasterNahkodaArmada = React.lazy(() => import('./views/armada/MasterNahkodaArmada'));
 const MasterLoket = React.lazy(() => import('./views/armada/MasterLoket'));
+const Approval = React.lazy(() => import('./views/data/Approval'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -39,7 +40,7 @@ const routes = [
   { path: '/master-kapal-armada', name: 'Master Kapal Armada', component: MasterKapalArmada },
   { path: '/master-nahkoda-armada', name: 'Master Nahkoda Armada', component: MasterNahkodaArmada },
   { path: '/master-loket-armada', name: 'Master Loket Armada', component: MasterLoket },
-
+  { path: '/approval', name: 'Approval', component: Approval }
 ];
 
 export default routes;
