@@ -50,7 +50,7 @@ const Approval = () => {
               window.location.reload()
           }
         })
-        setWisata(result.data.data.wisatas)
+        setWisata(result.data.data)
     }
     
     useEffect(() => {

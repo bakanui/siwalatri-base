@@ -2,26 +2,26 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   CBadge,
-  CCardBody,
-  CCardFooter,
-  CCol,
-  CHeader,
+//   CCardBody,
+//   CCardFooter,
+//   CCol,
+//   CHeader,
   CDataTable,
-  CLink,
-  CWidgetIcon,
-  CRow,
+//   CLink,
+//   CWidgetIcon,
+//   CRow,
   CButton,
-  CModal, 
-  CModalHeader, 
-  CModalTitle, 
-  CModalBody, 
-  CModalFooter, 
-  CForm, 
-  CFormGroup, 
-  CLabel, 
-  CInput, 
-  CTextarea, 
-  CSelect
+//   CModal, 
+//   CModalHeader, 
+//   CModalTitle, 
+//   CModalBody, 
+//   CModalFooter, 
+//   CForm, 
+//   CFormGroup, 
+//   CLabel, 
+//   CInput, 
+//   CTextarea, 
+//   CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../../../src/useToken';
@@ -38,16 +38,17 @@ Moment.globalTimezone = 'Asia/Makassar';
 const LaporanManifest = () => {
     const todays = new Date()
     const { token,id } = useToken();
-    const headers = {
-        headers: {
-          'Authorization': "bearer " + token 
-        },
-    }
+    // const headers = {
+    //     headers: {
+    //       'Authorization': "bearer " + token 
+    //     },
+    // }
     useEffect(() => {
         fetchData(todays,false)
+        // eslint-disable-next-line
     }, [])
 
-    const [filter, setFilter] = useState(false)
+    // const [filter, setFilter] = useState(false)
     const [dateFilter, setDateFilter] = useState(new Date());
     const [reports, setReport] = useState([]);
 
@@ -79,7 +80,7 @@ const LaporanManifest = () => {
               window.location.reload()
           }
         })
-        console.log(result.data)
+        // console.log(result.data)
         setReport(result.data)
     }
     

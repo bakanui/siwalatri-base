@@ -10,7 +10,7 @@ import {
 //   CLink,
 //   CWidgetIcon,
 //   CRow,
-//   CButton,
+  CButton,
 //   CModal, 
 //   CModalHeader, 
 //   CModalTitle, 
@@ -32,10 +32,49 @@ import 'moment-timezone';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from 'dayjs';
+import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+
 Moment.globalTimezone = 'Asia/Makassar';
 
-
 const HarianOperator = () => {
+
+    const styles = StyleSheet.create({
+        page: {
+            flexDirection: 'row',
+            backgroundColor: '#E4E4E4'
+        },
+        section: {
+            margin: 10,
+            padding: 10,
+            flexGrow: 1
+        },
+        judul : {
+            fontSize: 10,
+            margin: 1,
+        },
+        subJudul : {
+            fontSize: 10,
+            textTransform: "uppercase",
+            margin: 1
+        }
+    });
+
+    const MyDoc = () => (
+        <Document>
+            <Page size="A4" style={styles.page}>
+            <View style={styles.judul}>
+                <Text>DIREKTORAT JENDRAL PERHUBUNGAN LAUT</Text>
+            </View>
+            <View style={styles.subJudul}>
+                <Text>KANTOR UNIT PENYELENGGARA PELABUHAN</Text>
+            </View>
+            <View style={styles.judul}>
+                <Text>KANTOR INDUK</Text>
+            </View>
+            </Page>
+        </Document>
+    );
+    
     const todays = new Date()
     const { token } = useToken();
 
@@ -105,6 +144,12 @@ const HarianOperator = () => {
                 selected={dateFilter}
                 onChange={(date) => handleDateChange(date)} //only when value has changed
             />
+            {/* <PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
+                {({ blob, url, loading, error }) => (loading ? 'Mohon menunggu...' : <CButton color="primary">
+                <CIcon name="cil-scrubber" /> Download sebagai PDF
+            </CButton>)}
+            </PDFDownloadLink> */}
+            
             <CDataTable
                 items={reports}
                 fields={[
