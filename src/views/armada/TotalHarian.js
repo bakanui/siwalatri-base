@@ -116,7 +116,7 @@ const TotalHarian = () => {
                             fields={[
                                 { key: 'nama_kapal', _style: { width: '15%'}},
                                 { key: 'jadwal', _style: { width: '10%'} },
-                                { key: 'keberangkatan', _style: { width: '20%'} },
+                                { key: 'keberangkatan', _style: { width: '25%'} },
                                 { key: 'kapasitas_penumpang', _style: { width: '1%'} },
                                 { key: 'jenis', _style: { width: '5%'} },
                                 { key: 'status', _style: { width: '5%'} },
