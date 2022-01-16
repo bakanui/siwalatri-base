@@ -81,7 +81,6 @@ const HarianOperator = () => {
               window.location.reload()
           }
         })
-        console.log(result.data.penumpang)
         setReport(result.data.penumpang)
     }
 

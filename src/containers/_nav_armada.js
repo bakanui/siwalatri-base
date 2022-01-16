@@ -45,13 +45,13 @@ const _nav_armada =  [
     _children: [
         {
           _tag: 'CSidebarNavItem',
-          name: 'Harian Operator',
-          to: '/harian-operator',
+          name: 'Total Harian Operator',
+          to: '/total-harian-operator',
         },
         {
           _tag: 'CSidebarNavItem',
-          name: 'Bulanan Operator',
-          to: '/bulanan-operator',
+          name: 'Manifest',
+          to: '/laporan-manifest',
         },
     ]
   },
