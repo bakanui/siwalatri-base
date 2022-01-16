@@ -19,6 +19,11 @@ const MasterKapalArmada = React.lazy(() => import('./views/armada/MasterKapalArm
 const MasterNahkodaArmada = React.lazy(() => import('./views/armada/MasterNahkodaArmada'));
 const MasterLoket = React.lazy(() => import('./views/armada/MasterLoket'));
 const Approval = React.lazy(() => import('./views/data/Approval'));
+const Jadwal = React.lazy(() => import('./views/armada/Jadwal'));
+const TotalHarian = React.lazy(() => import('./views/armada/TotalHarian'));
+const DetailKeberangkatan = React.lazy(() => import('./views/DetailKeberangkatan'));
+const LaporanManifest = React.lazy(() => import('./views/report/LaporanManifest'));
+const DetailManifest = React.lazy(() => import('./views/report/DetailManifest'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -40,7 +45,15 @@ const routes = [
   { path: '/master-kapal-armada', name: 'Master Kapal Armada', component: MasterKapalArmada },
   { path: '/master-nahkoda-armada', name: 'Master Nahkoda Armada', component: MasterNahkodaArmada },
   { path: '/master-loket-armada', name: 'Master Loket Armada', component: MasterLoket },
-  { path: '/approval', name: 'Approval', component: Approval }
+  { path: '/approval', name: 'Approval', component: Approval },
+  { path: '/jadwal', name: 'Jadwal Keberangkatan', component: Jadwal },
+  { path: '/total-harian-operator', name: 'Total Harian Operator', component: TotalHarian },
+  { path: '/detail-keberangkatan/:id_keberangkatan', name: 'Detail Keberangkatan', component: DetailKeberangkatan, exact: true },
+  { path: '/total-harian-operator/:id_keberangkatan', name: 'Detail Keberangkatan', component: DetailKeberangkatan, exact: true },
+  { path: '/total-harian-operator/detail-keberangkatan/:id_keberangkatan', name: 'Detail Keberangkatan', component: DetailKeberangkatan, exact: true },
+  { path: '/laporan-manifest', name: 'Laporan Manifest', component: LaporanManifest },
+  { path: '/detail-manifest/:id_jadwals/:fil_date', name: 'Detail Manifest', component: DetailManifest, exact: true },
+
 ];
 
 export default routes;

@@ -138,3 +138,26 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     margin: 15px 0px;
 }
+
+.inner-padd-report{
+  padding: 1.5rem 3rem;
+}
+
+.center-title{
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.bold-text{
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
+.table-bordered-report{
+  /* border: 1px solid #dadada; */
+}
+
+.table-bordered{
+  border: none;
+}

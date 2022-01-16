@@ -35,10 +35,9 @@ import dayjs from 'dayjs';
 Moment.globalTimezone = 'Asia/Makassar';
 
 
-const HarianOperator = () => {
+const LaporanManifest = () => {
     const todays = new Date()
-    const { token } = useToken();
-
+    const { token,id } = useToken();
     const headers = {
         headers: {
           'Authorization': "bearer " + token 
@@ -48,9 +47,9 @@ const HarianOperator = () => {
         fetchData(todays,false)
     }, [])
 
-    const [reports, setReport] = useState([]);
     const [filter, setFilter] = useState(false)
     const [dateFilter, setDateFilter] = useState(new Date());
+    const [reports, setReport] = useState([]);
 
     const fetchData = async (dates,filter) => {
         
@@ -73,29 +72,30 @@ const HarianOperator = () => {
             }
         }
         
-        const result = await axios.get(apiUrl + 'laporan/harian_armada', head)
+        const result = await axios.get(apiUrl + 'laporan/manifest/armada/'+id, head)
         .catch(function (error) {
           if(error.response?.status === 401){
               localStorage.removeItem('access_token')
               window.location.reload()
           }
         })
-        setReport(result.data.penumpang)
+        console.log(result.data)
+        setReport(result.data)
     }
-
+    
     function handleDateChange(date){
         setDateFilter(date);
         fetchData(date,true)
     }
 
-    const getBadge = (status)=>{
-        switch (status) {
-          case 'Berlayar': return 'success'
-          case 'Nyandar': return 'secondary'
-          case 'Persiapan': return 'warning'
-          default: return 'primary'
-        }
-      }
+    const fields = [
+        { key: 'no', _style: { width: '1%'} },
+        { key: 'nama_kapal', _style: { width: '15%'} },
+        { key: 'jadwal', _style: { width: '10%'} },
+        { key: 'keberangkatan', _style: { width: '20%'} },
+        { key: 'jml_penumpang', _style: { width: '5%'} },
+        { key: 'detail', _style: { width: '1%'} },
+      ]
 
     return(
         <>
@@ -104,45 +104,55 @@ const HarianOperator = () => {
                 selected={dateFilter}
                 onChange={(date) => handleDateChange(date)} //only when value has changed
             />
+            <div className='grey-thead'>
             <CDataTable
                 items={reports}
-                fields={[
-                { key: 'nama_armada', label:'Nama Operator', _style: { width: '10%'}},
-                { key: 'nama_kapal', _style: { width: '10%'} },
-                { key: 'nama_nahkoda', _style: { width: '10%'} },
-                { key: 'keberangkatan', label:'Keberangkatan', _style: { width: '10%'} },
-                { key: 'status', _style: { width: '1%'} },
-                { key: 'jml_penumpang', label:'Jml Penumpang', _style: { width: '1%'} },
-                { key: 'tanggal_berangkat', label:'Waktu Berangkat', _style: { width: '5%'} },
-                { key: 'tanggal_sampai', label:'Waktu Sampai', _style: { width: '5%'} },
-                ]}
-                columnFilter
-                button
+                fields={fields}
                 hover
-                pagination
-                bordered
                 striped
+                bordered
                 size="sm"
                 itemsPerPage={10}
+                pagination
                 scopedSlots = {{
-                    'status':
-                    (item)=>(
-                        <td>
-                            <CBadge color={getBadge(item.status)}>
-                                {item.status}
-                            </CBadge>
-                        </td>
+                    'no':
+                    (item,index)=>(
+                    <td key={index}>
+                        {index+1}
+                    </td>
                     ),
                     'keberangkatan':
                     (item)=>(
                     <td>
-                       {item.tujuan_awal}  <CIcon name="cil-arrow-right" className="mfe-2" /> {item.tujuan_akhir} 
+                        {item.tujuan_awal}  <CBadge color="warning">{item.lokasi_awal}</CBadge> <CIcon name="cil-arrow-right" className="mfe-2" /> {item.tujuan_akhir} <CBadge color="warning">{item.lokasi_akhir}</CBadge>
+                    </td>
+                    ),
+                    'jml_penumpang':
+                    (item)=>(
+                    <td>
+                        {item.total ? item.total : 0}
+                    </td>
+                    ),
+                    'detail':
+                    (item)=>(
+                    <td>
+                       <Link to={"/detail-manifest/"+item.id_jadwal+"/"+dayjs(dateFilter).format('YYYY-MM-DD')}>
+                        <CButton
+                            color="primary"
+                            variant="outline"
+                            shape="square"
+                            size="sm"
+                        >
+                            Details
+                        </CButton>
+                        </Link>
                     </td>
                     ),
                 }}
             />
+            </div>
         </>
     )
 }
 
-export default HarianOperator
+export default LaporanManifest

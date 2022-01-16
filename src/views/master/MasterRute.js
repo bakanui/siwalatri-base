@@ -62,7 +62,6 @@ const MasterRute = () => {
           }
         })
         setRute(rute.data)
-        console.log(rute)
 
         const dermaga = await axios.get(apiUrl + 'dermaga', headers)
         .catch(function (error) {
