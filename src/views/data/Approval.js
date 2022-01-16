@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  CCol,
   CDataTable,
   CButton,
   CModal, 
   CModalHeader, 
   CModalTitle, 
   CModalBody, 
-  CModalFooter, 
-  CForm, 
-  CFormGroup, 
-  CLabel, 
-  CInput, 
-  CTextarea
+  CModalFooter
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../../../src/useToken';
@@ -29,9 +23,9 @@ const Approval = () => {
 
     const { token, id } = useToken();
     const [pid, setId] = useState(0)
-    const [judul, setJudul] = useState('')
-    const [deskripsi, setDeskripsi] = useState('')
-    const [typeModal, setTypeModal] = useState()  
+    // const [judul, setJudul] = useState('')
+    // const [deskripsi, setDeskripsi] = useState('')
+    // const [typeModal, setTypeModal] = useState()  
     const [modal, setModal] = useState(false)
 
     //Toast
@@ -71,31 +65,28 @@ const Approval = () => {
             judul: form.get('judul'),
             deskripsi: form.get('deskripsi'),
           }
-        if(typeModal === 'Approve'){
-            axios.post(apiUrl + 'wisata/'+pid+'/update', datas, headers)
-            .then(() => {
-                setTitle("Perubahan data berhasil")
-                setMessage("Data telah berhasil dirubah!")
-                setColor("bg-success text-white")
-                setModal(!modal)
-                clearState()
-                fetchData();
-                addToast()
-            }).catch((error) => {
-                setTitle("Terjadi kesalahan")
-                setMessage(error?.response?.data?.message)
-                setColor("bg-danger text-white")
-                setModal(!modal)
-                clearState()
-                fetchData()
-                addToast()
-            })
-        }
+        axios.post(apiUrl + 'wisata/'+pid+'/update', datas, headers)
+        .then(() => {
+            setTitle("Perubahan data berhasil")
+            setMessage("Data telah berhasil dirubah!")
+            setColor("bg-success text-white")
+            setModal(!modal)
+            clearState()
+            fetchData();
+            addToast()
+        }).catch((error) => {
+            setTitle("Terjadi kesalahan")
+            setMessage(error?.response?.data?.message)
+            setColor("bg-danger text-white")
+            setModal(!modal)
+            clearState()
+            fetchData()
+            addToast()
+        })
+        
       }
 
       function clearState(){
-        setJudul('')
-        setDeskripsi('')
         setId()
     }
 
@@ -139,10 +130,6 @@ const Approval = () => {
                                     shape="square"
                                     size="sm"
                                     onClick={()=>{
-                                        setTypeModal('Edit')
-                                        setId(item.id)
-                                        setJudul(item.judul)
-                                        setDeskripsi(item.deskripsi)
                                         setModal(!modal)
                                     }}
                                     >
@@ -159,33 +146,17 @@ const Approval = () => {
                     color='info'
                     >
                         <CModalHeader closeButton>
-                            <CModalTitle>{typeModal} Wisata</CModalTitle>
+                            <CModalTitle>Konfirmasi</CModalTitle>
                         </CModalHeader>
-                        <CForm onSubmit={submitHandler}  method="post" encType="multipart/form-data" className="form-horizontal">
                         <CModalBody>
-                                <CFormGroup row>
-                                    <CCol xs="12">
-                                        <CLabel htmlFor="nameLabel">Judul</CLabel>
-                                        <CInput id={"nameInput"} placeholder="Judul"
-                                        onChange={(e) => { setJudul(e.target.value); }}
-                                        name="judul" value={judul} required/>
-                                    </CCol>
-                                </CFormGroup>
-                                <CFormGroup row>
-                                    <CCol xs="12">
-                                        <CLabel htmlFor="nameLabel">Deskripsi</CLabel>
-                                        <CTextarea required rows="6" value={deskripsi} placeholder="...." name="deskripsi" onChange={(e) => { setDeskripsi(e.target.value); }}>
-                                        </CTextarea>
-                                    </CCol>
-                                </CFormGroup>
+                            <p>Apakah anda yakin untuk memberikan approval kepada trip ini?</p>
                         </CModalBody>
                         <CModalFooter>
-                            <CButton type="submit" color="primary">
-                                <CIcon name="cil-scrubber" /> Submit
+                            <CButton type="submit" color="primary" onClick={() => submitHandler}>
+                                <CIcon name="cil-scrubber" /> Ya
                             </CButton>{' '}
-                            <CButton color="secondary" onClick={() => setModal(!modal)}>Cancel</CButton>
+                            <CButton color="secondary" onClick={() => setModal(!modal)}>Batalkan</CButton>
                         </CModalFooter>
-                        </CForm>
                     </CModal>
             </div>
         </>

@@ -48,6 +48,19 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavDropdown',
+    name: 'Data',
+    // route: '/data',
+    icon: 'cil-excerpt',
+    _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Approval',
+          to: '/approval',
+        }
+    ]
+  },
+  {
+    _tag: 'CSidebarNavDropdown',
     name: 'User',
     route: '/user',
     icon: 'cil-user',
