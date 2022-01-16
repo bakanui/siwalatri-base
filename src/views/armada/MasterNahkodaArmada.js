@@ -13,8 +13,7 @@ import {
   CFormGroup, 
   CLabel, 
   CInput, 
-  CSelect,
-  CBadge,
+  CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../../useToken';

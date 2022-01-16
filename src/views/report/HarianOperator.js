@@ -2,33 +2,33 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   CBadge,
-  CCardBody,
-  CCardFooter,
-  CCol,
-  CHeader,
+//   CCardBody,
+//   CCardFooter,
+//   CCol,
+//   CHeader,
   CDataTable,
-  CLink,
-  CWidgetIcon,
-  CRow,
-  CButton,
-  CModal, 
-  CModalHeader, 
-  CModalTitle, 
-  CModalBody, 
-  CModalFooter, 
-  CForm, 
-  CFormGroup, 
-  CLabel, 
-  CInput, 
-  CTextarea, 
-  CSelect
+//   CLink,
+//   CWidgetIcon,
+//   CRow,
+//   CButton,
+//   CModal, 
+//   CModalHeader, 
+//   CModalTitle, 
+//   CModalBody, 
+//   CModalFooter, 
+//   CForm, 
+//   CFormGroup, 
+//   CLabel, 
+//   CInput, 
+//   CTextarea, 
+//   CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from 'dayjs';
@@ -39,17 +39,18 @@ const HarianOperator = () => {
     const todays = new Date()
     const { token } = useToken();
 
-    const headers = {
-        headers: {
-          'Authorization': "bearer " + token 
-        },
-    }
+    // const headers = {
+    //     headers: {
+    //       'Authorization': "bearer " + token 
+    //     },
+    // }
     useEffect(() => {
         fetchData(todays,false)
+        // eslint-disable-next-line
     }, [])
 
     const [reports, setReport] = useState([]);
-    const [filter, setFilter] = useState(false)
+    // const [filter, setFilter] = useState(false)
     const [dateFilter, setDateFilter] = useState(new Date());
 
     const fetchData = async (dates,filter) => {

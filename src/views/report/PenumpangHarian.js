@@ -1,38 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {
-  CBadge,
-  CCardBody,
-  CCardFooter,
-  CCol,
-  CHeader,
-  CDataTable,
-  CLink,
-  CWidgetIcon,
-  CRow,
-  CButton,
-  CModal, 
-  CModalHeader, 
-  CModalTitle, 
-  CModalBody, 
-  CModalFooter, 
-  CForm, 
-  CFormGroup, 
-  CLabel, 
-  CInput, 
-  CTextarea, 
-  CSelect
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+// import {
+//   CBadge,
+//   CCardBody,
+//   CCardFooter,
+//   CCol,
+//   CHeader,
+//   CDataTable,
+//   CLink,
+//   CWidgetIcon,
+//   CRow,
+//   CButton,
+//   CModal, 
+//   CModalHeader, 
+//   CModalTitle, 
+//   CModalBody, 
+//   CModalFooter, 
+//   CForm, 
+//   CFormGroup, 
+//   CLabel, 
+//   CInput, 
+//   CTextarea, 
+//   CSelect
+// } from '@coreui/react'
+// import CIcon from '@coreui/icons-react'
 import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from 'dayjs';
-import ReactToPdf from "react-to-pdf";
+// import ReactToPdf from "react-to-pdf";
 Moment.globalTimezone = 'Asia/Makassar';
 
 
@@ -47,16 +47,17 @@ const PenumpangHarian = () => {
         },
     }
     const [laporan, setLaporan] = useState([]);
-    const [kapal, setKapal] = useState();
-    const ref = React.createRef();
-    const options = {
-        orientation: 'landscape',
-        unit: 'in',
-        format: [4,2]
-    };
+    // const [kapal, setKapal] = useState();
+    // const ref = React.createRef();
+    // const options = {
+    //     orientation: 'landscape',
+    //     unit: 'in',
+    //     format: [4,2]
+    // };
 
     useEffect(() => {
         fetchData(todays,false)
+        // eslint-disable-next-line
     }, [])
 
     const fetchData = async (dates,filter) => {
