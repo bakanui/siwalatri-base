@@ -25,7 +25,7 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import _ from "lodash";
 
 Moment.globalTimezone = 'Asia/Makassar';
 const TotalHarian = () => {
@@ -96,6 +96,12 @@ const TotalHarian = () => {
         }
       }
 
+      function money(amount){
+        return Number(amount)
+            .toFixed(2)
+            .replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    };
+    
 
     return(
         <>
@@ -114,6 +120,7 @@ const TotalHarian = () => {
                                 { key: 'kapasitas_penumpang', _style: { width: '1%'} },
                                 { key: 'jenis', _style: { width: '5%'} },
                                 { key: 'status', _style: { width: '5%'} },
+                                { key: 'pendapatan', _style: { width: '10%'}, sorter: false, filter: false  },
                                 { key: 'aksi', _style: { width: '1%'}, sorter: false, filter: false  },
                             ]}
                             columnFilter
@@ -150,6 +157,12 @@ const TotalHarian = () => {
                                     <CBadge color={getBadge(item.status)}>
                                           {item.status}
                                     </CBadge>
+                                </td>
+                                ),
+                                'pendapatan':
+                                (item)=>(
+                                <td>
+                                          {item.harga_total ? item.harga_total : 0}
                                 </td>
                                 ),
                                 'aksi':
@@ -229,6 +242,11 @@ const TotalHarian = () => {
                                 // )
                             }}
                         />
+                        <div className='pull-right' style={{padding:'1rem',float:'right'}}>
+                            <h4><b>{"Rp. "+ total_harian.reduce((prev,current) => {
+                                return prev + (Number(current.harga_total));
+                            },0).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</b></h4>
+                        </div>
                 </div>
 
                 <CModal 
