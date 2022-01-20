@@ -2,54 +2,94 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   CBadge,
-  CCardBody,
-  CCardFooter,
-  CCol,
-  CHeader,
+//   CCardBody,
+//   CCardFooter,
+//   CCol,
+//   CHeader,
   CDataTable,
-  CLink,
-  CWidgetIcon,
-  CRow,
+//   CLink,
+//   CWidgetIcon,
+//   CRow,
   CButton,
-  CModal, 
-  CModalHeader, 
-  CModalTitle, 
-  CModalBody, 
-  CModalFooter, 
-  CForm, 
-  CFormGroup, 
-  CLabel, 
-  CInput, 
-  CTextarea, 
-  CSelect
+//   CModal, 
+//   CModalHeader, 
+//   CModalTitle, 
+//   CModalBody, 
+//   CModalFooter, 
+//   CForm, 
+//   CFormGroup, 
+//   CLabel, 
+//   CInput, 
+//   CTextarea, 
+//   CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from 'dayjs';
+import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+
 Moment.globalTimezone = 'Asia/Makassar';
 
-
 const HarianOperator = () => {
+
+    const styles = StyleSheet.create({
+        page: {
+            flexDirection: 'row',
+            backgroundColor: '#E4E4E4'
+        },
+        section: {
+            margin: 10,
+            padding: 10,
+            flexGrow: 1
+        },
+        judul : {
+            fontSize: 10,
+            margin: 1,
+        },
+        subJudul : {
+            fontSize: 10,
+            textTransform: "uppercase",
+            margin: 1
+        }
+    });
+
+    const MyDoc = () => (
+        <Document>
+            <Page size="A4" style={styles.page}>
+            <View style={styles.judul}>
+                <Text>DIREKTORAT JENDRAL PERHUBUNGAN LAUT</Text>
+            </View>
+            <View style={styles.subJudul}>
+                <Text>KANTOR UNIT PENYELENGGARA PELABUHAN</Text>
+            </View>
+            <View style={styles.judul}>
+                <Text>KANTOR INDUK</Text>
+            </View>
+            </Page>
+        </Document>
+    );
+    
     const todays = new Date()
     const { token } = useToken();
 
-    const headers = {
-        headers: {
-          'Authorization': "bearer " + token 
-        },
-    }
+    // const headers = {
+    //     headers: {
+    //       'Authorization': "bearer " + token 
+    //     },
+    // }
     useEffect(() => {
         fetchData(todays,false)
+        // eslint-disable-next-line
     }, [])
 
     const [reports, setReport] = useState([]);
-    const [filter, setFilter] = useState(false)
+    // const [filter, setFilter] = useState(false)
     const [dateFilter, setDateFilter] = useState(new Date());
 
     const fetchData = async (dates,filter) => {
@@ -104,6 +144,12 @@ const HarianOperator = () => {
                 selected={dateFilter}
                 onChange={(date) => handleDateChange(date)} //only when value has changed
             />
+            {/* <PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
+                {({ blob, url, loading, error }) => (loading ? 'Mohon menunggu...' : <CButton color="primary">
+                <CIcon name="cil-scrubber" /> Download sebagai PDF
+            </CButton>)}
+            </PDFDownloadLink> */}
+            
             <CDataTable
                 items={reports}
                 fields={[

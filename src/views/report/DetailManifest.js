@@ -1,41 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  CCol,
+//   CCol,
   CDataTable,
-  CButton,
-  CModal, 
-  CModalHeader, 
-  CModalTitle, 
-  CModalBody, 
-  CModalFooter, 
-  CForm, 
-  CFormGroup, 
-  CLabel, 
-  CInput, 
-  CSelect,
-  CBadge,
-  CWidgetIcon,
+//   CButton,
+//   CModal, 
+//   CModalHeader, 
+//   CModalTitle, 
+//   CModalBody, 
+//   CModalFooter, 
+//   CForm, 
+//   CFormGroup, 
+//   CLabel, 
+//   CInput, 
+//   CSelect,
+//   CBadge,
+//   CWidgetIcon,
   CRow,
-  CCard,
-  CLink
+//   CCard,
+//   CLink
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+// import CIcon from '@coreui/icons-react'
 import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import dayjs from 'dayjs';
+// import { Link } from 'react-router-dom';
+// import dayjs from 'dayjs';
 import 'moment-timezone';
 
 Moment.globalTimezone = 'Asia/Makassar';
 const DetailManifest = () => {
     const { id_jadwals,fil_date } = useParams();
-    const { token,id } = useToken();
+    const { token } = useToken();
  
     const [datas, setDatas] = useState([]);
     const [details, setDetails] = useState([]);
+    // eslint-disable-next-line
     const [jenis, setJenis] = useState([]);
 
 
@@ -64,6 +65,7 @@ const DetailManifest = () => {
 
     useEffect(() => {
         fetchData(fil_date,false)
+        // eslint-disable-next-line
     }, [])
 
     const fields = [
@@ -143,7 +145,7 @@ const DetailManifest = () => {
                                 'jenis_kelamin':
                                 (item,index)=>(
                                 <td key={index}>
-                                    {item.jenis_kelamin == 0 ? 'Laki Laki' : 'Wanita'}
+                                    {item.jenis_kelamin === 0 ? 'Laki Laki' : 'Wanita'}
                                 </td>
                                 ),
                             }}

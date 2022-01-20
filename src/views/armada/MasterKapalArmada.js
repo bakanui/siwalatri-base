@@ -84,14 +84,14 @@ const MasterKapalArmada = () => {
 
     }
 
-    const getBadge = (status)=>{
-      switch (status) {
-        case 'Berlayar': return 'success'
-        case 'Nyandar': return 'secondary'
-        case 'Persiapan': return 'warning'
-        default: return 'primary'
-      }
-    }
+    // const getBadge = (status)=>{
+    //   switch (status) {
+    //     case 'Berlayar': return 'success'
+    //     case 'Nyandar': return 'secondary'
+    //     case 'Persiapan': return 'warning'
+    //     default: return 'primary'
+    //   }
+    // }
 
     const getBadgeStatus = (status)=>{
       switch (status) {
