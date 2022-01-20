@@ -161,3 +161,184 @@
 .table-bordered{
   border: none;
 }
+
+
+/* Float four columns side by side */
+.column-card {
+  float: left;
+  width: 20%;
+  padding: 0 10px;
+  
+}
+
+/* Responsive columns */
+@media screen and (max-width: 1500px) {
+  .column-card {
+    width: 33%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Responsive columns */
+@media screen and (max-width: 1200px) {
+  .column-card {
+    width: 30%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Responsive columns */
+@media screen and (max-width: 900px) {
+  .column-card {
+    width: 50%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column-card {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+
+/* Style the counter cards */
+.column-card .card {
+  box-shadow: 1px 1px 7px 3px rgb(0 0 0 / 8%);
+  padding: 16px;
+  text-align: center;
+  background-color: #ffffff;
+  border: none;
+}
+.rute-label-card{
+  text-align: initial;
+  font-size: 15px;
+  font-family: system-ui;
+  color: #8c8c8c;
+  font-weight: 400;
+}
+
+
+
+
+/* Header */
+.boardingPass-header {
+	padding: .5em 2em;
+	border-radius: inherit;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+  background: linear-gradient(
+    90deg
+    , rgb(206 148 17) 0%, rgb(255 179 66) 35%, rgb(255 214 119) 100%);
+        color: #fff;
+        padding: 15px 8px;
+}
+
+.boardingPass-airline {
+	margin: 0;
+  font-weight: 700;
+}
+
+.row-custome-tiket{
+  box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -.5rem;
+    align-items: center;
+    margin-left: -.5rem;
+
+}
+.section-label-child {
+  display: block;
+  text-transform: uppercase;
+  font-size:0.7rem;
+  color: #919191;
+}
+
+.boardingPass-departur-IATA, .boardingPass-arrival-IATA {
+  display: inline-block;
+  line-height: 1;
+  font-size: 1.3rem;
+}
+
+.boardingPass-transport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.boardingPass-icon {
+  flex-grow: 0.5;
+  color: #f03f55;
+}
+
+.tiket-hr{
+    width: 100%;
+    margin: 1.5em 0;
+    border: 0;
+    border-bottom: 1px dashed #ccc;
+}
+.col-xs {
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  max-width: 100%;
+}
+
+.col-xs-pessanger{
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-preferred-size: 0;
+  max-width: 100%;
+}
+
+.component-nav{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: #00a1ff;
+}
+.btn-login{
+  background-color: #0a98c7;
+    background-image: unset;
+    border: none;
+    transition: .3s;
+    color: #fff!important;
+    -webkit-text-fill-color: #fff!important;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 8px
+}
+.modal-login .modal-dialog .modal-content{
+  padding: 2rem;
+}
+.login-text-modal {
+  width: 100px;
+  position: relative;
+  font-weight: 800;
+  margin: 0;
+  line-height: 26px;
+  text-decoration: initial;
+  color: #0a92c1;
+  font-size: 1.5111rem;
+}

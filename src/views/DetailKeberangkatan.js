@@ -52,7 +52,7 @@ const DetailKeberangkatan = () => {
               'Authorization': "bearer " + token 
           },
           params: {
-              tanggal: '2021-12-07'
+              tanggal: dayjs(todays).format('YYYY-MM-DD')
           },
       }
       if(filter === true){
@@ -73,6 +73,7 @@ const DetailKeberangkatan = () => {
               window.location.reload()
           }
         })
+        console.log(result);
         setData(result.data.datas)
         setUnData(result.data.detail2)
         setTotTujuan(result.data.tujuans)

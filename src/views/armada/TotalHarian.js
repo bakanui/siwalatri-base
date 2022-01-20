@@ -32,7 +32,7 @@ const TotalHarian = () => {
     const [filter, setFilter] = useState(false)
     const [dateFilter, setDateFilter] = useState(new Date());
     const todays = new Date()
-    const { token,type,id } = useToken();
+    const { token,type,id,id_armada } = useToken();
     const [total_harian, setTotalHarian] = useState([]);
     const headers = {
         headers: {
@@ -70,16 +70,22 @@ const TotalHarian = () => {
                   },
             }
         }    
-        
-          const result = await axios.get(apiUrl + 'penumpang/view_harian/'+id, head)
-          .catch(function (error) {
-            if(error.response?.status === 401){
-                localStorage.removeItem('access_token')
-                window.location.reload()
-            }
-          })
-          setTotalHarian(result.data)
-          console.log(result)
+
+        let id_user = id
+
+        if(type === 'loket'){
+            id_user = id_armada
+        }
+
+        const result = await axios.get(apiUrl + 'penumpang/view_harian/'+id_user, head)
+        .catch(function (error) {
+        if(error.response?.status === 401){
+            localStorage.removeItem('access_token')
+            window.location.reload()
+        }
+        })
+        setTotalHarian(result.data)
+        console.log(result)
     }
 
     function handleDateChange(date){

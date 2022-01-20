@@ -56,7 +56,7 @@ const Dashboard = () => {
   // ]
 
   
-  const { token,type,id } = useToken();
+  const { token,type,id,id_armada } = useToken();
   const [armadas, setArmada] = useState({data : postArmada});
   const [jadwals, setJadwals] = useState({data : []});
   const [jadwalnya, setJadwalnya] = useState([]);
@@ -113,10 +113,12 @@ const Dashboard = () => {
       })
       setKapals(result)
       // console.log(result)
-
       const jad = await axios.get(apiUrl + 'jadwal_keberangkatan/index/'+id, headers)
       setJadwalnya(jad.data.jadwal)
       // console.log(jad.data.jadwal);
+    }else if(type === 'loket'){
+      const jad = await axios.get(apiUrl + 'jadwal_keberangkatan/index/'+id_armada, headers)
+      setJadwalnya(jad.data.jadwal)
     }
   }
 
@@ -363,6 +365,74 @@ const Dashboard = () => {
                 </div>
             </CRow>
           </div>
+        )
+      }else if(type === 'loket'){
+        return(
+        <div >
+        <h5 className="heading-text">List Keberangkatan</h5>
+          <div className='card blue-thead'>
+                  <CDataTable
+                  items={jadwalnya}
+                  fields={[
+                    { key: 'nahkoda', _style: { width: '15%'}},
+                    { key: 'jadwal', _style: { width: '10%'} },
+                    { key: 'nama_kapal', _style: { width: '10%'} },
+                    { key: 'tujuan_awal', _style: { width: '20%'} },
+                    { key: 'tujuan_akhir', _style: { width: '10%'} },
+                    { key: 'status', _style: { width: '10%'} },
+                  ]}
+                  columnFilter
+                  // tableFilter
+                  button
+                  hover
+                  pagination
+                  bordered
+                  striped
+                  size="sm"
+                  itemsPerPage={5}
+                  scopedSlots = {{
+                      'nahkoda':
+                        (item)=>(
+                          <td>
+                            {item.jadwal_to_nahkoda.nama_nahkoda}
+                          </td>
+                        ),
+                        'jadwal':
+                        (item)=>(
+                          <td>
+                            {item.jadwal}
+                          </td>
+                        ),
+                        'nama_kapal': 
+                        (item)=> (
+                          <td>
+                            {item?.jadwal_to_kapal?.nama_kapal ? item.jadwal_to_kapal.nama_kapal : '-'}
+                          </td>
+                        ),
+                        'tujuan_awal': 
+                        (item)=> (
+                          <td>
+                            {item.jadwal_to_rute.tujuan_awals.nama_dermaga} - {item.jadwal_to_rute.tujuan_awals.lokasi}
+                          </td>
+                        ),
+                        'tujuan_akhir': 
+                        (item)=> (
+                          <td>
+                            {item.jadwal_to_rute.tujuan_akhirs.nama_dermaga} - {item.jadwal_to_rute.tujuan_akhirs.lokasi}
+                          </td>
+                        ),
+                        'status': 
+                        (item)=> (
+                          <td>
+                            <CBadge color={getBadge(item.status)}>
+                              {item.status}
+                            </CBadge>
+                          </td>
+                        ),
+                  }}
+                />
+          </div>
+        </div>
         )
       }
     })()}

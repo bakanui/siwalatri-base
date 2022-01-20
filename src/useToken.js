@@ -45,10 +45,21 @@ export default function useToken() {
     
   };
 
+  const getIdArmada = () => {
+    if(type === 'loket'){
+      if(localStorage.getItem('access_token')){
+        const tokenString = localStorage.getItem('access_token');
+        const userToken = JSON.parse(tokenString);
+        return userToken?.loket.id_armada
+      }
+    }
+  }
+
   const [token, setToken] = useState(getToken());
   const [email, setEmail] = useState(getEmail());
   const [type, setType] = useState(getType())
   const [id, setId] = useState(getId())
+  const [id_armada, setIdArmada] = useState(getIdArmada())
 
   const saveToken = userToken => {
     localStorage.setItem('access_token', JSON.stringify(userToken));
@@ -56,6 +67,9 @@ export default function useToken() {
     setEmail(userToken.user.email)
     setType(userToken.user.type)
     setId(userToken.user.id)
+    if(type === 'loket'){
+      setIdArmada(userToken.loket.id_armada)
+    }
   };
 
   return {
@@ -63,6 +77,7 @@ export default function useToken() {
     token,
     email,
     type,
-    id
+    id,
+    id_armada
   }
 }
