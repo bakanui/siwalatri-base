@@ -23,13 +23,15 @@ import {
   CModalHeader, 
   CModalTitle, 
   CModalBody, 
-  CModalFooter, 
+  CModalFooter,
+  CBadge, 
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { apiUrl } from '../../../reusable/constants'
 import axios from 'axios';
 import logos from './../../../assets/logo.png';
 import './../../../assets/css/style.css';
+import Slider from "react-slick";
 
 export default function Login({ setToken }) {
   const [email, setEmail] = useState();
@@ -37,12 +39,22 @@ export default function Login({ setToken }) {
   const [message, setMessage] = useState("");
   const [visible, setVisible] = useState(0)
   const [data_jadwal, setDataJadwal] = useState([]);
+  const [pengumumans, setPengumuman] = useState([]);
+  const [wisatas, setWisata] = useState([]);
   const [modal, setModal] = useState(false) 
 
   const fetchData = async () => {
     const jad = await axios.get(apiUrl + 'jadwal_keberangkatan')
     setDataJadwal(jad.data)
     console.log(jad.data);
+
+    const peng = await axios.get(apiUrl + 'pengumuman')
+    setPengumuman(peng.data)
+    console.log(peng.data);
+
+    const wisa = await axios.get(apiUrl + 'wisata')
+    setWisata(wisa.data.data.wisatas)
+    console.log(wisa.data);
   }
 
   useEffect(() => {
@@ -68,6 +80,33 @@ export default function Login({ setToken }) {
       })
         
   }
+
+  const settings = {
+    arrows: false,
+    dots: false,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    vertical: true,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 2000,
+    verticalSwiping: true,
+    pauseOnHover: true
+  };
+
+  const settingsWisata = {
+    arrows: false,
+    dots: false,
+    infinite: true,
+    fade: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 3000,
+    autoplaySpeed: 3000,
+  };
+
   return (
     <>
 
@@ -100,6 +139,74 @@ export default function Login({ setToken }) {
                           </CDropdown>
                       </div>
               </div>
+        </div>
+        <div className='content'>
+          <div className='row'>
+              <CCol xs="12" md="6">
+                <ul className="content scroll" style={{overflowX:'hidden'}}>
+                <Slider {...settings}>
+                  {
+                        data_jadwal.map((data,index) => {
+                            return(
+                              <div key={index} className="card card-schedule-public"> 
+                                  <div className="row">
+                                      <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3" style={{display:'flex',alignItems:'center', justifyContent:'center'}}>
+                                          <h4 style={{fontFamily:'sans-serif',fontWeight:700}}>{data.jadwal}</h4>
+                                      </div>
+                                      <div className="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+                                              <div className="row-custome-tiket" style={{justifyContent:'center'}}>
+                                                  <section className="boardingPass-departur col-xs">
+                                                      <span className="section-label-child">{data.lokasi_awal}</span>
+                                                      <span className="boardingPass-departur-IATA">{data.tujuan_awal}</span>	
+                                                  </section>
+                                                  <section className="boardingPass-transport boardingPass-icon col-xs" style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
+                                                      <i className="fas fa-ship"></i>
+                                                      <span className="section-label-child">Menuju</span>
+                                                  </section>
+                                                  <section className="boardingPass-arrival col-xs">
+                                                      <span className="section-label-child">{data.lokasi_akhir}</span>
+                                                      <span className="boardingPass-arrival-IATA">{data.tujuan_akhir}</span>	
+                                                  </section>
+                                              </div>
+                                              <div className="dashed-tiket"></div>
+                                              <div className="row-custome-tiket">
+                                                      <section className="boardingPass-departur col-xs">
+                                                          <i className="fas fa-anchor" ></i>
+                                                          <span>{data.nama_kapal}</span>	
+                                                      </section>
+                                                      <section className="boardingPass-transport boardingPass-icon col-xs" style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
+                                                          <CBadge color='primary'>{data.status}</CBadge>
+                                                      </section>
+                                              </div>
+                                      </div>
+                                  </div>
+                              </div>
+                            )
+                        })
+                  }
+                  </Slider>
+                </ul>
+              </CCol>
+              <CCol xs="12" md="6" style={{padding:'10px 37px'}}>
+                <div className='slick-for-wisatas'>
+                      <Slider {...settingsWisata}>
+                          {
+                              wisatas.map((data,index) => {
+                                  return(
+                                        <div key={index} className='card-slider'>
+                                                      <img src={data.path} alt="bali" title="bali" style={{maxHeight:'450px',borderRadius:'5px',width:'100%'}} /> 
+                                                      <div className="CCzVr">
+                                                          <span className="hbFQhX" data-qa-id="title">{data.judul}</span>
+                                                          <span className="csca" data-qa-id="title">{data.deskripsi}</span>
+                                                      </div>
+                                        </div>
+                                  )
+                              })
+                          }
+                    </Slider>
+                </div>
+              </CCol>
+          </div>
         </div>
 
                   <CModal 
