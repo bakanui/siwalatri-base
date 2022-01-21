@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import {
   CAlert,
@@ -18,12 +18,15 @@ import {
 import CIcon from '@coreui/icons-react'
 import { apiUrl } from '../../../reusable/constants'
 import axios from 'axios';
-
 export default function Login({ setToken }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [message, setMessage] = useState("");
   const [visible, setVisible] = useState(0)
+
+  useEffect(() => {
+    
+  }, []);
 
   const submitHandler = async e => {
       e.preventDefault();

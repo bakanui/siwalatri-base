@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   CBadge,
+  CCard,
   // CCardBody,
   // CCardFooter,
   // CCol,
@@ -16,6 +17,7 @@ import CIcon from '@coreui/icons-react'
 import useToken from '../../../src/useToken';
 import { apiUrl } from './../../reusable/constants'
 import Penumpangs from './../../components/Penumpangs'
+import { MapLocation } from 'src/reusable/MapLocation';
 
 const Dashboard = () => {
   const postArmada = [
@@ -67,6 +69,8 @@ const Dashboard = () => {
     },
     timeout: 10000 
   }
+  console.log('id = '+id);
+
   useEffect(() => {
     fetchData()
     // eslint-disable-next-line
@@ -202,7 +206,7 @@ const Dashboard = () => {
               />
           </div>
         )
-    }
+  }
 
   return (
     <>
@@ -284,11 +288,17 @@ const Dashboard = () => {
                 </div>
             </CRow>
             <Penumpangs />
+            <CCard className='p-3'>
+              <MapLocation id={id}/>
+            </CCard>
           </div>
         )
       }else if(type === 'armada'){
         return(
           <div>
+            <CCard className='p-3'>
+              <MapLocation id={id}/>
+            </CCard>
             <CRow>
                 <div className='col-lg-6 col-xs-12 col-sm-12 col-md-6'>
                     <h5 className="heading-text">List Kapal</h5>
