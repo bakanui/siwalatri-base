@@ -18,11 +18,13 @@ import {
 import CIcon from '@coreui/icons-react'
 import { apiUrl } from '../../../reusable/constants'
 import axios from 'axios';
+import ReactLoading from 'react-loading';
 export default function Login({ setToken }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [message, setMessage] = useState("");
-  const [visible, setVisible] = useState(0)
+  const [visible, setVisible] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     
@@ -35,13 +37,16 @@ export default function Login({ setToken }) {
         email: email,
         password: password
       }
+      setLoading(true);
       await axios.post(apiUrl + 'auth/login', login)
       .then((res) => {
         setToken(res.data)
+        setLoading(false);
       })
       .catch(error => {
-        setVisible(10)
-        setMessage(error.response.data.message)
+        setVisible(10);
+        setLoading(false);
+        setMessage(error.response.data.message);
       })
         
   }
@@ -70,7 +75,7 @@ export default function Login({ setToken }) {
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" onChange={(e) => { setEmail(e.target.value); }} id="email" placeholder="example@mail.com" autoComplete="email" />
+                      <CInput disabled={loading} type="text" onChange={(e) => { setEmail(e.target.value); }} id="email" placeholder="example@mail.com" autoComplete="email" />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -78,11 +83,16 @@ export default function Login({ setToken }) {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" onChange={(e) => { setPassword(e.target.value); }}  id="password" placeholder="Password" autoComplete="current-password" />
+                      <CInput disabled={loading} type="password" onChange={(e) => { setPassword(e.target.value); }}  id="password" placeholder="Password" autoComplete="current-password" />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" type="submit" className="px-4">Login</CButton>
+                        <CButton disabled={loading} color="primary" type="submit" className="px-4">
+                          {!loading ? 'Login' 
+                          :
+                          <ReactLoading type={'spin'} color={'white'} height={22} width={20} />
+                          }
+                        </CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
                         <CButton color="link" className="px-0">Forgot password?</CButton>
