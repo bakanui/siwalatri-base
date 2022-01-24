@@ -41,6 +41,25 @@ const DetailKeberangkatan = () => {
     const [typeModal, setTypeModal] = useState()  
     const [modal, setModal] = useState(false)
 
+
+    //form
+    const [id_penumpang, setIdPenumpang] = useState(0);
+    const [tiket_data, setTiketData] = useState();
+    const [nama, setNama] = useState('');
+    const [alamat, setAlamat] = useState('');
+    const [jenis_kelamin, setJenisKelamin] = useState(0);
+    const [id_jenis_penum, setIdJenisPenum] = useState(0);
+    const [id_tujuan, setIdTujuan] = useState(0);
+    const [id_tiket, setIdTiket] = useState(0);
+    const [no_identitas, setNoIdentitas] = useState('');
+    const [view_total, setTotalView] = useState(0);
+    const [harga_tiket, setHargaTiket] = useState(0);
+    const [showFreePass, setShowFreePass] = useState(false)
+    const [free_pass, setFreePass] = useState(0)
+    const [free_pass_harga, setFreePassHarga] = useState(0)
+    const [ket_free_pass, setKetFreePass] = useState('');
+
+
     useEffect(() => {
       fetchData()
       // eslint-disable-next-line
@@ -171,7 +190,7 @@ const DetailKeberangkatan = () => {
                             <h5 className="heading-text">List Penumpang <CBadge color='success'>Sudah Bayar</CBadge></h5>
                             <CDataTable
                                 items={datas}
-                                fields={ type === 'Loket' ? fields : fields2}
+                                fields={ type === 'loket' ? fields : fields2}
                                 hover
                                 striped
                                 bordered

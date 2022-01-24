@@ -414,3 +414,35 @@ overflow: hidden;
 .card-slider{
   position: relative;
 }
+
+.slick-for-announce .slick-slider .slick-list{
+  overflow-x: hidden;
+}
+.slick-for-announce .slick-slider .slick-list .slick-track{
+  display: flex;
+}
+.card-announce{
+  position: relative;
+  background-color: #d8dbe0;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.padd-card{
+  padding: 5px 5px;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 500px) {
+  ul.scroll {
+   padding: 5px;
+  }
+}
+
+.content-annouce{
+  min-height: 60px;
+}
+.title-annouce{
+  min-height: 20px;
+  font-size: 1.1rem;
+}

@@ -29,6 +29,8 @@ import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
 // import { Link } from 'react-router-dom';
+import Toast from './../../reusable/toast';
+import ToastMaker from './../../reusable/toastMaker';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
@@ -47,6 +49,12 @@ const Petugas = () => {
           'Authorization': "bearer " + token 
         }
       }
+
+      //Toast
+      const { toasters, addToast } = ToastMaker()
+      const [title, setTitle] = useState("")
+      const [message, setMessage] = useState("")
+      const [color, setColor] = useState("")
 
       useEffect(() => {
           fetchData()
@@ -86,14 +94,17 @@ const Petugas = () => {
         axios.post(apiUrl + 'auth/register_armada', auth, headers)
         .then((res) => {
               console.log(res);
+              setTitle("Action completed")
+              setMessage("Entry has successfully been posted!")
+              setColor("bg-success text-white")
               setModal(!modal)
               clearState();
               fetchData()
-
+              addToast()
         }).catch((error) => {
-          // setTitle("An error occurred")
-          // setMessage(error?.response?.data?.message)
-          // setColor("bg-danger text-white")
+          setTitle("An error occurred")
+          setMessage(error?.response?.data?.message)
+          setColor("bg-danger text-white")
           setModal(!modal)
           clearState();
           fetchData()
@@ -128,6 +139,7 @@ const Petugas = () => {
 
     return(
         <>
+          <Toast toasters={toasters} message={message} title={title} color={color}/>
                 <div className='card grey-thead'>
                         <div className="left-right-component">
                             <CButton
@@ -216,6 +228,7 @@ const Petugas = () => {
                                         <option  value="admin">Admin</option>
                                         <option  value="syahbandar">Syahbandar</option>
                                         <option  value="wisata">Wisata</option>
+                                        <option  value="pelapor">Pelapor</option>
                                     </CSelect>
                                     </CCol>
                              </CFormGroup>  

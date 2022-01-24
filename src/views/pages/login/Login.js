@@ -32,6 +32,7 @@ import axios from 'axios';
 import logos from './../../../assets/logo.png';
 import './../../../assets/css/style.css';
 import Slider from "react-slick";
+import XMLParser from 'react-xml-parser';
 
 export default function Login({ setToken }) {
   const [email, setEmail] = useState();
@@ -46,15 +47,19 @@ export default function Login({ setToken }) {
   const fetchData = async () => {
     const jad = await axios.get(apiUrl + 'jadwal_keberangkatan')
     setDataJadwal(jad.data)
-    console.log(jad.data);
 
     const peng = await axios.get(apiUrl + 'pengumuman')
-    setPengumuman(peng.data)
-    console.log(peng.data);
+    setPengumuman(peng.data.data.pengumumans)
 
     const wisa = await axios.get(apiUrl + 'wisata')
     setWisata(wisa.data.data.wisatas)
-    console.log(wisa.data);
+
+    // axios.get('https://data.bmkg.go.id/datamkg/MEWS/DigitalForecast/DigitalForecast-Bali.xml')
+    // .then((res) => {
+    //   console.log(res);
+    //   const jsonDataFromXml = new XMLParser().parseFromString(res.data);
+    //   console.log(jsonDataFromXml);
+    //  })
   }
 
   useEffect(() => {
@@ -100,6 +105,18 @@ export default function Login({ setToken }) {
     dots: false,
     infinite: true,
     fade: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 3000,
+    autoplaySpeed: 3000,
+  };
+
+  const settingsAnnounce = {
+    arrows: false,
+    dots: false,
+    infinite: true,
+    speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -187,7 +204,7 @@ export default function Login({ setToken }) {
                   </Slider>
                 </ul>
               </CCol>
-              <CCol xs="12" md="6" style={{padding:'10px 37px'}}>
+              <CCol xs="12" md="6" style={{padding:'10px 37px 10px 10px'}}>
                 <div className='slick-for-wisatas'>
                       <Slider {...settingsWisata}>
                           {
@@ -207,6 +224,31 @@ export default function Login({ setToken }) {
                 </div>
               </CCol>
           </div>
+          <CRow>
+            <CCol xs="12" md="6">
+                {/* {(() => {
+                   
+                  })()} */}
+            </CCol>
+            <CCol xs="12" md="6" className="slick-for-announce" style={{padding:'10px 35px 10px 10px'}}>
+              <Slider {...settingsAnnounce}>
+                  {
+                      pengumumans.map((data,index) => {
+                          return(
+                            <div className='padd-card'>
+                              <div className='card-announce'>
+                                  <div className='title-annouce'><CIcon name="cil-bullhorn" className="mfe-2" /><b>{data.judul}</b></div>
+                                  <div className='content-annouce'>
+                                        <p>{data.deskripsi.substring(0,50)}</p>
+                                  </div>
+                              </div>
+                            </div>
+                          )
+                    })
+                  }
+              </Slider>
+            </CCol>
+          </CRow>
         </div>
 
                   <CModal 

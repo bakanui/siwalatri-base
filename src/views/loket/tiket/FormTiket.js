@@ -500,6 +500,12 @@ const FormTiket = () => {
                                       {index+1}
                                   </td>
                                   ),
+                                  'jenis_kelamin':
+                                  (item) => (
+                                    <td>
+                                      {item.jenis_kelamin == 0 ? 'Laki Laki' : 'Wanita'}
+                                    </td>
+                                  )
                             }}
                           />
             </div>
