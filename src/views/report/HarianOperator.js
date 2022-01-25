@@ -2,37 +2,30 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   CBadge,
-//   CCardBody,
-//   CCardFooter,
-//   CCol,
-//   CHeader,
   CDataTable,
-//   CLink,
-//   CWidgetIcon,
-//   CRow,
   CButton,
-//   CModal, 
-//   CModalHeader, 
-//   CModalTitle, 
-//   CModalBody, 
-//   CModalFooter, 
-//   CForm, 
-//   CFormGroup, 
-//   CLabel, 
-//   CInput, 
-//   CTextarea, 
-//   CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-// import { Link } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from 'dayjs';
-import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { 
+    PDFDownloadLink, 
+    Page, 
+    Document, 
+    StyleSheet
+} from '@react-pdf/renderer';
+import { 
+    Table,
+    TableHeader,
+    TableCell,
+    TableBody,
+    DataTableCell 
+} from '@david.kucsai/react-pdf-table'
 
 Moment.globalTimezone = 'Asia/Makassar';
 
@@ -50,10 +43,6 @@ const HarianOperator = () => {
         },
         judul : {
             fontSize: 10,
-            margin: 1,
-        },
-        subJudul : {
-            fontSize: 10,
             textTransform: "uppercase",
             margin: 1
         }
@@ -61,16 +50,51 @@ const HarianOperator = () => {
 
     const MyDoc = () => (
         <Document>
-            <Page size="A4" style={styles.page}>
-            <View style={styles.judul}>
-                <Text>DIREKTORAT JENDRAL PERHUBUNGAN LAUT</Text>
-            </View>
-            <View style={styles.subJudul}>
-                <Text>KANTOR UNIT PENYELENGGARA PELABUHAN</Text>
-            </View>
-            <View style={styles.judul}>
-                <Text>KANTOR INDUK</Text>
-            </View>
+            <Page>
+                <Table
+                    data={reports}
+                >
+                    <TableHeader textAlign={"center"}>
+                        <TableCell>
+                            No.
+                        </TableCell>
+                        <TableCell>
+                            Nama Operator
+                        </TableCell>
+                        <TableCell>
+                            Nama Kapal
+                        </TableCell>
+                        <TableCell>
+                            Nama Nahkoda
+                        </TableCell>
+                        <TableCell>
+                            Keberangkatan
+                        </TableCell>
+                        <TableCell>
+                            Status
+                        </TableCell>
+                        <TableCell>
+                            Jml Penumpang
+                        </TableCell>
+                        <TableCell>
+                            Waktu Berangkat
+                        </TableCell>
+                        <TableCell>
+                            Waktu Sampai
+                        </TableCell>
+                    </TableHeader>
+                    <TableBody>
+                        <DataTableCell getContent={(r) => r.no}/>
+                        <DataTableCell getContent={(r) => r.nama_operator}/>
+                        <DataTableCell getContent={(r) => r.nama_kapal}/>
+                        <DataTableCell getContent={(r) => r.nama_nahkoda}/>
+                        <DataTableCell getContent={(r) => r.keberangkatan}/>
+                        <DataTableCell getContent={(r) => r.status}/>
+                        <DataTableCell getContent={(r) => r.jml_penumpang}/>
+                        <DataTableCell getContent={(r) => r.waktu_berangkat}/>
+                        <DataTableCell getContent={(r) => r.waktu_sampai}/>
+                    </TableBody>
+                </Table>
             </Page>
         </Document>
     );
@@ -78,18 +102,12 @@ const HarianOperator = () => {
     const todays = new Date()
     const { token } = useToken();
 
-    // const headers = {
-    //     headers: {
-    //       'Authorization': "bearer " + token 
-    //     },
-    // }
     useEffect(() => {
         fetchData(todays,false)
         // eslint-disable-next-line
     }, [])
 
     const [reports, setReport] = useState([]);
-    // const [filter, setFilter] = useState(false)
     const [dateFilter, setDateFilter] = useState(new Date());
 
     const fetchData = async (dates,filter) => {
@@ -144,15 +162,16 @@ const HarianOperator = () => {
                 selected={dateFilter}
                 onChange={(date) => handleDateChange(date)} //only when value has changed
             />
-            {/* <PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
+            <PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
                 {({ blob, url, loading, error }) => (loading ? 'Mohon menunggu...' : <CButton color="primary">
                 <CIcon name="cil-scrubber" /> Download sebagai PDF
             </CButton>)}
-            </PDFDownloadLink> */}
+            </PDFDownloadLink>
             
             <CDataTable
                 items={reports}
                 fields={[
+                { key: 'no', label:'No. ', _style: { width: '1%'} },   
                 { key: 'nama_armada', label:'Nama Operator', _style: { width: '10%'}},
                 { key: 'nama_kapal', _style: { width: '10%'} },
                 { key: 'nama_nahkoda', _style: { width: '10%'} },
@@ -171,6 +190,12 @@ const HarianOperator = () => {
                 size="sm"
                 itemsPerPage={10}
                 scopedSlots = {{
+                    'no':
+                    (item, index)=>(
+                        <td>
+                            {index + 1}
+                        </td>
+                    ),
                     'status':
                     (item)=>(
                         <td>
