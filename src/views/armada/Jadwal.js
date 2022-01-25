@@ -21,7 +21,7 @@ import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
@@ -53,7 +53,7 @@ const Jadwal = () => {
       const getBadge = (status)=>{
         switch (status) {
           case 'Berlayar': return 'success'
-          case 'Nyandar': return 'secondary'
+          case 'Sandar': return 'secondary'
           case 'Persiapan': return 'warning'
           default: return 'primary'
         }
@@ -105,7 +105,7 @@ const Jadwal = () => {
           let datas = {
             jadwal: form.get('jadwal'),
             harga: form.get('harga'),
-            status: "Nyandar",
+            status: "Sandar",
             id_kapal: form.get('id_kapal'),
             id_nahkoda: form.get('id_nahkoda'),
             id_rute: form.get('id_rute'),
@@ -223,8 +223,9 @@ const Jadwal = () => {
                                 { key: 'nama_kapal', _style: { width: '10%'} },
                                 { key: 'tujuan_awal', _style: { width: '20%'} },
                                 { key: 'tujuan_akhir', _style: { width: '10%'} },
-                                { key: 'status', _style: { width: '10%'} },
+                                { key: 'status', _style: { width: '5%'} },
                                 { key: 'edit', _style: { width: '1%'}, sorter: false, filter: false  },
+                                { key: 'tiket', _style: { width: '1%'}, sorter: false, filter: false  },
                                 { key: 'delete', _style: { width: '1%'}, sorter: false, filter: false  },
                               ]}
                               columnFilter
@@ -298,6 +299,21 @@ const Jadwal = () => {
                                                 >
                                                 Edit
                                                 </CButton>
+                                            </td>
+                                   ),
+                                   'tiket':
+                                    (item)=>(
+                                            <td className="py-2">
+                                               <Link to={"/tiket-keberangkatan/"+item.id_jadwal}>
+                                                    <CButton
+                                                    color="success"
+                                                    variant="outline"
+                                                    shape="square"
+                                                    size="sm"
+                                                    >
+                                                    Tiket
+                                                    </CButton>
+                                                </Link>
                                             </td>
                                    ),
                                    'delete':

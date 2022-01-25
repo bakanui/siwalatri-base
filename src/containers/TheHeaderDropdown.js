@@ -14,6 +14,7 @@ const TheHeaderDropdown = () => {
   const logout = () => {
     localStorage.removeItem('access_token')
     window.location.reload()
+    window.location = "/";
   }
 
   
@@ -26,14 +27,14 @@ const TheHeaderDropdown = () => {
       <CDropdownToggle className="c-header-nav-link" caret={false}>
         <div className="c-avatar">
           <CImg
-            src={'avatars/6.jpg'}
+            src={'avatars/7.jpg'}
             className="c-avatar-img"
-            alt="admin@bootstrapmaster.com"
+            // alt="admin@bootstrapmaster.com"
           />
         </div>
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
-        <CDropdownItem
+        {/* <CDropdownItem
           header
           tag="div"
           color="light"
@@ -68,7 +69,7 @@ const TheHeaderDropdown = () => {
           className="text-center"
         >
           <strong>Settings</strong>
-        </CDropdownItem>
+        </CDropdownItem> */}
         <CDropdownItem onClick={logout}>
           <CIcon name="cil-lock-locked" className="mfe-2" />
           Logout Account

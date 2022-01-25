@@ -20,6 +20,7 @@ import wisata_navigation from './_nav_wisata'
 import armada_navigation from './_nav_armada'
 import syahbandar_navigation from './_nav_syahbandar'
 import loket_navigation from './_nav_loket'
+import pelapor_navigation from './_nav_pelapor'
 
 import useToken from '../useToken';
 
@@ -81,6 +82,18 @@ const TheSidebar = () => {
       return(
         <CCreateElement
           items={syahbandar_navigation}
+          components={{
+            CSidebarNavDivider,
+            CSidebarNavDropdown,
+            CSidebarNavItem,
+            CSidebarNavTitle
+          }}
+        />
+      )
+    }else if(type === 'pelapor'){
+      return(
+        <CCreateElement
+          items={pelapor_navigation}
           components={{
             CSidebarNavDivider,
             CSidebarNavDropdown,

@@ -2,20 +2,23 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   CBadge,
-  // CCardBody,
-  // CCardFooter,
-  // CCol,
-  // CHeader,
+  CCard,
   CDataTable,
-  // CLink,
-  // CWidgetIcon,
-  CRow
-
+  CRow,
+  CModal, 
+  CModalHeader, 
+  CModalTitle, 
+  CModalBody, 
+  CModalFooter, 
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../../../src/useToken';
 import { apiUrl } from './../../reusable/constants'
 import Penumpangs from './../../components/Penumpangs'
+import { MapLocation } from 'src/reusable/MapLocation';
+import warningIcon from '../../assets/img/warning.png';
+import { ref, onValue } from "firebase/database";
+import database from 'src/firebase_init';
 
 const Dashboard = () => {
   const postArmada = [
@@ -47,7 +50,7 @@ const Dashboard = () => {
   //     "nama_armada": "Gangga Express",
   //     "jadwal": "06:30:00",
   //     "nama_kapal": "Gangga Exspress 8",
-  //     "status": "Nyandar",
+  //     "status": "Sandar",
   //     "tujuan_awal": "Tribuana",
   //     "lokasi_awal": "Kusamba",
   //     "tujuan_akhir": "Sampalan",
@@ -61,26 +64,39 @@ const Dashboard = () => {
   const [jadwals, setJadwals] = useState({data : []});
   const [jadwalnya, setJadwalnya] = useState([]);
   const [kapal, setKapals] = useState({data : []});
+  const [showEmergencyModal, setShowEmergencyModal] = useState(false);
+  const [emergencyData, setEmergencyData] = useState([]);
+  const [emergencyDataActive, setEmergencyDataActive] = useState(null);
+  const [idKeberangkatan, setIdKeberangkatan] = useState(null);
   const headers = {
     headers: {
       'Authorization': "bearer " + token 
     },
     timeout: 10000 
   }
+
   useEffect(() => {
-    fetchData()
+    fetchData();
+    _listenEmergencyNotification();
     // eslint-disable-next-line
   }, [])
+
+  useEffect(() => {
+    //listen emergency message
+    if (emergencyData.length > 0) {
+      setEmergencyDataActive(emergencyData[0]);
+      setShowEmergencyModal(true);
+    }
+  }, [emergencyData.length]);
 
   const getBadge = (status)=>{
     switch (status) {
       case 'Berlayar': return 'success'
-      case 'Nyandar': return 'secondary'
+      case 'Sandar': return 'secondary'
       case 'Persiapan': return 'warning'
       default: return 'primary'
     }
   }
-
 
   const getBadgeStatus = (status)=>{
     switch (status) {
@@ -204,7 +220,30 @@ const Dashboard = () => {
               />
           </div>
         )
-    }
+  }
+
+  const _listenEmergencyNotification = () => {
+    onValue(ref(database, '/emergency/'), (snapshot) => {
+      let dataTmp = [];
+      snapshot.forEach((child)=>{
+        dataTmp.push({
+          id: child.key,
+          armada: child.val().armada,
+          date: child.val().date,
+          id_armada: child.val().id_armada,
+          nama_kapal: child.val().kapal,
+          kode: child.val().kode,
+          nahkoda: child.val().nahkoda,
+        });
+        setEmergencyData(dataTmp);
+      });
+    });
+  }
+
+  const _fokusShipLocation = () => {
+    setShowEmergencyModal(false);
+    setIdKeberangkatan(emergencyDataActive ? emergencyDataActive.id : null);
+  }
 
   return (
     <>
@@ -212,6 +251,9 @@ const Dashboard = () => {
       if(type === 'admin'){
         return(
           <div className='conteiner-operator'>
+            <CCard className='p-3'>
+              <MapLocation id={null} id_keberangkatan={idKeberangkatan}/>
+            </CCard>
             <CRow>
                 <div className='col-lg-6 col-xs-12 col-sm-12 col-md-6'>
                     <h5 className="heading-text">List Armada</h5>
@@ -291,6 +333,9 @@ const Dashboard = () => {
       }else if(type === 'armada'){
         return(
           <div>
+            <CCard className='p-3'>
+              <MapLocation id={id} id_keberangkatan={idKeberangkatan}/>
+            </CCard>
             <CRow>
                 <div className='col-lg-6 col-xs-12 col-sm-12 col-md-6'>
                     <h5 className="heading-text">List Kapal</h5>
@@ -436,6 +481,38 @@ const Dashboard = () => {
         )
       }
     })()}
+    <CModal 
+      show={showEmergencyModal} 
+      size='lg'
+      onClose={()=> setShowEmergencyModal(false)}
+      color='danger'
+      alignment="center"
+      >
+          <CModalHeader closeButton>
+              <CIcon width={25} name="cil-warning"/>
+              <div className="mr-2"/>
+              <CModalTitle>EMERGENCY!</CModalTitle>
+          </CModalHeader>
+          <CModalBody>
+            <div className='d-flex flex-column align-items-center bg-successs'>
+              <img className="warning-icon" src={warningIcon}/>
+              <p>Nahkoda atas nama <span className='font-weight-bold'>{emergencyDataActive && emergencyDataActive.nahkoda ? emergencyDataActive.nahkoda : '-'}</span> telah mengirim kode darurat:</p>
+              <p className='danger-code'>{emergencyDataActive && emergencyDataActive.kode ? emergencyDataActive.kode : '-'}</p>
+              <p className='danger-time'>{emergencyDataActive && emergencyDataActive.date ? emergencyDataActive.date : '-'}</p>
+              <p className='danger-time-subtitle no-line-height font-weight-bold text-danger'>(1 Menit yang lalu)</p>
+              <hr className='hr-1 mb-4'/>
+              <div className='d-flex flex-row justify-content-between w-50 no-line-height'>
+                <p>Armada</p>
+                <p>{emergencyDataActive && emergencyDataActive.armada ? emergencyDataActive.armada : ''}</p>
+              </div>
+              <div className='d-flex flex-row justify-content-between w-50'>
+                <p>Kapal</p>
+                <p>{emergencyDataActive && emergencyDataActive.nama_kapal ? emergencyDataActive.nama_kapal : '-'}</p>
+              </div>
+              <button onClick={_fokusShipLocation} className='btn btn-primary btn-block btn-blue w-50'>Lihat Posisi Kapal</button>
+            </div>
+          </CModalBody>
+      </CModal>
     </>
   )
 }

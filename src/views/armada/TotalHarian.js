@@ -96,7 +96,7 @@ const TotalHarian = () => {
     const getBadge = (status)=>{
         switch (status) {
           case 'Berlayar': return 'success'
-          case 'Nyandar': return 'secondary'
+          case 'Sandar': return 'secondary'
           case 'Persiapan': return 'warning'
           default: return 'primary'
         }

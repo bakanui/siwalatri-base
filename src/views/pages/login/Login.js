@@ -34,6 +34,7 @@ import './../../../assets/css/style.css';
 import Slider from "react-slick";
 import XMLParser from 'react-xml-parser';
 
+import ReactLoading from 'react-loading';
 export default function Login({ setToken }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -43,6 +44,13 @@ export default function Login({ setToken }) {
   const [pengumumans, setPengumuman] = useState([]);
   const [wisatas, setWisata] = useState([]);
   const [modal, setModal] = useState(false) 
+
+  const header = {
+    headers: {
+        'Access-Control-Allow-Origin': "*",
+        'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept"
+      }
+  }
 
   const fetchData = async () => {
     const jad = await axios.get(apiUrl + 'jadwal_keberangkatan')
@@ -54,9 +62,9 @@ export default function Login({ setToken }) {
     const wisa = await axios.get(apiUrl + 'wisata')
     setWisata(wisa.data.data.wisatas)
 
-    // axios.get('https://data.bmkg.go.id/datamkg/MEWS/DigitalForecast/DigitalForecast-Bali.xml')
+    // axios.get('https://data.bmkg.go.id/datamkg/MEWS/DigitalForecast/DigitalForecast-Bali.xml', header)
     // .then((res) => {
-    //   console.log(res);
+    //   // console.log(res);
     //   const jsonDataFromXml = new XMLParser().parseFromString(res.data);
     //   console.log(jsonDataFromXml);
     //  })
@@ -67,6 +75,11 @@ export default function Login({ setToken }) {
       // eslint-disable-next-line
   }, [])
 
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    
+  }, []);
 
   const submitHandler = async e => {
       e.preventDefault();
@@ -75,13 +88,16 @@ export default function Login({ setToken }) {
         email: email,
         password: password
       }
+      setLoading(true);
       await axios.post(apiUrl + 'auth/login', login)
       .then((res) => {
         setToken(res.data)
+        setLoading(false);
       })
       .catch(error => {
-        setVisible(10)
-        setMessage(error.response.data.message)
+        setVisible(10);
+        setLoading(false);
+        setMessage(error.response.data.message);
       })
         
   }
@@ -124,6 +140,15 @@ export default function Login({ setToken }) {
     autoplaySpeed: 3000,
   };
 
+  const getBadge = (status)=>{
+    switch (status) {
+      case 'Berlayar': return 'success'
+      case 'Sandar': return 'secondary'
+      case 'Persiapan': return 'warning'
+      default: return 'primary'
+    }
+  }
+
   return (
     <>
 
@@ -141,7 +166,7 @@ export default function Login({ setToken }) {
                             <CDropdownToggle className="c-header-nav-link" caret={false}>
                               <div className="c-avatar">
                                 <CImg
-                                  src={'avatars/6.jpg'}
+                                  src={'avatars/7.jpg'}
                                   className="c-avatar-img"
                                   alt="admin@bootstrapmaster.com"
                                 />
@@ -160,7 +185,7 @@ export default function Login({ setToken }) {
         <div className='content'>
           <div className='row'>
               <CCol xs="12" md="6">
-                <ul className="content scroll" style={{overflowX:'hidden'}}>
+                <ul className="content scroll" style={{overflow:'hidden'}}>
                 <Slider {...settings}>
                   {
                         data_jadwal.map((data,index) => {
@@ -192,7 +217,7 @@ export default function Login({ setToken }) {
                                                           <span>{data.nama_kapal}</span>	
                                                       </section>
                                                       <section className="boardingPass-transport boardingPass-icon col-xs" style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
-                                                          <CBadge color='primary'>{data.status}</CBadge>
+                                                          <CBadge className="badge-custom" color={getBadge(data.status)}>{data.status}</CBadge>
                                                       </section>
                                               </div>
                                       </div>
@@ -211,7 +236,7 @@ export default function Login({ setToken }) {
                               wisatas.map((data,index) => {
                                   return(
                                         <div key={index} className='card-slider'>
-                                                      <img src={data.path} alt="bali" title="bali" style={{maxHeight:'450px',borderRadius:'5px',width:'100%'}} /> 
+                                                      <img src={data.path} alt={data.judul} title={data.judul} style={{maxHeight:'450px',borderRadius:'5px',width:'100%'}} /> 
                                                       <div className="CCzVr">
                                                           <span className="hbFQhX" data-qa-id="title">{data.judul}</span>
                                                           <span className="csca" data-qa-id="title">{data.deskripsi}</span>
@@ -235,7 +260,7 @@ export default function Login({ setToken }) {
                   {
                       pengumumans.map((data,index) => {
                           return(
-                            <div className='padd-card'>
+                            <div key={index} className='padd-card'>
                               <div className='card-announce'>
                                   <div className='title-annouce'><CIcon name="cil-bullhorn" className="mfe-2" /><b>{data.judul}</b></div>
                                   <div className='content-annouce'>
@@ -295,6 +320,7 @@ export default function Login({ setToken }) {
                            {' '}
                         </CForm>
                     </CModal>
+
     </>
   )
 }

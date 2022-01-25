@@ -26,10 +26,13 @@ const LaporanManifest = React.lazy(() => import('./views/report/LaporanManifest'
 const DetailManifest = React.lazy(() => import('./views/report/DetailManifest'));
 const Tiket = React.lazy(() => import('./views/loket/tiket/Tiket'));
 const FormTiket = React.lazy(() => import('./views/loket/tiket/FormTiket'));
+const TiketKeberangkatan = React.lazy(() => import('./views/armada/TiketKeberangkatan'));
+const Logout = React.lazy(() => import('./views/pages/Logout'));
 
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
+  { path: '/logout', exact: true, name: 'Out', component: Logout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/master-kapal', name: 'Master Kapal', component: MasterKapal },
   { path: '/master-penumpang', name: 'Master Penumpang', component: MasterPenumpang },
@@ -58,6 +61,8 @@ const routes = [
   { path: '/detail-manifest/:id_jadwals/:fil_date', name: 'Detail Manifest', component: DetailManifest, exact: true },
   { path: '/tiket', name: 'Tiket', component: Tiket, exact: true },
   { path: '/tiket/form-tiket/:id_jadwal/:kapasitas_penumpang', name: 'Form Tiket', component: FormTiket, exact: true },
+  { path: '/tiket-keberangkatan/:id_jadwal', name: 'Daftar Tiket Keberangkatan', component: TiketKeberangkatan, exact: true },
+  { path: '/jadwal/tiket-keberangkatan/:id_jadwal', name: 'Daftar Tiket Keberangkatan', component: TiketKeberangkatan, exact: true },
 
 ];
 
