@@ -125,9 +125,9 @@ const Penumpangs = () => {
                 window.location.reload()
             }
         });
-        // console.log(total);
-        setTotPenum(laporan.data)
-        setTotJenis(laporan.data)
+        console.log(laporan);
+        // setTotPenum(laporan.data)
+        // setTotJenis(laporan.data)
         // console.log(total);
     }
     
@@ -170,10 +170,10 @@ const Penumpangs = () => {
            <div>
                 <CRow>
                         {
-                        total.total.map((data) =>
+                        total.total.map((data,index) =>
                             {
                                 return(
-                                    <div className='col-xs-6 col-sm-4 col-md-4 col-lg-3' >
+                                    <div key={index} className='col-xs-6 col-sm-4 col-md-4 col-lg-3' >
                                         <CLink
                                         className="font-weight-bold font-xs btn-block text-muted"
                                         href="#"
@@ -190,10 +190,10 @@ const Penumpangs = () => {
                 </CRow>
                 <CRow>
                         {
-                        jenis.jenis.map((data) =>
+                        jenis.jenis.map((data,index) =>
                             {
                                 return(
-                                    <div className='col-xs-6 col-sm-4 col-md-4 col-lg-3 ' >
+                                    <div key={index} className='col-xs-6 col-sm-4 col-md-4 col-lg-3 ' >
                                         <CLink
                                         className="font-weight-bold font-xs btn-block text-muted"
                                         href="#"
@@ -221,7 +221,14 @@ const Penumpangs = () => {
                                 size="sm"
                                 itemsPerPage={10}
                                 pagination
-                                    
+                                scopedSlots = {{
+                                    'nama_penumpang':
+                                      (item, index)=>(
+                                        <td key={index}>
+                                          {item.nama_penumpang}
+                                        </td>
+                                      ),
+                                }}
                             />
                     </CCard>
                 </CCol>

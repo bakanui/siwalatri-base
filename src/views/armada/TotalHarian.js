@@ -56,9 +56,9 @@ const TotalHarian = () => {
             headers: {
                 'Authorization': "bearer " + token 
             },
-            params: {
-                tanggal: dayjs(todays).format('YYYY-MM-DD')
-            },
+            // params: {
+            //     tanggal: dayjs(todays).format('YYYY-MM-DD')
+            // },
         }
         if(filter === true){
              head = {
@@ -168,7 +168,7 @@ const TotalHarian = () => {
                                 'pendapatan':
                                 (item)=>(
                                 <td>
-                                          {item.harga_total ? item.harga_total : 0}
+                                          {item.harga_total ? Number(item.harga_total).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : 0}
                                 </td>
                                 ),
                                 'aksi':
@@ -261,7 +261,7 @@ const TotalHarian = () => {
                     color='info'
                     >
                     <CModalHeader closeButton>
-                        <CModalTitle>Notifikasi</CModalTitle>
+                        <CModalTitle>Pemberitahuan</CModalTitle>
                     </CModalHeader>
                     <CModalBody>
                           <h5>Data Keberangkatan tidak ada</h5>

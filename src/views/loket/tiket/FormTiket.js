@@ -252,19 +252,6 @@ const FormTiket = () => {
         }
     }
 
-    // 'nama_penumpang' => $this->input->post('nama_penumpang'),
-    // 'no_identitas' => $this->input->post('no_identitas'),
-    // 'id_jns_penum' => $this->input->post('id_jns_penum'),
-    // 'id_tujuan' => $this->input->post('id_tujuan'),
-    // 'id_tiket' => $id_tiket[0],
-    // 'id_jadwal' => $id_jadwal[0],
-    // 'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-    // 'alamat' => $this->input->post('alamat'),
-    // 'status_verif' => 1,
-    // 'freepass' => $this->input->post('freepass'),
-    // 'harga_tiket' => $this->input->post('harga_tiket'),
-    // 'tanggal' =>  $tanggal_tiket,
-    // 'ket_freepass' =>  $ket_freepass,
     const submitHandler = (e) => {
       const form = new FormData(e.target);
       e.preventDefault();
@@ -385,11 +372,11 @@ const FormTiket = () => {
                           <CFormGroup row> 
                             <CCol md="3">
                               <CLabel htmlFor="statusLabel">Tanggal</CLabel>
-                                <CInput className="form-control" id="tanggal" name="tanggal" placeholder="MM/DD/YYY" value={dayjs(todays).format('YYYY-MM-DD')} type="date"/>
+                                <CInput className="form-control" id="tanggal" name="tanggal" placeholder="MM/DD/YYY" value={dayjs(todays).format('YYYY-MM-DD')} type="date" required/>
                             </CCol>
                             <CCol md="3">
                                   <CLabel htmlFor="statusLabel">Jenis Penumpang</CLabel>
-                                  <CSelect custom name="tiket_data" id={"statusLabel"} onChange={(e) => { setTiketData(e.target.value); setTotalTiket(e.target.value) }}>
+                                  <CSelect custom name="tiket_data" id={"statusLabel"} onChange={(e) => { setTiketData(e.target.value); setTotalTiket(e.target.value) }} required>
                                       <option >-</option>
                                       {
                                           tiketJadwal.map((data,index) => {
@@ -404,11 +391,11 @@ const FormTiket = () => {
                                 <CLabel htmlFor="nameLabel">Nama  Penumpang</CLabel>
                                 <CInput id={"nameInput"} placeholder="Nama  Penumpang"
                                 onChange={(e) => { setNama(e.target.value); }}
-                                name="nama" value={nama} required/>
+                                name="nama" value={nama} required required/>
                             </CCol>
                             <CCol md="3">
                                   <CLabel htmlFor="statusLabel">Jenis Kelamin</CLabel>
-                                  <CSelect custom name="jenis_kelamin"  id={"statusLabel"} onChange={(e) => { setJenisKelamin(e.target.value); }}>
+                                  <CSelect custom name="jenis_kelamin"  id={"statusLabel"} onChange={(e) => { setJenisKelamin(e.target.value); }} required>
                                       <option value="0">Laki Laki</option>
                                       <option value="1">Wanita</option>
                                   </CSelect>
@@ -417,7 +404,7 @@ const FormTiket = () => {
                           <CFormGroup row>
                               <CCol xs="12" md="4">
                                   <CLabel htmlFor="nameLabel">Alamat</CLabel>
-                                  <CTextarea required rows="4" value={alamat} placeholder="...." name="alamat" onChange={(e) => { setAlamat(e.target.value); }}>
+                                  <CTextarea required rows="4" value={alamat} placeholder="...." name="alamat" onChange={(e) => { setAlamat(e.target.value); }} required>
                                   </CTextarea>
                               </CCol>
                               <CCol md="4">

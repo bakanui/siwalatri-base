@@ -510,3 +510,35 @@ overflow: hidden;
   padding: 5px 10px;
   text-transform: uppercase;
 }
+.pull-right{
+  margin: 10px 5px;
+  text-align: end;
+}
+
+
+.item-bmkg-weather{
+  background-color: white;
+  padding: 15px 10px;
+  display: flex!important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+}
+
+.image-weather{
+  max-width: 100px;
+}
+
+
+.slick-for-bmkg .slick-slider .slick-list{
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.slick-for-bmkg .slick-slider .slick-list .slick-track{
+  display: flex;
+}
+
+.slick-for-bmkg .slick-slider .slick-list .slick-track div{
+    padding: 5px 10px;
+}

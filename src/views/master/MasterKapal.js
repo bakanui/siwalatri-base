@@ -26,6 +26,8 @@ import CIcon from '@coreui/icons-react'
 import useToken from '../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
+import Toast from './../../reusable/toast';
+import ToastMaker from './../../reusable/toastMaker';
 import 'moment-timezone';
 // import { Link } from 'react-router-dom';
 
@@ -43,7 +45,11 @@ const MasterKapal = () => {
         'Authorization': "bearer " + token 
       }
     }
-
+    //Toast
+    const { toasters, addToast } = ToastMaker()
+    const [title, setTitle] = useState("")
+    const [message, setMessage] = useState("")
+    const [color, setColor] = useState("")
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line
@@ -75,24 +81,24 @@ const MasterKapal = () => {
     
           axios.post(apiUrl + 'jenis_kapal', datas, headers)
           .then((res) => {
-            // setTitle("Action completed")
-            // setMessage("Entry has successfully been posted!")
-            // setColor("bg-success text-white")
+            setTitle("Action completed")
+            setMessage("Entry has successfully been posted!")
+            setColor("bg-success text-white")
             // setEdit(!edit)
             setModalKapal(!modalKapal)
             setNamaKapal('');
             setDeskripsiKapal('');
             fetchData();
-            // addToast()
+            addToast()
           }).catch((error) => {
-            // setTitle("An error occurred")
-            // setMessage(error?.response?.data?.message)
-            // setColor("bg-danger text-white")
+            setTitle("An error occurred")
+            setMessage(error?.response?.data?.message)
+            setColor("bg-danger text-white")
             setModalKapal(!modalKapal)
             setNamaKapal('');
             setDeskripsiKapal('');
             fetchData()
-            // addToast()
+            addToast()
           })
         }else{
             let datas = {
@@ -103,26 +109,26 @@ const MasterKapal = () => {
 
             axios.post(apiUrl + 'jenis_kapal/'+id, datas, headers)
             .then((res) => {
-                // setTitle("Action completed")
-                // setMessage("Entry has successfully been posted!")
-                // setColor("bg-success text-white")
+                setTitle("Action completed")
+                setMessage("Entry has successfully been posted!")
+                setColor("bg-success text-white")
                 // setEdit(!edit)
                 setModalKapal(!modalKapal)
                 setId();
                 setNamaKapal('');
                 setDeskripsiKapal('');
                 fetchData();
-                // addToast()
+                addToast()
             }).catch((error) => {
-                // setTitle("An error occurred")
-                // setMessage(error?.response?.data?.message)
-                // setColor("bg-danger text-white")
+                setTitle("An error occurred")
+                setMessage(error?.response?.data?.message)
+                setColor("bg-danger text-white")
                 setModalKapal(!modalKapal)
                 setId();
                 setNamaKapal('');
                 setDeskripsiKapal('');
                 fetchData()
-                // addToast()
+                addToast()
             })
         }
       }
@@ -131,6 +137,7 @@ const MasterKapal = () => {
 
     return(
         <>
+          <Toast toasters={toasters} message={message} title={title} color={color}/>
                 <div className='card grey-thead'>
                         <div className="left-right-component">
                             <CButton
