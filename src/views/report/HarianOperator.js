@@ -50,7 +50,13 @@ const HarianOperator = () => {
 
     const MyDoc = () => (
         <Document>
-            <Page>
+            <Page style={{
+                flex: 1,
+                width: 500,
+                height: 500,
+                alignItems: 'flex-start',
+                padding: 20,
+            }}>
                 <Table
                     data={reports}
                 >
@@ -162,11 +168,11 @@ const HarianOperator = () => {
                 selected={dateFilter}
                 onChange={(date) => handleDateChange(date)} //only when value has changed
             />
-            <PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
+            {/* <PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
                 {({ blob, url, loading, error }) => (loading ? 'Mohon menunggu...' : <CButton color="primary">
                 <CIcon name="cil-scrubber" /> Download sebagai PDF
             </CButton>)}
-            </PDFDownloadLink>
+            </PDFDownloadLink> */}
             
             <CDataTable
                 items={reports}

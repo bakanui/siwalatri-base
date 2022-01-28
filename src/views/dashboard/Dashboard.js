@@ -108,7 +108,7 @@ const Dashboard = () => {
 
 
   const fetchData = async () => {
-    if(type === 'admin'){
+    if(type === 'admin' || type === 'syahbandar'){
       const result = await axios.get(apiUrl + 'armada', headers)
       .catch(function (error) {
         if(error.response?.status === 401){
@@ -185,8 +185,8 @@ const Dashboard = () => {
                   itemsPerPage={5}
                   scopedSlots = {{
                       'nama_kapal': 
-                        (item)=> (
-                          <td>
+                        (item,index)=> (
+                          <td key={index}>
                             {item.nama_kapal}
                           </td>
                         ),
@@ -248,7 +248,7 @@ const Dashboard = () => {
   return (
     <>
     {(() => {
-      if(type === 'admin'){
+      if(type === 'admin' || type === 'syahbandar'){
         return(
           <div className='conteiner-operator'>
             <CCard className='p-3'>
@@ -285,8 +285,8 @@ const Dashboard = () => {
                           itemsPerPage={5}
                           scopedSlots = {{
                               'nama_armada':
-                                (item)=>(
-                                  <td>
+                                (item, index)=>(
+                                  <td key={index}>
                                     {item.nama_armada}
                                   </td>
                                 ),
@@ -367,8 +367,8 @@ const Dashboard = () => {
                               itemsPerPage={5}
                               scopedSlots = {{
                                   'nahkoda':
-                                    (item)=>(
-                                      <td>
+                                    (item, index)=>(
+                                      <td key={index}>
                                         {item.jadwal_to_nahkoda.nama_nahkoda}
                                       </td>
                                     ),
@@ -437,8 +437,8 @@ const Dashboard = () => {
                   itemsPerPage={5}
                   scopedSlots = {{
                       'nahkoda':
-                        (item)=>(
-                          <td>
+                        (item,index)=>(
+                          <td key={index}>
                             {item.jadwal_to_nahkoda.nama_nahkoda}
                           </td>
                         ),

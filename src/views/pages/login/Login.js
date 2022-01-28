@@ -32,9 +32,18 @@ import axios from 'axios';
 import logos from './../../../assets/logo.png';
 import './../../../assets/css/style.css';
 import Slider from "react-slick";
-import XMLParser from 'react-xml-parser';
+import Moment from 'react-moment';
+import 'moment-timezone';
+import moment from 'moment';
 
-import ReactLoading from 'react-loading';
+import suny from './../../../assets/cuaca/sunny.png'
+import partly_cloudy from './../../../assets/cuaca/partly_cloudy.png'
+import cloudy from './../../../assets/cuaca/cloudy.png'
+import rain_light from './../../../assets/cuaca/rain_light.png'
+import rain_s_cloudy from './../../../assets/cuaca/rain_s_cloudy.png'
+import thunderstorms from './../../../assets/cuaca/thunderstorms.png'
+
+Moment.globalTimezone = 'Asia/Makassar';
 export default function Login({ setToken }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -44,6 +53,7 @@ export default function Login({ setToken }) {
   const [pengumumans, setPengumuman] = useState([]);
   const [wisatas, setWisata] = useState([]);
   const [modal, setModal] = useState(false) 
+  const [data_weather, setWeatherData] = useState([]);
 
   const header = {
     headers: {
@@ -62,12 +72,11 @@ export default function Login({ setToken }) {
     const wisa = await axios.get(apiUrl + 'wisata')
     setWisata(wisa.data.data.wisatas)
 
-    // axios.get('https://data.bmkg.go.id/datamkg/MEWS/DigitalForecast/DigitalForecast-Bali.xml', header)
-    // .then((res) => {
-    //   // console.log(res);
-    //   const jsonDataFromXml = new XMLParser().parseFromString(res.data);
-    //   console.log(jsonDataFromXml);
-    //  })
+    axios.get(apiUrl + 'xml-to-json')
+    .then((res) => {
+      setWeatherData(res.data.forecast.area[6].parameter[6].timerange)
+      console.log(res.data.forecast.area[6].parameter[6].timerange)
+     })
   }
 
   useEffect(() => {
@@ -135,6 +144,20 @@ export default function Login({ setToken }) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    speed: 3000,
+    autoplaySpeed: 3000,
+  };
+
+  const settingsWeather = {
+    arrows: false,
+    dots: false,
+    infinite: true,
+    // centerPadding: "60px",
+    slidesToShow: 2,
+    speed: 500,
+    rows: 2,
+    slidesPerRow: 1,
     autoplay: true,
     speed: 3000,
     autoplaySpeed: 3000,
@@ -250,10 +273,113 @@ export default function Login({ setToken }) {
               </CCol>
           </div>
           <CRow>
-            <CCol xs="12" md="6">
-                {/* {(() => {
-                   
-                  })()} */}
+            <CCol xs="12" md="6" style={{padding:'10px 10px 10px 37px'}}>
+              <div className='slick-for-bmkg'>
+              <Slider {...settingsWeather}>
+                    {
+                      data_weather.map((data,index) => {
+                        return(
+                            <div key={index} className='item-bmkg-weather'>
+                                          {(() => {
+                                            if(data.value === 0){
+                                              return(
+                                                <>
+                                                  <img className='image-weather' src={suny}></img>
+                                                  <b>Cerah</b>
+                                                </>
+                                              )
+                                            }else if(data.value == 1){
+                                              return(
+                                                <>
+                                                  <img className='image-weather' src={partly_cloudy}></img>
+                                                  <b>Cerah Berawan</b>
+                                                </>
+                                              )
+                                            }else if(data.value == 2){
+                                              return(
+                                                <>
+                                                  <img className='image-weather' src={partly_cloudy}></img>
+                                                  <b>Cerah Berawan</b>
+                                                </>
+                                              )
+                                            }else if(data.value == 3){
+                                              return(
+                                                <>
+                                                  <img className='image-weather' src={cloudy}></img>
+                                                  <b>Berawan</b>
+                                                </>
+                                              )
+                                            }else if(data.value == 4){
+                                              return(
+                                                <>
+                                                  <img className='image-weather' src={cloudy}></img>
+                                                  <b>Berawan Tebal</b>                                               
+                                                </>
+                                              )
+                                            }else if(data.value == 5){
+                                              return(
+                                              <img className='image-weather' src={cloudy}></img>
+                                              )
+                                            }else if(data.value == 10){
+                                              return(
+                                              <img className='image-weather' src={cloudy}></img>
+                                              )
+                                            }else if(data.value == 45){
+                                              return(
+                                              <img className='image-weather' src={cloudy}></img>
+                                              )
+                                            }else if(data.value == 60){
+                                              return(
+                                              <>
+                                                <img className='image-weather' src={rain_light}></img>
+                                                <b>Hujan Ringan</b>
+                                              </>
+                                              )
+                                            }else if(data.value == 61){
+                                              return(
+                                                <>
+                                                  <img className='image-weather' src={rain_light}></img>
+                                                  <b>Hujan Sedang</b>
+                                                </>
+                                              )
+                                            }else if(data.value == 63){
+                                              return(
+                                                <>
+                                                    <img className='image-weather' src={rain_light}></img>
+                                                    <b>Hujan Lebat</b>
+                                                </>
+                                              )
+                                            }else if(data.value == 80){
+                                              return(
+                                                <>
+                                                  <img className='image-weather' src={rain_s_cloudy}></img>
+                                                  <b>Hujan Lokal</b>
+                                                </>
+                                              )
+                                            }else if(data.value == 95){
+                                              return(
+                                                <>
+                                                  <img className='image-weather' src={thunderstorms}></img>
+                                                  <b>Hujan Petir</b>
+                                                </>
+                                              )
+                                            }else if(data.value == 97){
+                                              return(
+                                                <>
+                                                   <img className='image-weather' src={thunderstorms}></img>
+                                                  <b>Hujan Petir</b>
+                                                </>
+                                              )
+                                            }
+                                          })()}
+                                          <p className='no-margin'>{data['@attributes'].datetime}</p>
+                                          {/* <p className='no-margin'><Moment format="H:i">{data['@attributes'].datetime}</Moment></p> */}
+                            </div>
+                          )
+                      })
+                    }
+              </Slider>
+              </div>
             </CCol>
             <CCol xs="12" md="6" className="slick-for-announce" style={{padding:'10px 35px 10px 10px'}}>
               <Slider {...settingsAnnounce}>

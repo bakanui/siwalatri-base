@@ -18,7 +18,10 @@ import {
   CWidgetIcon,
   CRow,
   CCard,
-  CLink
+  CLink,
+  CTextarea,
+  CInputCheckbox,
+  CCollapse
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../useToken';
@@ -27,22 +30,32 @@ import { useParams } from 'react-router-dom';
 import { apiUrl } from '../reusable/constants'
 import dayjs from 'dayjs';
 import 'moment-timezone';
-
+import Toast from './../reusable/toast';
+import ToastMaker from './../reusable/toastMaker';
 
 Moment.globalTimezone = 'Asia/Makassar';
 const DetailKeberangkatan = () => {
     const { id_keberangkatan } = useParams();
     const todays = new Date()
-    const { token,type,id } = useToken();
+    const { token,type,id, id_armada } = useToken();
     const [datas, setData] = useState([]);
     const [undatas, setUnData] = useState([]);
     const [tujuan, setTotTujuan] = useState([]);
     const [jenis, setTotJenis] = useState([]);
     const [typeModal, setTypeModal] = useState()  
     const [modal, setModal] = useState(false)
+    const [jadwalnya, setJadwalnya] = useState([]);
+    const [tiketJadwal, setTikets] = useState([]);
 
+
+    //Toast
+    const { toasters, addToast } = ToastMaker()
+    const [title, setTitle] = useState("")
+    const [message, setMessage] = useState("")
+    const [color, setColor] = useState("")
 
     //form
+    const [id_jadwal, setIdJadwal] = useState(0);
     const [id_penumpang, setIdPenumpang] = useState(0);
     const [tiket_data, setTiketData] = useState();
     const [nama, setNama] = useState('');
@@ -58,7 +71,15 @@ const DetailKeberangkatan = () => {
     const [free_pass, setFreePass] = useState(0)
     const [free_pass_harga, setFreePassHarga] = useState(0)
     const [ket_free_pass, setKetFreePass] = useState('');
+    const [status_verif, setStatusVerif] = useState();
+    const [tanggals, setTanggal] = useState(todays)
 
+    const headers = {
+        headers: {
+          'Authorization': "bearer " + token 
+        },
+        timeout: 10000 
+      }
 
     useEffect(() => {
       fetchData()
@@ -97,6 +118,14 @@ const DetailKeberangkatan = () => {
         setUnData(result.data.detail2)
         setTotTujuan(result.data.tujuans)
         setTotJenis(result.data.jenis)
+
+        const jad = await axios.get(apiUrl + 'jadwal_keberangkatan/index/'+id_armada, headers)
+        setJadwalnya(jad.data.jadwal)
+        console.log(jad.data)
+
+        const tik = await axios.get(apiUrl + 'jadwal_keberangkatan/view/tiket/'+id_keberangkatan, headers)
+        setTikets(tik.data)
+
   }
 
   const getBadgeTujuan = (status)=>{
@@ -140,9 +169,117 @@ const DetailKeberangkatan = () => {
     { key: 'created_at', _style: { width: '10%'} },
   ]
 
+  function setTotalTiket (datas){
+    if(!free_pass){
+      let nilai = datas.split('|');
+      setIdJenisPenum(nilai[0]);
+      setIdTiket(nilai[1])
+      setHargaTiket(nilai[2]);
+      setTotalView(nilai[2]);
+      setFreePassHarga(nilai[2]);
+    }
+  }
+
+
+  const handleFreePassHarga = (value) => {
+    if(free_pass){
+        setFreePassHarga(value)
+        // setHargaTiket(value)
+        setTotalView(value)
+    }
+   }
+
+
+    const getTiketData = async (id_jadwal) => {
+        setTikets([])
+        const tik = await axios.get(apiUrl + 'jadwal_keberangkatan/view/tiket/'+id_jadwal, headers)
+        setTikets(tik.data)
+        setIdTiket(0)
+    }
+
+    const collapseHandler = (value) => {
+        if(value){
+            setShowFreePass(true)
+            setFreePass(1)
+            setTotalView(free_pass_harga)
+            console.log(free_pass_harga);
+        }else{
+            console.log('au');
+            console.log(harga_tiket);
+            setShowFreePass(false)
+            setFreePass(0)
+            setTotalView(harga_tiket)
+        }
+      }
+
+    const updateHandler = (e) => {
+        const form = new FormData(e.target);
+        e.preventDefault();
+    
+        let value_freepass = 0;
+        let harga_tiketnya = harga_tiket;
+
+      if(free_pass){
+        value_freepass = 1
+        harga_tiketnya = free_pass_harga
+      }
+
+      let datas = {
+        tanggal: form.get('tanggal'),
+        nama_penumpang: form.get('nama'),
+        no_identitas: no_identitas,
+        id_jns_penum: parseInt(id_jenis_penum),
+        id_tujuan: parseInt(id_tujuan),
+        id_tiket: parseInt(id_tiket),
+        id_jadwal: id_jadwal,
+        jenis_kelamin:form.get('jenis_kelamin'),
+        alamat:form.get('alamat'),
+        status_verif:status_verif,
+        freepass: value_freepass,
+        harga_tiket:harga_tiketnya,
+        ket_freepass:ket_free_pass
+      }
+      console.log(id_penumpang);
+      console.log(datas);
+
+      if(id_penumpang){
+        axios.post(apiUrl + 'penumpang/'+id_penumpang, datas, headers)
+        .then((res) => {
+          setTitle("Data penumpang berhasil diupdate")
+          setMessage("Data telah berhasil diupdate!")
+          setColor("bg-success text-white")
+          setModal(!modal)
+          clearState()
+          fetchData();
+          addToast()
+        }).catch((error) => {
+          setTitle("Terjadi kesalahan")
+          setMessage(error?.response?.data?.message)
+          setColor("bg-danger text-white")
+          setModal(!modal)
+          clearState()
+          fetchData()
+          addToast()
+        })
+      }
+    
+    }
+
+    function clearState(){
+        setNama('')
+        setJenisKelamin()
+        setIdTujuan()
+        setNoIdentitas('')
+        setIdTiket(0)
+        setIdJenisPenum(0)
+        setFreePass(0)
+        setKetFreePass()
+      }
+  
 
     return(
         <>
+          <Toast toasters={toasters} message={message} title={title} color={color}/>
           <div>
                   <CRow>
                         {
@@ -204,6 +341,12 @@ const DetailKeberangkatan = () => {
                                       {index+1}
                                   </td>
                                   ),
+                                  'nama_penumpang':
+                                    (item)=>(
+                                        <td>
+                                            {item.nama_penumpang} {item.freepass == 1 ? <div><CBadge color='primary'>FREEPASS</CBadge> <CBadge color='info'>{item.ket_freepass}</CBadge></div> : ''}
+                                        </td>
+                                    ),
                                   'edit':
                                   (item)=>(
                                         <td className="py-2">
@@ -214,7 +357,23 @@ const DetailKeberangkatan = () => {
                                             size="sm"
                                             onClick={()=>{
                                                 setTypeModal('Edit')
+                                                setIdJadwal(item.id_jadwal)
+                                                setIdPenumpang(item.id_penumpang)
+                                                setIdTiket(item.id_tiket)
+                                                setNama(item.nama_penumpang)
+                                                setAlamat(item.alamat)
+                                                setIdJenisPenum(item.id_jns_penum)
+                                                setIdTujuan(item.id_tujuan)
+                                                setJenisKelamin(item.jenis_kelamin)
+                                                setNoIdentitas(item.no_identitas)
+                                                setHargaTiket(item.harga_tiket)
+                                                setFreePass(item.freepass)
+                                                setKetFreePass(item.ket_freepass)
+                                                setStatusVerif(item.status_verif)
+                                                setTotalView(item.harga_tiket)
                                                 setModal(true)
+                                                setShowFreePass(item.freepass == 1 ? true : false)
+                                                setFreePassHarga(item.freepass == 1 ? item.harga_tiket : 0)
                                             }}
                                             >
                                             Edit
@@ -274,6 +433,7 @@ const DetailKeberangkatan = () => {
           </div>
 
             <CModal 
+                size="lg"
                   show={modal} 
                   onClose={() => setModal(!modal)}
                   color='info'
@@ -281,8 +441,129 @@ const DetailKeberangkatan = () => {
                       <CModalHeader closeButton>
                           <CModalTitle>{typeModal} Data Penumpang</CModalTitle>
                       </CModalHeader>
-                      <CForm  method="post" encType="multipart/form-data" className="form-horizontal">
+                      <CForm onSubmit={updateHandler} method="post" encType="multipart/form-data" className="form-horizontal">
                       <CModalBody>
+                      <CFormGroup row> 
+                            <CCol xs="12" md="4">
+                              <CLabel htmlFor="statusLabel">Tanggal</CLabel>
+                                <CInput className="form-control" id="tanggal" name="tanggal" placeholder="MM/DD/YYY" value={dayjs(tanggals).format('YYYY-MM-DD')} onChange={(e) => { setTanggal(e.target.value);}} type="date"/>
+                            </CCol>
+                            <CCol xs="12" md="8">
+                                  <CLabel htmlFor="statusLabel">Jadwal</CLabel>
+                                  <CSelect custom name="tiket_data" id={"statusLabel"} onChange={(e) => { setIdJadwal(e.target.value); getTiketData(e.target.value) }} required>
+                                      {
+                                          jadwalnya.map((data,index) => {
+                                              if(id_jadwal && id_jadwal === data.id_jadwal){
+                                                return(
+                                                    <option key={index} value={data.id_jadwal} selected>{data.jadwal} | {data.jadwal_to_rute.tujuan_awals.nama_dermaga} -  {data.jadwal_to_rute.tujuan_akhirs.nama_dermaga}  </option>
+                                                )
+                                              }else{
+                                                return(
+                                                    <option key={index} value={data.id_jadwal}>{data.jadwal} | {data.jadwal_to_rute.tujuan_awals.nama_dermaga} -  {data.jadwal_to_rute.tujuan_akhirs.nama_dermaga} </option>
+                                                )
+                                              }
+                                          })
+                                      }
+                                  </CSelect>
+                            </CCol>
+                        </CFormGroup>
+                        <CFormGroup row> 
+                            <CCol xs="12" md="6">
+                                <CLabel htmlFor="nameLabel">Nama  Penumpang</CLabel>
+                                <CInput id={"nameInput"} placeholder="Nama  Penumpang"
+                                onChange={(e) => { setNama(e.target.value); }}
+                                name="nama" value={nama} required/>
+                            </CCol>
+                            <CCol xs="12" md="6">
+                                    <CLabel htmlFor="statusLabel">Tiket</CLabel>
+                                    <CSelect custom name="tiket_data" id={"statusLabel"} onChange={(e) => { setTiketData(e.target.value); setTotalTiket(e.target.value) }} required>
+                                        {
+                                            tiketJadwal.map((data,index) => {
+                                                if(id_tiket && id_tiket === data.id){
+                                                    return(
+                                                        <option key={index} value={data.id_jns_penum+'|'+data.id+'|'+data.harga} selected>{data.nama_jns_penum} - {data.nama_tiket} | {data.harga}</option>
+                                                    )
+                                                }else{
+                                                    if(index == 0){
+                                                        return(
+                                                            <option key={index} value="">-</option>
+                                                        )
+                                                    }
+                                                    return(
+                                                        <option key={index} value={data.id_jns_penum+'|'+data.id+'|'+data.harga}>{data.nama_jns_penum} - {data.nama_tiket} | {data.harga}</option>
+                                                    )
+                                                }
+                                            })
+                                        }
+                                    </CSelect>
+                                </CCol>
+                       </CFormGroup>
+                       <CFormGroup row> 
+                            <CCol xs="12" md="6">
+                                  <CLabel htmlFor="statusLabel">Jenis Kelamin</CLabel>
+                                  <CSelect custom name="jenis_kelamin"  id={"statusLabel"} onChange={(e) => { setJenisKelamin(e.target.value); }} required>
+                                      <option value="0">Laki Laki</option>
+                                      <option value="1">Wanita</option>
+                                  </CSelect>
+                            </CCol>
+                            <CCol xs="12" md="6">
+                                  <CLabel htmlFor="statusLabel">Status Penumpang</CLabel>
+                                  <CSelect custom name="status_verif"  id={"statusLabel"} onChange={(e) => { setStatusVerif(e.target.value); }} required>
+                                        {(() => {
+                                            if(status_verif && status_verif === 1){
+                                                return(
+                                                    <>
+                                                        <option value={1}>Sudah Bayar</option>
+                                                        <option value={0}>Belum Bayar</option>  
+                                                    </>
+                                                )
+                                            }else{
+                                                return(
+                                                    <>
+                                                        <option value={1}>Sudah Bayar</option>
+                                                        <option value={0}>Belum Bayar</option>  
+                                                    </>
+                                                )
+                                            }
+                                        })()}
+
+                                  </CSelect>
+                            </CCol>
+                       </CFormGroup>
+                       <CFormGroup row> 
+                            <CCol xs="12" md="6">
+                                  <CLabel htmlFor="statusLabel">Alamat</CLabel>
+                                  <CTextarea required rows="3" value={alamat} placeholder="...." name="alamat" onChange={(e) => { setAlamat(e.target.value); }} required>
+                                  </CTextarea>
+                            </CCol>
+                            <CCol xs="12" md="6">
+                                 <CFormGroup row>
+                                    <CCol xs="12" md="6">
+                                        <CInputCheckbox 
+                                        style={{position:'relative', margin:'10px 5px'}}
+                                        custom
+                                        id="freePass" 
+                                        name="freePass" 
+                                        onChange={(e) => { collapseHandler(e.target.checked); }} 
+                                        checked={free_pass == 1 ? true : false }
+                                        />
+                                        <CLabel variant="custom-checkbox" htmlFor="freePass">Free Pass Tiket</CLabel>
+                                    </CCol>
+                                </CFormGroup>
+                                <CCollapse show={showFreePass}>
+                                    <CFormGroup row>
+                                    <CCol xs="12">
+                                        <CInput className="form-control" name="free_pass_harga" placeholder='Masukan Harga Tiket Freepass'  value={free_pass_harga}  onChange={(e) => { handleFreePassHarga(e.target.value); }} type="text"/>
+                                        <CInput className="form-control" name="ket_free_pass" placeholder='Masukan Keterangan Freepass'  value={ket_free_pass} onChange={(e) => { setKetFreePass(e.target.value); }} type="text" style={{margin:'10px 0'}}/>
+                                        </CCol>
+                                    </CFormGroup>
+                                </CCollapse>
+                            </CCol>
+                       </CFormGroup>
+                       <hr/>
+                       <div className='pull-right' style={{padding:'1rem'}}>
+                            <h4><b>{"Rp. "+ (Number(view_total)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</b></h4>
+                        </div>
                       </CModalBody>
                       <CModalFooter>
                           <CButton type="submit" color="primary">
