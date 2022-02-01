@@ -39,6 +39,7 @@
     "enzyme": "^3.11.0",
     "firebase": "^9.6.3",
     "google-map-react": "^2.1.10",
+    "jspdf": "^2.5.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
