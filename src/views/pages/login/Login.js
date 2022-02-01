@@ -1,5 +1,5 @@
 import { React,useEffect, useState } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import {
   CAlert,
   CButton,
@@ -74,8 +74,7 @@ export default function Login({ setToken }) {
 
     axios.get(apiUrl + 'xml-to-json')
     .then((res) => {
-      setWeatherData(res.data.forecast.area[6].parameter[6].timerange)
-      console.log(res.data.forecast.area[6].parameter[6].timerange)
+      setWeatherData(res.data.Humidity)
      })
   }
 
@@ -281,89 +280,118 @@ export default function Login({ setToken }) {
                         return(
                             <div key={index} className='item-bmkg-weather'>
                                           {(() => {
-                                            if(data.value === 0){
+                                            if(parseInt(data.value) == 0){
                                               return(
                                                 <>
                                                   <img className='image-weather' src={suny}></img>
                                                   <b>Cerah</b>
                                                 </>
                                               )
-                                            }else if(data.value == 1){
+                                            }else if(parseInt(data.value) == 1){
                                               return(
                                                 <>
                                                   <img className='image-weather' src={partly_cloudy}></img>
                                                   <b>Cerah Berawan</b>
                                                 </>
                                               )
-                                            }else if(data.value == 2){
+                                            }else if(parseInt(data.value) == 2){
                                               return(
                                                 <>
                                                   <img className='image-weather' src={partly_cloudy}></img>
                                                   <b>Cerah Berawan</b>
                                                 </>
                                               )
-                                            }else if(data.value == 3){
+                                            }else if(parseInt(data.value) == 3){
                                               return(
                                                 <>
                                                   <img className='image-weather' src={cloudy}></img>
                                                   <b>Berawan</b>
                                                 </>
                                               )
-                                            }else if(data.value == 4){
+                                            }else if(parseInt(data.value) == 4){
                                               return(
                                                 <>
                                                   <img className='image-weather' src={cloudy}></img>
                                                   <b>Berawan Tebal</b>                                               
                                                 </>
                                               )
-                                            }else if(data.value == 5){
+                                            }else if(parseInt(data.value) == 5){
                                               return(
                                               <img className='image-weather' src={cloudy}></img>
                                               )
-                                            }else if(data.value == 10){
+                                            }else if(parseInt(data.value) == 10){
                                               return(
                                               <img className='image-weather' src={cloudy}></img>
                                               )
-                                            }else if(data.value == 45){
+                                            }else if(parseInt(data.value) == 45){
                                               return(
                                               <img className='image-weather' src={cloudy}></img>
                                               )
-                                            }else if(data.value == 60){
+                                            }else if(parseInt(data.value) == 60){
                                               return(
                                               <>
                                                 <img className='image-weather' src={rain_light}></img>
                                                 <b>Hujan Ringan</b>
                                               </>
                                               )
-                                            }else if(data.value == 61){
+                                            }else if(parseInt(data.value) == 61){
                                               return(
                                                 <>
                                                   <img className='image-weather' src={rain_light}></img>
                                                   <b>Hujan Sedang</b>
                                                 </>
                                               )
-                                            }else if(data.value == 63){
+                                            }else if(parseInt(data.value) == 63){
+                                              return(
+                                                <>
+                                                    <img className='image-weather' src={rain_light}></img>
+                                                    <b>Hujan Lokal</b>
+                                                </>
+                                              )
+                                            }else if(parseInt(data.value) == 65){
+                                              return(
+                                                <>
+                                                    <img className='image-weather' src={rain_light}></img>
+                                                    <b>Hujan Lokal</b>
+                                                </>
+                                              )
+                                            }else if(parseInt(data.value) == 70){
                                               return(
                                                 <>
                                                     <img className='image-weather' src={rain_light}></img>
                                                     <b>Hujan Lebat</b>
                                                 </>
                                               )
-                                            }else if(data.value == 80){
+                                            }else if(parseInt(data.value) == 75){
+                                              return(
+                                                <>
+                                                    <img className='image-weather' src={rain_light}></img>
+                                                    <b>Hujan Lebat</b>
+                                                </>
+                                              )
+                                            }else if(parseInt(data.value) == 80){
                                               return(
                                                 <>
                                                   <img className='image-weather' src={rain_s_cloudy}></img>
-                                                  <b>Hujan Lokal</b>
+                                                  <b>Hujan Lebat</b>
                                                 </>
                                               )
-                                            }else if(data.value == 95){
+                                            }else if(parseInt(data.value) == 90){
                                               return(
                                                 <>
                                                   <img className='image-weather' src={thunderstorms}></img>
                                                   <b>Hujan Petir</b>
                                                 </>
                                               )
-                                            }else if(data.value == 97){
+                                            }
+                                            else if(parseInt(data.value) == 95){
+                                              return(
+                                                <>
+                                                  <img className='image-weather' src={thunderstorms}></img>
+                                                  <b>Hujan Petir</b>
+                                                </>
+                                              )
+                                            }else if(parseInt(data.value) == 97){
                                               return(
                                                 <>
                                                    <img className='image-weather' src={thunderstorms}></img>
@@ -372,8 +400,7 @@ export default function Login({ setToken }) {
                                               )
                                             }
                                           })()}
-                                          <p className='no-margin'>{data['@attributes'].datetime}</p>
-                                          {/* <p className='no-margin'><Moment format="H:i">{data['@attributes'].datetime}</Moment></p> */}
+                                          <p className='no-margin'>{data.datetime}</p>
                             </div>
                           )
                       })

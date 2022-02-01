@@ -26,6 +26,7 @@ const LaporanManifest = React.lazy(() => import('./views/report/LaporanManifest'
 const DetailManifest = React.lazy(() => import('./views/report/DetailManifest'));
 const Tiket = React.lazy(() => import('./views/loket/tiket/Tiket'));
 const FormTiket = React.lazy(() => import('./views/loket/tiket/FormTiket'));
+const FormTiketGroup = React.lazy(() => import('./views/loket/tiket/FormTiketGroup'));
 const TiketKeberangkatan = React.lazy(() => import('./views/armada/TiketKeberangkatan'));
 const Logout = React.lazy(() => import('./views/pages/Logout'));
 
@@ -54,13 +55,14 @@ const routes = [
   { path: '/approval', name: 'Approval', component: Approval },
   { path: '/jadwal', name: 'Jadwal Keberangkatan', component: Jadwal },
   { path: '/total-harian-operator', name: 'Total Harian Operator', component: TotalHarian },
-  { path: '/detail-keberangkatan/:id_keberangkatan', name: 'Detail Keberangkatan', component: DetailKeberangkatan, exact: true },
-  { path: '/total-harian-operator/:id_keberangkatan', name: 'Detail Keberangkatan', component: DetailKeberangkatan, exact: true },
-  { path: '/total-harian-operator/detail-keberangkatan/:id_keberangkatan', name: 'Detail Keberangkatan', component: DetailKeberangkatan, exact: true },
+  { path: '/detail-keberangkatan/:id_keberangkatan/:fil_date', name: 'Detail Keberangkatan', component: DetailKeberangkatan, exact: true },
+  { path: '/total-harian-operator/:id_keberangkatan/:fil_date', name: 'Detail Keberangkatan', component: DetailKeberangkatan, exact: true },
+  { path: '/total-harian-operator/detail-keberangkatan/:id_keberangkatan/:fil_date', name: 'Detail Keberangkatan', component: DetailKeberangkatan, exact: true },
   { path: '/laporan-manifest', name: 'Laporan Manifest', component: LaporanManifest },
   { path: '/detail-manifest/:id_jadwals/:fil_date', name: 'Detail Manifest', component: DetailManifest, exact: true },
   { path: '/tiket', name: 'Tiket', component: Tiket, exact: true },
   { path: '/tiket/form-tiket/:id_jadwal/:kapasitas_penumpang', name: 'Form Tiket', component: FormTiket, exact: true },
+  { path: '/tiket/form-tiket-group/:id_jadwal/:kapasitas_penumpang', name: 'Form Tiket Group', component: FormTiketGroup, exact: true },
   { path: '/tiket-keberangkatan/:id_jadwal', name: 'Daftar Tiket Keberangkatan', component: TiketKeberangkatan, exact: true },
   { path: '/jadwal/tiket-keberangkatan/:id_jadwal', name: 'Daftar Tiket Keberangkatan', component: TiketKeberangkatan, exact: true },
 

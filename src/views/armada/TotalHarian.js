@@ -177,7 +177,7 @@ const TotalHarian = () => {
                                         {(() => {
                                              if(item.id_jadwal){
                                                     return(
-                                                        <Link to={"/detail-keberangkatan/"+item.id_jadwal}>
+                                                        <Link to={"/detail-keberangkatan/"+item.id_jadwal+"/"+dayjs(dateFilter).format('YYYY-MM-DD')}>
                                                         <CButton
                                                             color="primary"
                                                             variant="outline"

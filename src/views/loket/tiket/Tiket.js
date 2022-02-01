@@ -28,6 +28,8 @@ import CIcon from '@coreui/icons-react'
 import useToken from '../../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../../reusable/constants'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import 'moment-timezone';
 import { Link } from 'react-router-dom';
 
@@ -164,7 +166,7 @@ const Tiket = () => {
                                     </Link>
                                 </div>
                                 <div className='col-xs-12 col-sm-12 xol-md-6 col-lg-6' style={{textAlign:'center'}}>
-                                    <Link >
+                                    <Link to={"/tiket/form-tiket-group/"+id_jadwal+"/"+kapasitas_penumpang}>
                                         <CButton
                                             color="warning"
                                             shape="square"

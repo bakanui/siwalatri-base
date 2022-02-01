@@ -38,6 +38,7 @@ const DetailManifest = () => {
     const [details, setDetails] = useState([]);
     // eslint-disable-next-line
     const [jenis, setJenis] = useState([]);
+    const [link_pdf, setLinkPdf] = useState('');
 
 
     const fetchData = async () => {
@@ -61,6 +62,8 @@ const DetailManifest = () => {
         setDatas(result.data.datas)
         setDetails(result.data.detail[0])
         setJenis(result.data.jenis)
+        let links = apiUrl + 'laporan/manifest/armada/'+id_jadwals+'/pdf?tanggal='+fil_date
+        setLinkPdf(links)
     }
 
     useEffect(() => {
@@ -79,6 +82,7 @@ const DetailManifest = () => {
     return(
         <>
             <div className='card inner-padd-report'>
+                    <div style={{textAlign:'end'}}><a href={link_pdf} target="_blank"  className="btn c-link-pdf">Export PDF</a></div>
                     <h4 className='center-title bold-text'>Detail Penumpang Boat {details.nama_armada}</h4>
                     <CRow style={{margin:'1rem 0'}}>
                         <div className='col-xs-12 col-sm-6 col-md-6'>

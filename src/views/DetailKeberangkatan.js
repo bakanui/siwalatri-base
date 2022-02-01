@@ -35,7 +35,7 @@ import ToastMaker from './../reusable/toastMaker';
 
 Moment.globalTimezone = 'Asia/Makassar';
 const DetailKeberangkatan = () => {
-    const { id_keberangkatan } = useParams();
+    const { id_keberangkatan, fil_date } = useParams();
     const todays = new Date()
     const { token,type,id, id_armada } = useToken();
     const [datas, setData] = useState([]);
@@ -46,6 +46,7 @@ const DetailKeberangkatan = () => {
     const [modal, setModal] = useState(false)
     const [jadwalnya, setJadwalnya] = useState([]);
     const [tiketJadwal, setTikets] = useState([]);
+    const [link_pdf, setLinkPdf] = useState('');
 
 
     //Toast
@@ -86,46 +87,41 @@ const DetailKeberangkatan = () => {
       // eslint-disable-next-line
     }, [])
   
-  const fetchData = async (dates,filter) => {
+  const fetchData = async () => {
       let head = {
           headers: {
               'Authorization': "bearer " + token 
           },
           params: {
-              tanggal: dayjs(todays).format('YYYY-MM-DD')
+              tanggal: fil_date
           },
       }
-      if(filter === true){
-           head = {
-              headers: {
-                  'Authorization': "bearer " + token 
-                },
-                params: {
-                    tanggal: dayjs(dates).format('YYYY-MM-DD')
-                },
-          }
-      }    
+      let id_armadas = id;
+      if(type === 'loket'){
+        id_armadas = id_armada
+      }
       
         const result = await axios.get(apiUrl + 'laporan/harian_armada/detail/'+id_keberangkatan, head)
         .catch(function (error) {
           if(error.response?.status === 401){
               localStorage.removeItem('access_token')
-              window.location.reload()
+               window.location.reload()
           }
         })
-        console.log(result);
+
         setData(result.data.datas)
         setUnData(result.data.detail2)
         setTotTujuan(result.data.tujuans)
         setTotJenis(result.data.jenis)
 
-        const jad = await axios.get(apiUrl + 'jadwal_keberangkatan/index/'+id_armada, headers)
+        const jad = await axios.get(apiUrl + 'jadwal_keberangkatan/index/'+id_armadas, headers)
         setJadwalnya(jad.data.jadwal)
-        console.log(jad.data)
 
         const tik = await axios.get(apiUrl + 'jadwal_keberangkatan/view/tiket/'+id_keberangkatan, headers)
         setTikets(tik.data)
 
+        let links = apiUrl + 'laporan/manifest/armada/'+id_armadas+'/pdf?tanggal='+fil_date
+        setLinkPdf(links)
   }
 
   const getBadgeTujuan = (status)=>{
@@ -280,6 +276,7 @@ const DetailKeberangkatan = () => {
     return(
         <>
           <Toast toasters={toasters} message={message} title={title} color={color}/>
+          <div style={{textAlign:'end', margin:'10px 0'}}><a href={link_pdf} target="_blank"  className="btn c-link-pdf">Export Manifest</a><a href={link_pdf} target="_blank"  className="btn c-link-pdf">Export Manifest Loket</a></div>
           <div>
                   <CRow>
                         {

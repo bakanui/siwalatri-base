@@ -542,3 +542,11 @@ overflow: hidden;
 .slick-for-bmkg .slick-slider .slick-list .slick-track div{
     padding: 5px 10px;
 }
+
+.c-link-pdf{
+  color: cadetblue;
+}
+
+.c-link-pdf:hover{
+  color: #022427;
+}
