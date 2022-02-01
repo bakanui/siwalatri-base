@@ -33,6 +33,8 @@ import logos from './../../../assets/logo.png';
 import './../../../assets/css/style.css';
 import Slider from "react-slick";
 import Moment from 'react-moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAnchor, faMapMarked, faMapMarkedAlt, faMapMarker, faMapMarkerAlt, faShip } from '@fortawesome/free-solid-svg-icons'
 import 'moment-timezone';
 import moment from 'moment';
 
@@ -224,22 +226,23 @@ export default function Login({ setToken }) {
                                                       <span className="boardingPass-departur-IATA">{data.tujuan_awal}</span>	
                                                   </section>
                                                   <section className="boardingPass-transport boardingPass-icon col-xs" style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
-                                                      <i className="fas fa-ship"></i>
+                                                      <FontAwesomeIcon icon={faShip} />
                                                       <span className="section-label-child">Menuju</span>
                                                   </section>
-                                                  <section className="boardingPass-arrival col-xs">
+                                                  <section className="boardingPass-arrival col-xs ">
                                                       <span className="section-label-child">{data.lokasi_akhir}</span>
                                                       <span className="boardingPass-arrival-IATA">{data.tujuan_akhir}</span>	
                                                   </section>
                                               </div>
                                               <div className="dashed-tiket"></div>
                                               <div className="row-custome-tiket">
-                                                      <section className="boardingPass-departur col-xs">
-                                                          <i className="fas fa-anchor" ></i>
-                                                          <span>{data.nama_kapal}</span>	
+                                                      <section className="boardingPass-departur boardingPass-icon col-xs">
+                                                          <FontAwesomeIcon icon={faAnchor} />
+                                                          <span style={{color:'#555'}}> {data.nama_kapal}</span>	
                                                       </section>
-                                                      <section className="boardingPass-transport boardingPass-icon col-xs" style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
-                                                          <CBadge className="badge-custom" color={getBadge(data.status)}>{data.status}</CBadge>
+                                                      <section className="boardingPass-transport boardingPass-icon col-xs" style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'row'}}>
+                                                          <FontAwesomeIcon icon={faMapMarkerAlt} style={{marginRight:'2px'}} />
+                                                          <CBadge className="badge-custom" color={getBadge(data.status)}> {data.status}</CBadge>
                                                       </section>
                                               </div>
                                       </div>

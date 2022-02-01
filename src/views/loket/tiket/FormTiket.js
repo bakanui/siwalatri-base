@@ -32,6 +32,8 @@ import Moment from 'react-moment';
 import { apiUrl } from './../../../reusable/constants'
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAnchor, faShip, faUser } from '@fortawesome/free-solid-svg-icons'
 import 'moment-timezone';
 import Toast from './../../../reusable/toast';
 import ToastMaker from './../../../reusable/toastMaker';
@@ -329,7 +331,7 @@ const FormTiket = () => {
                                   <span className="boardingPass-departur-IATA">{detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga}</span>	
                               </section>
                               <section className="boardingPass-transport boardingPass-icon col-xs">
-                                  <CIcon name="cil-scrubber" className="mfe-2" />
+                                <FontAwesomeIcon icon={faShip} />
                               </section>
                               <section className="boardingPass-arrival col-xs">
                                   <span className="section-label-child">{detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga}</span>
@@ -339,7 +341,7 @@ const FormTiket = () => {
                           <hr className="tiket-hr" />
                           <div className="row-custome-tiket">
                               <section className="boardingPass-icon col-xs-pessanger">
-                                  <CIcon name="cil-user" className="mfe-2" />
+                                <FontAwesomeIcon icon={faUser} />
                               </section>
                               <section className="boardingPass-passenger col-xs-pessanger">
                                   <span className="section-label-child">Nahkoda</span>
@@ -353,7 +355,7 @@ const FormTiket = () => {
                           <hr className="tiket-hr" />
                           <div className="row-custome-tiket">
                               <section className="boardingPass-icon col-xs-pessanger">
-                                  <CIcon name="cil-moon" className="mfe-2" />
+                                <FontAwesomeIcon icon={faAnchor} />
                               </section>
                               <section className="boardingPass-passenger col-xs-pessanger">
                                   <span className="section-label-child">Kapal</span>

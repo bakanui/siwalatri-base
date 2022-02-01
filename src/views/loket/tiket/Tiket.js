@@ -28,8 +28,8 @@ import CIcon from '@coreui/icons-react'
 import useToken from '../../../../src/useToken';
 import Moment from 'react-moment';
 import { apiUrl } from './../../../reusable/constants'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAnchor, faShip, faUser } from '@fortawesome/free-solid-svg-icons'
 import 'moment-timezone';
 import { Link } from 'react-router-dom';
 
@@ -99,7 +99,7 @@ const Tiket = () => {
                                                                 <span className="boardingPass-departur-IATA">{data.jadwal_to_rute.tujuan_awals.nama_dermaga}</span>	
                                                             </section>
                                                             <section className="boardingPass-transport boardingPass-icon col-xs">
-                                                                <CIcon name="cil-scrubber" className="mfe-2" />
+                                                                <FontAwesomeIcon icon={faShip} />
                                                             </section>
                                                             <section className="boardingPass-arrival col-xs">
                                                                 <span className="section-label-child">{data.jadwal_to_rute.tujuan_akhirs.nama_dermaga}</span>
@@ -109,7 +109,7 @@ const Tiket = () => {
                                                         <hr className="tiket-hr" />
                                                         <div className="row-custome-tiket">
                                                             <section className="boardingPass-icon col-xs-pessanger">
-                                                                <CIcon name="cil-user" className="mfe-2" />
+                                                                <FontAwesomeIcon icon={faUser} />
                                                             </section>
                                                             <section className="boardingPass-passenger col-xs-pessanger">
                                                                 <span className="section-label-child">Nahkoda</span>
@@ -123,7 +123,7 @@ const Tiket = () => {
                                                         <hr className="tiket-hr" />
                                                         <div className="row-custome-tiket">
                                                             <section className="boardingPass-icon col-xs-pessanger">
-                                                                <CIcon name="cil-moon" className="mfe-2" />
+                                                                <FontAwesomeIcon icon={faAnchor} />
                                                             </section>
                                                             <section className="boardingPass-passenger col-xs-pessanger">
                                                                 <span className="section-label-child">Kapal</span>
