@@ -113,6 +113,7 @@ const Penumpangs = () => {
                 window.location.reload()
             }
         })
+        // console.log(result);
         setPenumpangs(result.data)
 
         let datas = {
@@ -126,8 +127,8 @@ const Penumpangs = () => {
             }
         });
         console.log(laporan);
-        // setTotPenum(laporan.data)
-        // setTotJenis(laporan.data)
+        setTotPenum(laporan.data)
+        setTotJenis(laporan.data)
         // console.log(total);
     }
     

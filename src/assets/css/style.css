@@ -550,3 +550,26 @@ overflow: hidden;
 .c-link-pdf:hover{
   color: #022427;
 }
+
+.button-add {
+  background-color: #0a98c7;
+  color: white;
+}
+
+.button-remove{
+  background-color: #333333;
+  color: white;
+}
+.circle-count{
+  background-color: #eda364;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 20px;
+    font-weight: 900;
+    font-family: revert;
+}

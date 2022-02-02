@@ -393,7 +393,7 @@ const FormTiket = () => {
                                 <CLabel htmlFor="nameLabel">Nama  Penumpang</CLabel>
                                 <CInput id={"nameInput"} placeholder="Nama  Penumpang"
                                 onChange={(e) => { setNama(e.target.value); }}
-                                name="nama" value={nama} required required/>
+                                name="nama" value={nama} required/>
                             </CCol>
                             <CCol md="3">
                                   <CLabel htmlFor="statusLabel">Jenis Kelamin</CLabel>
