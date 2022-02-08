@@ -573,3 +573,7 @@ overflow: hidden;
     font-weight: 900;
     font-family: revert;
 }
+
+.no-margin-bottom{
+  margin-bottom: 5px;
+}
