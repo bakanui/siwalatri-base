@@ -71,7 +71,7 @@ const PenumpangHarian = () => {
           }
         })
         let results = result.data
-        console.log(result)
+        // console.log(result)
         let tmp = []
         // console.log(result.data)
         // if(results.message !== 'no data'){
