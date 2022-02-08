@@ -57,7 +57,7 @@ const Pengumuman = () => {
           }
         })
         setPengumuman(result.data.data.pengumumans)
-        console.log(result.data.data.pengumumans)
+        // console.log(result.data.data.pengumumans)
     }
 
     

@@ -60,7 +60,7 @@ const MasterTujuan = () => {
           }
         })
         setJenisTujuan(jenis.data)
-        console.log(jenis.data)
+        // console.log(jenis.data)
     }
 
     const submitHandler = (e) => {

@@ -199,10 +199,10 @@ const DetailKeberangkatan = () => {
             setShowFreePass(true)
             setFreePass(1)
             setTotalView(free_pass_harga)
-            console.log(free_pass_harga);
+            // console.log(free_pass_harga);
         }else{
-            console.log('au');
-            console.log(harga_tiket);
+            // console.log('au');
+            // console.log(harga_tiket);
             setShowFreePass(false)
             setFreePass(0)
             setTotalView(harga_tiket)
@@ -236,8 +236,8 @@ const DetailKeberangkatan = () => {
         harga_tiket:harga_tiketnya,
         ket_freepass:ket_free_pass
       }
-      console.log(id_penumpang);
-      console.log(datas);
+    //   console.log(id_penumpang);
+    //   console.log(datas);
 
       if(id_penumpang){
         axios.post(apiUrl + 'penumpang/'+id_penumpang, datas, headers)

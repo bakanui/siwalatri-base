@@ -76,7 +76,7 @@ const MasterRute = () => {
     const submitHandler = (e) => {
         const form = new FormData(e.target);
         e.preventDefault();
-        console.log(id);
+        // console.log(id);
         if(typeModal === 'Tambah'){
           let datas = {
             tujuan_awal: form.get('tujuan_awal'),

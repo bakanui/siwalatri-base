@@ -59,11 +59,11 @@ const MasterNahkodaArmada = () => {
           }
         })
         setNahkoda(result.data)
-        console.log(result.data)
+        // console.log(result.data)
 
         const kecakapan = await axios.get(apiUrl + 'kecakapan',headers)
         setKecakapan(kecakapan.data)
-        console.log(kecakapan.data)
+        // console.log(kecakapan.data)
 
     }
 
@@ -80,7 +80,7 @@ const MasterNahkodaArmada = () => {
           no_hp : form.get('no_hp'),
           id_kecakapan : form.get('id_kecakapan'),
         }
-        console.log(datas);
+        // console.log(datas);
         axios.post(apiUrl + 'auth/register_nahkoda', datas, headers)
         .then((res) => {
           // setTitle("Action completed")
@@ -106,7 +106,7 @@ const MasterNahkodaArmada = () => {
           no_hp : form.get('no_hp'),
           id_kecakapan : form.get('id_kecakapan'),
         }
-        console.log(datas);
+        // console.log(datas);
         axios.post(apiUrl + 'nahkoda/profile/'+id_nahkoda, datas, headers)
         .then((res) => {
           // setTitle("Action completed")

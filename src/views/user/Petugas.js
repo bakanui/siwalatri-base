@@ -72,7 +72,7 @@ const Petugas = () => {
             }
           })
           setPetugas(result.data)
-          console.log(result.data)
+          // console.log(result.data)
       }
 
       function clearState(){
@@ -93,7 +93,7 @@ const Petugas = () => {
         }
         axios.post(apiUrl + 'auth/register_armada', auth, headers)
         .then((res) => {
-              console.log(res);
+              // console.log(res);
               setTitle("Action completed")
               setMessage("Entry has successfully been posted!")
               setColor("bg-success text-white")

@@ -61,7 +61,7 @@ const MasterSOP = () => {
           }
         })
         setSOP(sops.data)
-        console.log(sops.data)
+        // console.log(sops.data)
     }
 
     const delSubmit = (e) => {

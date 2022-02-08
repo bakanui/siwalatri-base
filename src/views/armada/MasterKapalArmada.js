@@ -68,12 +68,12 @@ const MasterKapalArmada = () => {
           }
         })
         setKapal(result.data)
-        console.log(result.data)
+        // console.log(result.data)
 
         axios.get(apiUrl + 'jenis_kapal', headers)
         .then((res)=>{
           setJenisKapal(res.data)
-          console.log(res.data)
+          // console.log(res.data)
         })
         .catch(function (error) {
           if(error.response?.status === 401){
@@ -120,7 +120,7 @@ const MasterKapalArmada = () => {
             nama_kapal : form.get('nama_kapal'),
             id_armada : id
         }
-        console.log(datas);
+        // console.log(datas);
         axios.post(apiUrl + 'kapal', datas, headers)
         .then((res) => {
           // setTitle("Action completed")
@@ -155,7 +155,7 @@ const MasterKapalArmada = () => {
             id_status : form.get('id_status_kapal'),
             nama_kapal : form.get('nama_kapal'),
           }
-          console.log(datas);
+          // console.log(datas);
           axios.post(apiUrl + 'kapal/'+id_kapal, datas, headers)
           .then((res) => {
             // setTitle("Action completed")

@@ -73,7 +73,7 @@ const BulananOperator = () => {
             }
         }
 
-        console.log(head);
+        // console.log(head);
         
         const result = await axios.get(apiUrl + 'laporan/bulanan_armada', head)
         .catch(function (error) {
@@ -82,7 +82,7 @@ const BulananOperator = () => {
               window.location.reload()
           }
         })
-        console.log(result.data.penumpang)
+        // console.log(result.data.penumpang)
         setReport(result.data.penumpang)
     }
 

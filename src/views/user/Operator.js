@@ -66,7 +66,7 @@ const Operator = () => {
           }
         })
         setOperator(operators.data)
-        console.log(operators.data)
+        // console.log(operators.data)
     }
 
     const submitHandler = (e) => {
@@ -90,7 +90,7 @@ const Operator = () => {
 
             axios.post(apiUrl + 'armada', data, headers)
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 setModal(!modal)
                 clearState();
                 fetchData()

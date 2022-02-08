@@ -66,7 +66,7 @@ const MasterKapal = () => {
           }
         })
         setJenisKapal(jenis.data)
-        console.log(jenis.data)
+        // console.log(jenis.data)
     }
 
     const submitHandler = (e) => {

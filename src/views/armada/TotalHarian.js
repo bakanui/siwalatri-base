@@ -98,7 +98,7 @@ const TotalHarian = () => {
         }
         axios.get('http://dev.avatarsoftware.id:3006/manifest-data-view?offset=1&limit=5&sale_date=2022-01-31', head)
         .then((res) => {
-            console.log(res)
+            // console.log(res)
         })
         .catch(function (error) {
             if(error.response?.status === 401){

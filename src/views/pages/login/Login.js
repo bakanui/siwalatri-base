@@ -67,6 +67,7 @@ export default function Login({ setToken }) {
   const fetchData = async () => {
     const jad = await axios.get(apiUrl + 'jadwal_keberangkatan')
     setDataJadwal(jad.data)
+    // console.log(jad.data)
 
     const peng = await axios.get(apiUrl + 'pengumuman')
     setPengumuman(peng.data.data.pengumumans)

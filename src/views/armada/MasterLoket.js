@@ -57,7 +57,7 @@ const MasterLoket = () => {
         }
         })
         setLoket(result.data)
-        console.log(result.data)
+        // console.log(result.data)
     }
 
     const submitHandler = (e) => {
@@ -72,7 +72,7 @@ const MasterLoket = () => {
             id_armada : id,
             lokasi_loket : form.get('lokasi'),
           }
-          console.log(datas);
+        //   console.log(datas);
           axios.post(apiUrl + 'auth/register_loket', datas, headers)
           .then((res) => {
             // setTitle("Action completed")

@@ -72,7 +72,7 @@ const MasterDermaga = () => {
           }
         })
         setDermaga(result.data)
-        console.log(result.data)
+        // console.log(result.data)
 
         const result2 = await axios.get(apiUrl + 'user/syahbandar', headers)
         .catch(function (error) {
@@ -83,7 +83,7 @@ const MasterDermaga = () => {
         })
 
         setPetugas(result2.data)
-        console.log(result2.data)
+        // console.log(result2.data)
     }
 
     const submitHandler = (e) => {

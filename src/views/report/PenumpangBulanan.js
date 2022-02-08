@@ -40,6 +40,7 @@ const PenumpangBulanan = () => {
     const [dateFilter, setDateFilter] = useState(new Date());
     const todays = new Date()
     const { token } = useToken();
+    const [link_pdf, setLinkPdf] = useState('');
 
     const headers = {
         headers: {
@@ -97,9 +98,11 @@ const PenumpangBulanan = () => {
                 return( <></> )
             })
         }
-        console.log(tmp)
+        // console.log(tmp)
         setLaporan(tmp)
-        // setLaporan(result.data)
+
+        let links = apiUrl + 'laporan/bulanan_armada/detail/pdf?tanggal='+tanggal
+        setLinkPdf(links)
     }
 
     // const getKapals = async (id_kapal) => {
@@ -123,14 +126,14 @@ const PenumpangBulanan = () => {
                 showMonthYearPicker
                 showFullMonthYearPicker
             />
-           {/* <ReactToPdf targetRef={ref} filename="div-blue.pdf" options={options} x={.5} y={.5} scale={0.8}>
-                {({toPdf}) => (
-                    <button onClick={toPdf}>Generate pdf</button>
-                )}
-            </ReactToPdf>
-            <div style={{width: 500, height: 500, background: 'blue'}} ref={ref}/> */}
-            
             <div className='card' style={{padding:'10px'}}>
+            {(() => {
+                if(laporan.length !== 0){
+                    return(
+                        <div style={{textAlign:'end', margin:'10px 0'}}><a href={link_pdf} target="_blank"  className="btn c-link-pdf">Export Laporan Bulanan</a></div>
+                    )
+                }
+            })()}
                 <table className="table table-bordered table-hover table-responsive">
                     <thead>
                         <tr>
@@ -185,12 +188,12 @@ const PenumpangBulanan = () => {
                                 return(
                                     <tr key={index}>
                                         <td>{index+1}</td>
-                                        <td>Nama Kapal</td>
+                                        <td>{lap.nama_kapal}</td>
                                         <td>RI</td>
                                         <td>{lap.nama_armada}</td>
-                                        <td>panjang</td>
-                                        <td>lebar</td>
-                                        <td>panjang</td>
+                                        <td>{lap.panjang}</td>
+                                        <td>{lap.grt}</td>
+                                        <td>{lap.dwt}</td>
                                         <td><Moment format="MMMM">{lap.tanggal_laporan}</Moment></td>
                                         <td>-</td>
                                         <td>{lap.tujuan_awal_name}</td>
@@ -210,7 +213,7 @@ const PenumpangBulanan = () => {
                                         <td>-</td>
                                         <td>{lap.jml_penumpang}</td>
                                         <td>{lap.jml_penumpang}</td>
-                                        <td>-</td>
+                                        <td>{lap.count_trip}</td>
                                     </tr>
 
                                 )

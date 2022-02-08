@@ -126,7 +126,7 @@ const Penumpangs = () => {
                 window.location.reload()
             }
         });
-        console.log(laporan);
+        // console.log(laporan);
         setTotPenum(laporan.data)
         setTotJenis(laporan.data)
         // console.log(total);

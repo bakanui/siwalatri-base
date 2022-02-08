@@ -38,6 +38,7 @@ const PenumpangHarian = () => {
     const [dateFilter, setDateFilter] = useState(new Date());
     const todays = new Date()
     const { token } = useToken();
+    const [link_pdf, setLinkPdf] = useState('');
 
     const headers = {
         headers: {
@@ -92,8 +93,11 @@ const PenumpangHarian = () => {
             //     })
             // }
         // }
-        setLaporan(tmp)
-        // setLaporan(result.data)
+        // setLaporan(tmp)
+        setLaporan(result.data.details)
+
+        let links = apiUrl + 'laporan/harian_armada/detail/pdf?tanggal='+tanggal
+        setLinkPdf(links)
     }
 
     // const getKapals = async (id_kapal) => {
@@ -114,19 +118,15 @@ const PenumpangHarian = () => {
                 selected={dateFilter}
                 onChange={(date) => handleDateChange(date)} //only when value has changed
             />
+            
+            <div className='card' style={{padding:'10px'}}>
             {(() => {
                 if(laporan.length !== 0){
                     return(
-                        <div className='pull-right'>
-                            <CButton color="info">
-                                <CIcon name="cil-scrubber" /> Download sebagai PDF
-                            </CButton>
-                        </div>
+                        <div style={{textAlign:'end', margin:'10px 0'}}><a href={link_pdf} target="_blank"  className="btn c-link-pdf">Export Laporan Harian</a></div>
                     )
                 }
             })()}
-            
-            <div className='card' style={{padding:'10px'}}>
                 <table className="table table-bordered table-hover table-responsive">
                     <thead>
                         <tr>
@@ -184,16 +184,16 @@ const PenumpangHarian = () => {
                                         <td>Nama Kapal</td>
                                         <td>RI</td>
                                         <td>{lap.nama_armada}</td>
-                                        <td>panjang</td>
-                                        <td>lebar</td>
-                                        <td>panjang</td>
-                                        <td>{lap.tanggal_laporan}</td>
+                                        <td>{lap.panjang}</td>
+                                        <td>{lap.grt}</td>
+                                        <td>{lap.dwt}</td>
+                                        <td>{lap.created_at}</td>
                                         <td>-</td>
                                         <td>{lap.tujuan_awal_name}</td>
+                                        <td>{lap.created_at}</td>
                                         <td>-</td>
                                         <td>-</td>
-                                        <td>-</td>
-                                        <td>{lap.tanggal_laporan}</td>
+                                        <td>{lap.updated_at}</td>
                                         <td>-</td>
                                         <td>{lap.tujuan_akhir_name}</td>
                                         <td>-</td>
@@ -206,7 +206,7 @@ const PenumpangHarian = () => {
                                         <td>-</td>
                                         <td>{lap.jml_penumpang}</td>
                                         <td>{lap.jml_penumpang}</td>
-                                        <td>-</td>
+                                        <td>{lap.count_trip}</td>
                                     </tr>
 
                                 )

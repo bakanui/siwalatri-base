@@ -74,7 +74,7 @@ const Tiket = () => {
     const fetchData = async () => {
           const jad = await axios.get(apiUrl + 'jadwal_keberangkatan/index/'+id_armada, headers)
           setJadwalnya(jad.data.jadwal)
-          console.log(jad.data)
+        //   console.log(jad.data)
       }
 
     return(
