@@ -62,7 +62,7 @@ const DetailManifest = () => {
         setDatas(result.data.datas)
         setDetails(result.data.detail[0])
         setJenis(result.data.jenis)
-        let links = apiUrl + 'laporan/manifest/armada/'+id_jadwals+'/pdf?tanggal='+fil_date
+        let links = apiUrl + 'laporan/harian_armada/detail-non-history/'+id_jadwals+'?tanggal='+fil_date
         setLinkPdf(links)
     }
 
