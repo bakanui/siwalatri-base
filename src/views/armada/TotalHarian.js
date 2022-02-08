@@ -57,9 +57,9 @@ const TotalHarian = () => {
             headers: {
                 'Authorization': "bearer " + token 
             },
-            // params: {
-            //     tanggal: dayjs(todays).format('YYYY-MM-DD')
-            // },
+            params: {
+                tanggal: dayjs(todays).format('YYYY-MM-DD')
+            },
         }
         if(filter === true){
              head = {

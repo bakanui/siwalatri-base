@@ -103,7 +103,7 @@ const DetailApproval = () => {
         .then(async(res) => {
                 //approve to firebase database
                 await update(ref(database, 'rute_approval/' + id_jadwal), {
-                    status: 'approved'
+                    status: 'approve'
                 });
                 setTitle("Approval berhasil")
                 setMessage("Data telah berhasil diupdate!")

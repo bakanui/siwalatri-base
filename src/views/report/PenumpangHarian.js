@@ -181,7 +181,7 @@ const PenumpangHarian = () => {
                                 return(
                                     <tr key={index}>
                                         <td>{index+1}</td>
-                                        <td>Nama Kapal</td>
+                                        <td>{lap.nama_kapal}</td>
                                         <td>RI</td>
                                         <td>{lap.nama_armada}</td>
                                         <td>{lap.panjang}</td>

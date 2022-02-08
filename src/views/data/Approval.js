@@ -85,13 +85,13 @@ const Approval = () => {
                         { key: 'operator', label:'Operator', _style: { width: '20%'}},
                         { key: 'jadwal', label:'Jadwal', _style: { width: '20%'}},
                         { key: 'keberangkatan', label:'Keberangkatan', _style: { width: '20%'}},
-                        { key: 'nama_kapal', label:'kapal', _style: { width: '20%'}},
+                        { key: 'nama_kapal', label:'Kapal', _style: { width: '20%'}},
                         { key: 'status', label:'Status', _style: { width: '5%'}},
                         { key: 'total', label:'Total Penumpang', _style: { width: '5%'}},
                         { key: 'created_at', _style: { width: '10%'} },
                         { key: 'edit', label:'', _style: { width: '5%'}, sorter: false, filter: false },
                       ]}
-                      columnFilter
+                    //   columnFilter
                       button
                       hover
                       pagination
@@ -124,6 +124,12 @@ const Approval = () => {
                             <CBadge color={getBadge(item.status)}>
                                     {item.status}
                             </CBadge>
+                        </td>
+                        ),
+                        'total':
+                        (item)=>(
+                        <td>
+                                    {item.total ? item.total : '0'}
                         </td>
                         ),
                         'created_at':
