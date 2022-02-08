@@ -213,7 +213,7 @@ const FormTiketGroup = () => {
         _checked[index] = checked;
         list[index][name] = checked_form;
         setInputList(list);
-        console.log(checkeds)
+        // console.log(checkeds)
         // setAccordion(accordion === index ? null : index)
         setChecked(_checked);
       }
@@ -263,7 +263,7 @@ const FormTiketGroup = () => {
           }
         })
         setDataPenumpang(result.data.datas)
-        console.log(result.data)
+        // console.log(result.data)
         
   }
 
@@ -277,10 +277,10 @@ const FormTiketGroup = () => {
         setShowFreePass(true)
         setFreePass(1)
         setTotalView(free_pass_harga)
-        console.log(free_pass_harga);
+        // console.log(free_pass_harga);
     }else{
-        console.log('au');
-        console.log(harga_tiket);
+        // console.log('au');
+        // console.log(harga_tiket);
         setShowFreePass(false)
         setFreePass(0)
         setTotalView(harga_tiket)
