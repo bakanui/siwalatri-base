@@ -143,7 +143,7 @@ const TotalHarian = () => {
                                     onChange={(date) => handleDateChange(date)} //only when value has changed
                                 />
                             </div>
-                            <div className='col-xs-6 col-sm-6 col-md-6' style={{display:'flex',justifyContent:'flex-end',alignItems:'center'}}>
+                            {/* <div className='col-xs-6 col-sm-6 col-md-6' style={{display:'flex',justifyContent:'flex-end',alignItems:'center'}}>
                                 <CButton
                                 color="success"
                                 //  variant="outline"
@@ -153,7 +153,7 @@ const TotalHarian = () => {
                                 onClick={() => {setModal(true)}}
                                 >Sync Data Atix</CButton>
                             </div>
-                            
+                             */}
                         </div>
                         
                         <CDataTable

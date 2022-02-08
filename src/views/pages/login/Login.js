@@ -401,6 +401,13 @@ export default function Login({ setToken }) {
                                                   <b>Hujan Petir</b>
                                                 </>
                                               )
+                                            }else{
+                                              return(
+                                                <>
+                                                  <img className='image-weather' src={rain_light}></img>
+                                                  <b>Hujan Sedang</b>
+                                                </>
+                                              )
                                             }
                                           })()}
                                           <p className='no-margin'>{data.datetime}</p>
