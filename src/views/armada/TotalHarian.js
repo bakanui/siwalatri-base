@@ -15,6 +15,7 @@ import {
   CInput, 
   CSelect,
   CBadge,
+  CRow
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import useToken from '../../useToken';
@@ -85,7 +86,29 @@ const TotalHarian = () => {
         }
         })
         setTotalHarian(result.data)
-        console.log(result)
+        // console.log(result)
+    }
+
+    function getPenumpangFromAtix(){
+        let datenow = dayjs(todays).format('YYYY-MM-DD');
+        let head = {
+            headers: {
+                'X-AVATAR-KEY':'f3abeb0e61e6eee899082c1d1ead359ab458258dbcddac3647b4cd16f7a7812c',
+            }
+        }
+        axios.get('http://dev.avatarsoftware.id:3006/manifest-data-view?offset=1&limit=5&sale_date=2022-01-31', head)
+        .then((res) => {
+            console.log(res)
+        })
+        .catch(function (error) {
+            if(error.response?.status === 401){
+                localStorage.removeItem('access_token')
+                window.location.reload()
+            }
+        })
+
+        setModal(!modal)
+        
     }
 
     function handleDateChange(date){
@@ -112,11 +135,27 @@ const TotalHarian = () => {
     return(
         <>
                 <div className='grey-thead'>
-                        <DatePicker
-                            className='form-date'
-                            selected={dateFilter}
-                            onChange={(date) => handleDateChange(date)} //only when value has changed
-                        />
+                        <div className='row'>
+                            <div className='col-xs-6 col-sm-6 col-md-6'>
+                                <DatePicker
+                                    className='form-date'
+                                    selected={dateFilter}
+                                    onChange={(date) => handleDateChange(date)} //only when value has changed
+                                />
+                            </div>
+                            <div className='col-xs-6 col-sm-6 col-md-6' style={{display:'flex',justifyContent:'flex-end',alignItems:'center'}}>
+                                <CButton
+                                color="success"
+                                //  variant="outline"
+                                shape="square"
+                                size="sm"
+                                style={{height:'fit-content'}}
+                                onClick={() => {setModal(true)}}
+                                >Sync Data Atix</CButton>
+                            </div>
+                            
+                        </div>
+                        
                         <CDataTable
                             items={total_harian}
                             fields={[
@@ -266,6 +305,42 @@ const TotalHarian = () => {
                     <CModalBody>
                           <h5>Data Keberangkatan tidak ada</h5>
                     </CModalBody>
+                </CModal>
+
+                <CModal 
+                    show={modal} 
+                    onClose={() => {setModal(!modal);}}
+                    color='info'
+                    >
+                    <CModalHeader closeButton>
+                        <CModalTitle>Apakah Anda Yakin Ingin Melakukan Sync Data Penumpang Atix?</CModalTitle>
+                    </CModalHeader>
+                    <CForm method="post" encType="multipart/form-data" className="form-horizontal">
+                    <CModalBody>
+                          <CRow>
+                              <div className='col-xs-12 col-sm-12 xol-md-6 col-lg-6' style={{textAlign:'center'}}>
+                                        <CButton
+                                            color="danger"
+                                            shape="square"
+                                            size="lg"
+                                            onClick={() => setModal(!modal)}
+                                        >
+                                            Batal
+                                        </CButton>
+                                </div>
+                                <div className='col-xs-12 col-sm-12 xol-md-6 col-lg-6' style={{textAlign:'center'}}>
+                                        <CButton
+                                            color="success"
+                                            shape="square"
+                                            size="lg"
+                                            onClick={() => getPenumpangFromAtix()}
+                                        >
+                                            Ya, Lakukan
+                                        </CButton>
+                                </div>
+                          </CRow>
+                    </CModalBody>
+                    </CForm>
                 </CModal>
         </>
     )

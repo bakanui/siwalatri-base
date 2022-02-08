@@ -120,8 +120,9 @@ const DetailKeberangkatan = () => {
         const tik = await axios.get(apiUrl + 'jadwal_keberangkatan/view/tiket/'+id_keberangkatan, headers)
         setTikets(tik.data)
 
-        let links = apiUrl + 'laporan/manifest/armada/'+id_armadas+'/pdf?tanggal='+fil_date
+        let links = apiUrl + 'laporan/harian_armada/detail-non-history/'+id_keberangkatan+'?tanggal='+fil_date
         setLinkPdf(links)
+        console.log(links)
   }
 
   const getBadgeTujuan = (status)=>{

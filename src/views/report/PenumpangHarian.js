@@ -32,20 +32,6 @@ import 'moment-timezone';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from 'dayjs';
-import { 
-    PDFDownloadLink, 
-    Page, 
-    Document, 
-    StyleSheet,
-} from '@react-pdf/renderer';
-import { 
-    Table,
-    TableHeader,
-    TableCell,
-    TableBody,
-    DataTableCell 
-} from '@david.kucsai/react-pdf-table'
-import { TableRow } from '@david.kucsai/react-pdf-table/lib/TableRow';
 Moment.globalTimezone = 'Asia/Makassar';
 
 const PenumpangHarian = () => {
@@ -62,90 +48,11 @@ const PenumpangHarian = () => {
     // const [kapal, setKapal] = useState();
     // const ref = React.createRef();
 
-    const styles = StyleSheet.create({
-        page: {
-            orientation: 'landscape',
-        },
-        section: {
-          margin: 10,
-          padding: 20,
-          width: '100%',
-        }
-      });
-
     useEffect(() => {
         fetchData(todays,false)
         // eslint-disable-next-line
     }, [])
 
-
-    const MyDoc = () => (
-        <Document  >
-            <Page size="A4" style={styles.page} wrap>
-                <Table
-                    data={laporan}
-                >
-                    <TableHeader textAlign={"center"}>
-                        <TableRow>
-                            <TableCell rowSpan="3">No</TableCell>
-                            <TableCell rowSpan="3">Nama Kapal Jenis Pelayaran</TableCell>
-                            <TableCell rowSpan="3">Bendera</TableCell>
-                            <TableCell rowSpan="3">Pemilik/Agent</TableCell>
-                            <TableCell colSpan="3">Ukuran</TableCell>
-                            <TableCell colSpan="3">Tiba</TableCell>
-                            <TableCell colSpan="3">Tambat</TableCell>
-                            <TableCell colSpan="3">Berangkat</TableCell>
-                            <TableCell colSpan="4">Perdagangan Dalam Negeri</TableCell>
-                            <TableCell colSpan="4">Perdagangan Luar Negeri</TableCell>
-                            <TableCell colSpan="2">Penumpang</TableCell>
-                            <TableCell rowSpan="3">Ket/Trip</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell rowSpan="2">Panjang Kapal</TableCell>
-                            <TableCell rowSpan="2">GRT</TableCell>
-                            <TableCell rowSpan="2">DWT</TableCell>
-                            <TableCell rowSpan="2">Tgl</TableCell>
-                            <TableCell rowSpan="2">Jam</TableCell>
-                            <TableCell rowSpan="2">Pelabuhan Asal</TableCell>
-                            <TableCell rowSpan="2">Tgl</TableCell>
-                            <TableCell rowSpan="2">Jam</TableCell>
-                            <TableCell rowSpan="2">Jenis</TableCell>
-                            <TableCell rowSpan="2">Tgl</TableCell>
-                            <TableCell rowSpan="2">Jam</TableCell>
-                            <TableCell rowSpan="2">Pelabuhan Tujuan</TableCell>
-                            <TableCell colSpan="2">Bongkar</TableCell>
-                            <TableCell colSpan="2">Muat</TableCell>
-                            <TableCell colSpan="2">Import</TableCell>
-                            <TableCell colSpan="2">Export</TableCell>
-                            <TableCell rowSpan="2">Debar Kasi (Naik)</TableCell>
-                            <TableCell rowSpan="2">Embar Kasi (Turun)</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Jenis Brg/Hewan</TableCell>
-                            <TableCell>Jenis Kemasan</TableCell>
-                            <TableCell>Jenis Brg/Hewan</TableCell>
-                            <TableCell>Jenis Kemasan</TableCell>
-                            <TableCell>Jenis Brg/Hewan</TableCell>
-                            <TableCell>Jenis Kemasan</TableCell>
-                            <TableCell>Jenis Brg/Hewan</TableCell>
-                            <TableCell>Jenis Kemasan</TableCell>
-                        </TableRow>
-                    </TableHeader>
-                    {/* <TableBody>
-                        <DataTableCell getContent={(r) => r.no}/>
-                        <DataTableCell getContent={(r) => r.nama_operator}/>
-                        <DataTableCell getContent={(r) => r.nama_kapal}/>
-                        <DataTableCell getContent={(r) => r.nama_nahkoda}/>
-                        <DataTableCell getContent={(r) => r.keberangkatan}/>
-                        <DataTableCell getContent={(r) => r.status}/>
-                        <DataTableCell getContent={(r) => r.jml_penumpang}/>
-                        <DataTableCell getContent={(r) => r.waktu_berangkat}/>
-                        <DataTableCell getContent={(r) => r.waktu_sampai}/>
-                    </TableBody> */}
-                </Table>
-            </Page>
-        </Document>
-    );
 
     const fetchData = async (dates,filter) => {
         
@@ -163,28 +70,28 @@ const PenumpangHarian = () => {
           }
         })
         let results = result.data
-        // console.log(results)
+        console.log(result)
         let tmp = []
-        if(results.details.length > 0){
-            results.details.map((det)=>{
-                // let det_kap = getKapals(det.id_kapal)
-                // console.log(det_kap);
-                let det_lap = det
-                results.dermagas.map((derma) => {
-                    if(det.tujuan_awal === derma.id_dermaga){
-                        det_lap = {...det_lap, tujuan_awal_name: derma.nama_dermaga, tanggal_laporan:tanggal}
-                    }else if(det.tujuan_akhir === derma.id_dermaga){
-                        det_lap = {...det_lap, tujuan_akhir_name: derma.nama_dermaga, tanggal_laporan:tanggal}
-                    }
-                    return( <></> )
-                })
-                // console.log(kapal.dwt);
-                // det_lap = {...det_lap,  dwt: kapal.dwt, grt: kapal.grt, panjang_kapal: kapal.panjang}
-                tmp.push(det_lap)
-                return( <></> )
-            })
-        }
-        console.log(tmp)
+        // console.log(result.data)
+        // if(results.message !== 'no data'){
+            // if(results.details.length > 0){
+            //     results.details.map((det)=>{
+            //         // let det_kap = getKapals(det.id_kapal)
+            //         // console.log(det_kap);
+            //         let det_lap = det
+            //         results.dermagas.map((derma) => {
+            //             if(det.tujuan_awal === derma.id_dermaga){
+            //                 det_lap = {...det_lap, tujuan_awal_name: derma.nama_dermaga, tanggal_laporan:tanggal}
+            //             }else if(det.tujuan_akhir === derma.id_dermaga){
+            //                 det_lap = {...det_lap, tujuan_akhir_name: derma.nama_dermaga, tanggal_laporan:tanggal}
+            //             }
+            //             return( <></> )
+            //         })
+            //         tmp.push(det_lap)
+            //         return( <></> )
+            //     })
+            // }
+        // }
         setLaporan(tmp)
         // setLaporan(result.data)
     }
@@ -211,11 +118,9 @@ const PenumpangHarian = () => {
                 if(laporan.length !== 0){
                     return(
                         <div className='pull-right'>
-                        <PDFDownloadLink document={<MyDoc />} fileName="laporan_harian.pdf">
-                            {({ blob, url, loading, error }) => (loading ? 'Mohon menunggu...' : <CButton color="info">
-                            <CIcon name="cil-scrubber" /> Download sebagai PDF
-                            </CButton>)}
-                        </PDFDownloadLink>
+                            <CButton color="info">
+                                <CIcon name="cil-scrubber" /> Download sebagai PDF
+                            </CButton>
                         </div>
                     )
                 }
