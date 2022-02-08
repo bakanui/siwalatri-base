@@ -32,6 +32,8 @@ import dayjs from 'dayjs';
 import 'moment-timezone';
 import Toast from '../../reusable/toast'
 import ToastMaker from '../../reusable/toastMaker'
+import database from 'src/firebase_init';
+import { ref, update } from "firebase/database";
 
 Moment.globalTimezone = 'Asia/Makassar';
 const DetailApproval = () => {
@@ -98,7 +100,11 @@ const DetailApproval = () => {
             id: id_approval,
         }
         axios.post(apiUrl + 'jadwal_keberangkatan/proses/approval',datas, headers)
-        .then((res) => {
+        .then(async(res) => {
+                //approve to firebase database
+                await update(ref(database, 'rute_approval/' + id_jadwal), {
+                    status: 'approved'
+                });
                 setTitle("Approval berhasil")
                 setMessage("Data telah berhasil diupdate!")
                 setColor("bg-success text-white")
