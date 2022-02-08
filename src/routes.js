@@ -29,6 +29,7 @@ const FormTiket = React.lazy(() => import('./views/loket/tiket/FormTiket'));
 const FormTiketGroup = React.lazy(() => import('./views/loket/tiket/FormTiketGroup'));
 const TiketKeberangkatan = React.lazy(() => import('./views/armada/TiketKeberangkatan'));
 const Logout = React.lazy(() => import('./views/pages/Logout'));
+const TiketView = React.lazy(() => import('./views/dashboard/TiketView'));
 
 
 const routes = [
@@ -65,7 +66,8 @@ const routes = [
   { path: '/tiket/form-tiket-group/:id_jadwal/:kapasitas_penumpang', name: 'Form Tiket Group', component: FormTiketGroup, exact: true },
   { path: '/tiket-keberangkatan/:id_jadwal', name: 'Daftar Tiket Keberangkatan', component: TiketKeberangkatan, exact: true },
   { path: '/jadwal/tiket-keberangkatan/:id_jadwal', name: 'Daftar Tiket Keberangkatan', component: TiketKeberangkatan, exact: true },
-
+  { path: '/list-jadwal/:id_operator', name: 'List Jadwal', component: TiketView, exact: true  },
+  // { path: '/dashboard/list-jadwal/:id_operator', name: 'List Jadwal', component: TiketView, exact: true  },
 ];
 
 export default routes;

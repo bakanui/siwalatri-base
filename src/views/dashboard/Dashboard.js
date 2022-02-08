@@ -18,8 +18,10 @@ import Penumpangs from './../../components/Penumpangs'
 import { MapLocation } from 'src/reusable/MapLocation';
 import warningIcon from '../../assets/img/warning.png';
 import { ref, onValue } from "firebase/database";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAnchor, faShip, faUser } from '@fortawesome/free-solid-svg-icons'
 import database from 'src/firebase_init';
-
+import { Link } from 'react-router-dom';
 const Dashboard = () => {
   const postArmada = [
     {
@@ -145,11 +147,11 @@ const Dashboard = () => {
             if(data.nama_armada !== 'Padang Bai' && data.nama_armada !== 'El Rey'){
               return(
                       <div key={i} className={"card cards-custom card-"+i}>
-                        <div className="card__icon"><CIcon name="cil-scrubber" className="mfe-2" /></div>
+                        <div className="card__icon"><FontAwesomeIcon icon={faAnchor} /></div>
                         <h4 className="card__title">{data.nama_armada}</h4>
                         <h5 className="card__title_2">{data.kontak}</h5>
                         <p className="card__apply">
-                          <a href="/#" className="card__link" >Lihat Jadwal <CIcon name="cil-arrow-right" className="mfe-2" /></a>
+                            <Link to={"/list-jadwal/"+data.id_armada} className="card__link" >Lihat Jadwal <CIcon name="cil-arrow-right" className="mfe-2" /></Link>
                         </p>
                       </div>
               )
