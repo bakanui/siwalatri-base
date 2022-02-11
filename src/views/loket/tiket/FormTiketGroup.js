@@ -196,7 +196,10 @@ const FormTiketGroup = () => {
         const { name, value } = e.target;
         const list = [...inputList];
         list[index][name] = value;
-        console.log(index)
+        if(name == 'tiket_data'){
+          let data_tiket = value.split('|')
+          console.log(data_tiket[2])
+        }
         setInputList(list);
       };
 
@@ -217,16 +220,6 @@ const FormTiketGroup = () => {
         // setAccordion(accordion === index ? null : index)
         setChecked(_checked);
       }
-
-      // const showOrhide = (index) => {
-      //   if(index === accordion){
-      //     return 'Hide'
-      //   }else{
-      //     return 'Show'
-      //   }
-      // }
-
-
     
     const fetchData = async () => {
 
@@ -308,6 +301,31 @@ const FormTiketGroup = () => {
   }
 
   const submitHandler = (e) => {
+        const form = new FormData(e.target);
+        e.preventDefault();
+        let datas = []
+        inputList.map((res) => {
+            let data_tiket = res.tiket_data.split('|')
+            let pos = {
+                tanggal: form.get('tanggal'),
+                nama_penumpang: res.nama,
+                no_identitas: res.no_identitas,
+                id_jns_penum: data_tiket[0],
+                id_tujuan: form.get('id_tujuan'),
+                id_tiket: data_tiket[1],
+                id_jadwal: id_jadwal,
+                jenis_kelamin:res.jenis_kelamin,
+                alamat:form.get('alamat'),
+                status_verif:1,
+                freepass: 0,
+                harga_tiket:data_tiket[2],
+                ket_freepass:""
+            }
+            datas.push(pos)
+        })
+        console.log(datas)
+
+        //api group post penumpang
 
   }
 
@@ -459,7 +477,7 @@ const FormTiketGroup = () => {
                             )}
                             )
                             }
-                            <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
+                            {/* <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div> */}
                              <CRow>
                                 <CCol className='pt-3 d-flex justify-content-between'>
                                   <CButton className="button-add"  onClick={handleAddFields}>Add More</CButton>

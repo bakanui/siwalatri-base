@@ -13,98 +13,12 @@ import 'moment-timezone';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from 'dayjs';
-import { 
-    PDFDownloadLink, 
-    Page, 
-    Document, 
-    StyleSheet
-} from '@react-pdf/renderer';
-import { 
-    Table,
-    TableHeader,
-    TableCell,
-    TableBody,
-    DataTableCell 
-} from '@david.kucsai/react-pdf-table'
+import { Link } from 'react-router-dom';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
 const HarianOperator = () => {
 
-    const styles = StyleSheet.create({
-        page: {
-            flexDirection: 'row',
-            backgroundColor: '#E4E4E4'
-        },
-        section: {
-            margin: 10,
-            padding: 10,
-            flexGrow: 1
-        },
-        judul : {
-            fontSize: 10,
-            textTransform: "uppercase",
-            margin: 1
-        }
-    });
-
-    const MyDoc = () => (
-        <Document>
-            <Page style={{
-                flex: 1,
-                width: 500,
-                height: 500,
-                alignItems: 'flex-start',
-                padding: 20,
-            }}>
-                <Table
-                    data={reports}
-                >
-                    <TableHeader textAlign={"center"}>
-                        <TableCell>
-                            No.
-                        </TableCell>
-                        <TableCell>
-                            Nama Operator
-                        </TableCell>
-                        <TableCell>
-                            Nama Kapal
-                        </TableCell>
-                        <TableCell>
-                            Nama Nahkoda
-                        </TableCell>
-                        <TableCell>
-                            Keberangkatan
-                        </TableCell>
-                        <TableCell>
-                            Status
-                        </TableCell>
-                        <TableCell>
-                            Jml Penumpang
-                        </TableCell>
-                        <TableCell>
-                            Waktu Berangkat
-                        </TableCell>
-                        <TableCell>
-                            Waktu Sampai
-                        </TableCell>
-                    </TableHeader>
-                    <TableBody>
-                        <DataTableCell getContent={(r) => r.no}/>
-                        <DataTableCell getContent={(r) => r.nama_operator}/>
-                        <DataTableCell getContent={(r) => r.nama_kapal}/>
-                        <DataTableCell getContent={(r) => r.nama_nahkoda}/>
-                        <DataTableCell getContent={(r) => r.keberangkatan}/>
-                        <DataTableCell getContent={(r) => r.status}/>
-                        <DataTableCell getContent={(r) => r.jml_penumpang}/>
-                        <DataTableCell getContent={(r) => r.waktu_berangkat}/>
-                        <DataTableCell getContent={(r) => r.waktu_sampai}/>
-                    </TableBody>
-                </Table>
-            </Page>
-        </Document>
-    );
-    
     const todays = new Date()
     const { token } = useToken();
 
@@ -144,6 +58,7 @@ const HarianOperator = () => {
               window.location.reload()
           }
         })
+        console.log(result.data.penumpang)
         setReport(result.data.penumpang)
     }
 
@@ -186,6 +101,7 @@ const HarianOperator = () => {
                 { key: 'jml_penumpang', label:'Jml Penumpang', _style: { width: '1%'} },
                 { key: 'tanggal_berangkat', label:'Waktu Berangkat', _style: { width: '5%'} },
                 { key: 'tanggal_sampai', label:'Waktu Sampai', _style: { width: '5%'} },
+                { key: 'aksi', label:'#', _style: { width: '1%'} },
                 ]}
                 columnFilter
                 button
@@ -215,6 +131,21 @@ const HarianOperator = () => {
                     <td>
                        {item.tujuan_awal}  <CIcon name="cil-arrow-right" className="mfe-2" /> {item.tujuan_akhir} 
                     </td>
+                    ),
+                    'aksi':
+                    (item)=>(
+                        <td>
+                            <Link to={"/detail-keberangkatan-petugas/"+item.id_jadwal+"/"+dayjs(dateFilter).format('YYYY-MM-DD')}>
+                                <CButton
+                                    color="primary"
+                                    variant="outline"
+                                    shape="square"
+                                    size="sm"
+                                >
+                                    Details
+                                </CButton>
+                            </Link>
+                        </td>
                     ),
                 }}
             />

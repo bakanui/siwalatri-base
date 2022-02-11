@@ -577,3 +577,25 @@ overflow: hidden;
 .no-margin-bottom{
   margin-bottom: 5px;
 }
+
+.padd-wisata {
+  padding: 10px 37px 10px 10px;
+}
+.slick-for-bmkg{
+  padding: 10px 10px 10px 37px;
+}
+
+.slick-for-announce {
+  padding: 10px 10px 10px 37px;
+}
+
+@media (max-width:750px){
+  .content{
+    margin: unset;
+    padding: 1rem;
+  }
+
+  .padd-wisata, .padd-bmkg, .slick-for-bmkg, .slick-for-announce{
+    padding: 1.2rem;
+  }
+}

@@ -37,6 +37,11 @@ const _nav_syahbandar =  [
           name: 'Bulanan Operator',
           to: '/bulanan-operator',
         },
+        // {
+        //   _tag: 'CSidebarNavItem',
+        //   name: 'Manifest',
+        //   to: '/laporan-manifest',
+        // },
         {
           _tag: 'CSidebarNavItem',
           name: 'Laporan Penumpang Harian',

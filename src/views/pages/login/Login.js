@@ -209,7 +209,7 @@ export default function Login({ setToken }) {
         </div>
         <div className='content'>
           <div className='row'>
-              <CCol xs="12" md="6">
+              <CCol xs="12" sm="12" md="6">
                 <ul className="content scroll" style={{overflow:'hidden'}}>
                 <Slider {...settings}>
                   {
@@ -255,7 +255,7 @@ export default function Login({ setToken }) {
                   </Slider>
                 </ul>
               </CCol>
-              <CCol xs="12" md="6" style={{padding:'10px 37px 10px 10px'}}>
+              <CCol xs="12" sm="12" md="6">
                 <div className='slick-for-wisatas'>
                       <Slider {...settingsWisata}>
                           {
@@ -276,7 +276,7 @@ export default function Login({ setToken }) {
               </CCol>
           </div>
           <CRow>
-            <CCol xs="12" md="6" style={{padding:'10px 10px 10px 37px'}}>
+            <CCol xs="12" sm="12" md="6" >
               <div className='slick-for-bmkg'>
               <Slider {...settingsWeather}>
                     {
@@ -419,7 +419,7 @@ export default function Login({ setToken }) {
               </Slider>
               </div>
             </CCol>
-            <CCol xs="12" md="6" className="slick-for-announce" style={{padding:'10px 35px 10px 10px'}}>
+            <CCol xs="12" sm="12" md="6" className="slick-for-announce" >
               <Slider {...settingsAnnounce}>
                   {
                       pengumumans.map((data,index) => {

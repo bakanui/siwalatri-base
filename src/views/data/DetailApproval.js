@@ -34,12 +34,14 @@ import Toast from '../../reusable/toast'
 import ToastMaker from '../../reusable/toastMaker'
 import database from 'src/firebase_init';
 import { ref, update } from "firebase/database";
+import { Link } from 'react-router-dom';
 
 Moment.globalTimezone = 'Asia/Makassar';
 const DetailApproval = () => {
     const { id_jadwal, total_penumpang, id_approval } = useParams();
     const { token, id } = useToken();
     const [modal, setModal] = useState(false)
+    const [modalSuccess, setModalSuccess] = useState(false)
     const todays = new Date()
     
     //Toast
@@ -111,6 +113,7 @@ const DetailApproval = () => {
                 fetchData();
                 addToast()
                 setModal(false)
+                setModalSuccess(true)
                 // window.location.reload("")
         })
 
@@ -330,6 +333,30 @@ const DetailApproval = () => {
                                 <CIcon name="cil-scrubber" /> Ya
                             </CButton>{' '}
                             <CButton color="secondary" onClick={() => setModal(!modal)}>Batalkan</CButton>
+                        </CModalFooter>
+                    </CModal>
+
+
+                    <CModal 
+                    show={modalSuccess} 
+                    onClose={() => setModalSuccess(!modalSuccess)}
+                    color='success'
+                    closeOnBackdrop={false}
+                    >
+                        <CModalHeader closeButton={false}>
+                            <CModalTitle>Approval Success</CModalTitle>
+                        </CModalHeader>
+                        <CModalBody>
+                            <p>Approval Keberangkatan sudah berhasil!</p>
+                        </CModalBody>
+                        <CModalFooter>
+                            <Link to={"/approval"}>
+                            <CButton  color="primary">
+                                <CIcon name="cil-scrubber" /> Cek List Approval
+                            </CButton></Link>{' '}
+                            <Link to={"/harian-operator"}>
+                                <CButton color="secondary" >Cek List Keberangkatan</CButton>
+                            </Link>
                         </CModalFooter>
                     </CModal>
         </>

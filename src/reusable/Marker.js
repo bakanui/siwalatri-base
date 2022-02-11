@@ -49,6 +49,7 @@ export default class Marker extends Component{
 
   render() {
     const { show, loading, data } = this.state;
+    console.log(data)
     return (
        <div>
          {show && loading ?
