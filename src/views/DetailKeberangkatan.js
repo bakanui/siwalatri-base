@@ -47,6 +47,7 @@ const DetailKeberangkatan = () => {
     const [jadwalnya, setJadwalnya] = useState([]);
     const [tiketJadwal, setTikets] = useState([]);
     const [link_pdf, setLinkPdf] = useState('');
+    const [link_pdf2, setLinkPdf2] = useState('');
 
 
     //Toast
@@ -123,6 +124,9 @@ const DetailKeberangkatan = () => {
         let links = apiUrl + 'laporan/harian_armada/detail-non-history/'+id_keberangkatan+'?tanggal='+fil_date
         setLinkPdf(links)
         console.log(links)
+
+        let links2 = apiUrl + 'laporan/harian_armada/detail-non-history2/'+id_keberangkatan+'?tanggal='+fil_date
+        setLinkPdf2(links2)
   }
 
   const getBadgeTujuan = (status)=>{
@@ -277,7 +281,7 @@ const DetailKeberangkatan = () => {
     return(
         <>
           <Toast toasters={toasters} message={message} title={title} color={color}/>
-          <div style={{textAlign:'end', margin:'10px 0'}}><a href={link_pdf} target="_blank"  className="btn c-link-pdf">Export Manifest</a><a href={link_pdf} target="_blank"  className="btn c-link-pdf">Export Manifest Loket</a></div>
+          <div style={{textAlign:'end', margin:'10px 0'}}><a href={link_pdf} target="_blank"  className="btn c-link-pdf">Export Manifest</a><a href={link_pdf2} target="_blank"  className="btn c-link-pdf">Export Manifest Loket</a></div>
           <div>
                   <CRow>
                         {

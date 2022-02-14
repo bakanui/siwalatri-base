@@ -87,7 +87,7 @@ export default class Marker extends Component{
             </div>
             <div className='row-flex-space-between'>
               <p className='text-bold'>Jumlah Penumpang</p>
-              <p className='text-bold'>{data.total || '-'} orang</p>
+              <p className='text-bold'>{data.total_penumpang || '-'} orang</p>
             </div>
             <button onClick={this._hideTootips} className="btn btn-primary btn-block btn-blue">Tutup</button>
           </div>

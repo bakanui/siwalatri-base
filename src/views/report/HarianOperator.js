@@ -114,7 +114,7 @@ const HarianOperator = () => {
                 scopedSlots = {{
                     'no':
                     (item, index)=>(
-                        <td>
+                        <td key={index}>
                             {index + 1}
                         </td>
                     ),
@@ -131,6 +131,12 @@ const HarianOperator = () => {
                     <td>
                        {item.tujuan_awal}  <CIcon name="cil-arrow-right" className="mfe-2" /> {item.tujuan_akhir} 
                     </td>
+                    ),
+                    'tanggal_sampai':
+                    (item, index)=>(
+                        <td>
+                            {item.tanggal_sampai ? item.tanggal_sampai : '-'}
+                        </td>
                     ),
                     'aksi':
                     (item)=>(

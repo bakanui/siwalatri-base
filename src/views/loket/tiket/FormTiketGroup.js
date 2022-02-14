@@ -32,7 +32,7 @@ import { apiUrl } from './../../../reusable/constants'
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAnchor, faShip, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faAnchor, faShip, faUser, faTimes } from '@fortawesome/free-solid-svg-icons'
 import 'moment-timezone';
 import Toast from './../../../reusable/toast';
 import ToastMaker from './../../../reusable/toastMaker';
@@ -185,10 +185,18 @@ const FormTiketGroup = () => {
       setInputList(values);
     };
 
-    const handleRemoveFields = index => {
-      const values = [...inputList];
-      if(values.length > 1)  values.pop();
-      setInputList(values);
+    const handleRemoveFields = (index) => {
+      const list = [...inputList];
+      // console.log(list[index]['tiket_data'])
+      if(list[index]['tiket_data'].length !== 0){
+        let data_tiket = list[index]['tiket_data'].split('|')
+        let total_view = view_total;
+        total_view = total_view - parseInt(data_tiket[2])
+        setTotalView(total_view);
+      }
+      list.splice(index, 1); 
+      setInputList(list);
+ 
     };
 
      // handle input change
@@ -196,9 +204,12 @@ const FormTiketGroup = () => {
         const { name, value } = e.target;
         const list = [...inputList];
         list[index][name] = value;
+        var tot = parseInt(view_total);
         if(name == 'tiket_data'){
           let data_tiket = value.split('|')
-          console.log(data_tiket[2])
+          tot = tot + parseInt(data_tiket[2])
+          console.log(view_total)
+          setTotalView(tot);
         }
         setInputList(list);
       };
@@ -304,8 +315,15 @@ const FormTiketGroup = () => {
         const form = new FormData(e.target);
         e.preventDefault();
         let datas = []
+        
         inputList.map((res) => {
             let data_tiket = res.tiket_data.split('|')
+            let harga = data_tiket[2]
+            let keterangan = ''
+            if(res.free_pass == 1){
+              harga = res.free_pass_harga
+              keterangan = res.ket_free_pass
+            }
             let pos = {
                 tanggal: form.get('tanggal'),
                 nama_penumpang: res.nama,
@@ -317,15 +335,39 @@ const FormTiketGroup = () => {
                 jenis_kelamin:res.jenis_kelamin,
                 alamat:form.get('alamat'),
                 status_verif:1,
-                freepass: 0,
-                harga_tiket:data_tiket[2],
-                ket_freepass:""
+                freepass: res.free_pass,
+                harga_tiket: harga,
+                ket_freepass: keterangan
             }
             datas.push(pos)
         })
-        console.log(datas)
-
-        //api group post penumpang
+        let ultimate = {
+          data: datas
+        }
+        
+        axios.get(apiUrl + 'penumpang/total/'+id_jadwal, header)
+        .then((res) => {
+            if(res.data[0].total < kapasitas_penumpang){
+              //api group post penumpang
+              axios.post(apiUrl + 'penumpang-group', ultimate, header)
+              .then((res) => {
+                setTitle("Penambahan data penumpang berhasil")
+                setMessage("Data telah berhasil ditambahkan!")
+                setColor("bg-success text-white")
+                fetchData();
+                addToast()
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000)
+              }).catch((error) => {
+                setTitle("Terjadi kesalahan")
+                setMessage(error?.response?.data?.message)
+                setColor("bg-danger text-white")
+                fetchData()
+                addToast()
+              })
+            }
+        })
 
   }
 
@@ -448,7 +490,7 @@ const FormTiketGroup = () => {
                                   </CCol>
                                 </CFormGroup>
                                 <CFormGroup row>
-                                  <CCol xs="11" md="6">
+                                  <CCol xs="10" md="6">
                                       <input 
                                       type="checkbox"
                                         style={{position:'relative', margin:'10px 5px'}}
@@ -459,9 +501,9 @@ const FormTiketGroup = () => {
                                       />
                                       <CLabel htmlFor={'free_pass'+index}>Free Pass Tiket</CLabel>
                                   </CCol>
-                                  <CCol xs="hidden" md="5">
+                                  <CCol xs="hidden" md="4">
                                   </CCol>
-                                  <CCol xs="1" md="1" style={{display:'flex',justifyContent:'flex-end'}}>
+                                  <CCol xs="2" md="2" style={{display:'flex',justifyContent:'flex-end'}}>
                                           <div className='circle-count' >{index+1}</div>
                                   </CCol>
                                 </CFormGroup>
@@ -473,6 +515,15 @@ const FormTiketGroup = () => {
                                         </CCol>
                                   </CFormGroup>
                                 </CCollapse>
+                                {(() => {
+                                  if(index !== 0){
+                                    return(
+                                      <div style={{textAlign:'end'}}>
+                                        <CButton style={{width:'fit-content',fontWeight:'700'}} className="button-remove"  onClick={() => {handleRemoveFields(index)}}><FontAwesomeIcon icon={faTimes} /> Hapus</CButton>
+                                      </div>
+                                    )
+                                  }
+                                })()}
                               </div>
                             )}
                             )
@@ -481,7 +532,7 @@ const FormTiketGroup = () => {
                              <CRow>
                                 <CCol className='pt-3 d-flex justify-content-between'>
                                   <CButton className="button-add"  onClick={handleAddFields}>Add More</CButton>
-                                  <CButton className="button-remove"  onClick={handleRemoveFields}>Remove</CButton>
+                                  
                                 </CCol>
                             </CRow>
                             <hr style={{borderColor:'black', margin:'40px 0'}}></hr>
@@ -492,11 +543,49 @@ const FormTiketGroup = () => {
                             </div>
                           </CForm>
                           <div className='pull-right' style={{padding:'1rem',float:'right'}}>
-                              <h4><b>{"Rp. "+ (Number(view_total)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</b></h4>
+                              {/* <h4><b>{"Rp. "+ (Number(view_total)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</b></h4> */}
                           </div>
                         </div>
                   </CCol>
               </CRow>
+
+              <div className='card'>
+                          <CDataTable
+                            items={data_penumpang}
+                            fields={[
+                                { key: 'no', _style: { width: '1%'}},
+                                { key: 'nama_penumpang', _style: { width: '10%'} },
+                                { key: 'no_identitas', _style: { width: '10%'} },
+                                { key: 'alamat', _style: { width: '15%'} },
+                                { key: 'harga_tiket', _style: { width: '5%'} },
+                                { key: 'jenis_kelamin', _style: { width: '5%'} },
+                                { key: 'nama_jns_penum', label:'Jenis Penumpang' , _style: { width: '10%'} },
+                            ]}
+                            columnFilter
+                            // tableFilter
+                            button
+                            hover
+                            pagination
+                            bordered
+                            striped
+                            size="sm"
+                            itemsPerPage={10}
+                            scopedSlots = {{
+                                'no':
+                                  (item,index)=>(
+                                  <td key={index}>
+                                      {index+1}
+                                  </td>
+                                  ),
+                                  'jenis_kelamin':
+                                  (item) => (
+                                    <td>
+                                      {item.jenis_kelamin == 0 ? 'Laki Laki' : 'Wanita'}
+                                    </td>
+                                  )
+                            }}
+                          />
+                </div>
             </>
         )
 

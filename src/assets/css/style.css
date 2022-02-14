@@ -557,8 +557,9 @@ overflow: hidden;
 }
 
 .button-remove{
-  background-color: #333333;
+  background-color: #c72f2f;
   color: white;
+  border-radius: 30px;
 }
 .circle-count{
   background-color: #eda364;
