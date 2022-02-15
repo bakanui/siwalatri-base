@@ -43,10 +43,12 @@ const TiketKeberangkatan = () => {
     timeout: 10000 
   }
   const [datas, setData] = useState([]);
+  const [detail_jadwal, setDetailJadwal] = useState([]);
   const [jenisPenumpang, setJenisPenumpang] = useState([]);
 
   const [typeModal, setTypeModal] = useState()  
   const [modal, setModal] = useState(false)
+  const [modalsec, setModalSecond] = useState(false)
   const [delmodal, setModalDelete] = useState(false)
   const [id_tiket, setIdTiket] = useState(0);
   const [nama_tiket, setNamaTiket] = useState('');
@@ -74,8 +76,17 @@ const TiketKeberangkatan = () => {
             window.location.reload()
         }
       })
-      setData(result.data)
       console.log(result.data)
+      setData(result.data)
+      const jadwal = await axios.get(apiUrl + 'jadwal_keberangkatan/view/'+id_jadwal, headers)
+      .catch(function (error) {
+        if(error.response?.status === 401){
+            localStorage.removeItem('access_token')
+            window.location.reload()
+        }
+      })
+      setDetailJadwal(jadwal.data)
+      console.log(jadwal.data)
       const jenis = await axios.get(apiUrl + 'jenis_penumpang', headers)
       .catch(function (error) {
         if(error.response?.status === 401){
@@ -180,25 +191,110 @@ const TiketKeberangkatan = () => {
     }
   }
 
+  const sendAtixHandler = (e) => { //send data to atix handler
+      let tiket_mancanegara = _.filter(datas, {  'id_jns_penum': 2 });
+      // console.log(tiket_mancanegara)
+      let tiket_domestik = _.filter(datas, {  'id_jns_penum': 1 });
+      let data_mancanegara = {
+          ticket_name: tiket_mancanegara[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
+          ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
+          ticket_type: "mancanegara",
+          price_adult: tiket_mancanegara[0].harga,
+          price_child: tiket_mancanegara[1].harga,
+          label_child: "Anak-Anak",
+          label_adult: "Dewasa",
+          id_merchant: 131,
+          idtiket_siwalatri_adult: tiket_mancanegara[0].id,
+          idtiket_siwalatri_child: tiket_mancanegara[1].id,
+          idjadwal_siwalatri: detail_jadwal.id_jadwal,
+          kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
+      }
+
+      let data_nusantara = {
+        ticket_name: tiket_domestik[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
+        ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
+        ticket_type: "nusantara",
+        price_adult: tiket_domestik[0].harga,
+        price_child: tiket_domestik[1].harga,
+        label_child: "Anak-Anak",
+        label_adult: "Dewasa",
+        id_merchant: 131,
+        idtiket_siwalatri_adult: tiket_domestik[0].id,
+        idtiket_siwalatri_child: tiket_domestik[1].id,
+        idjadwal_siwalatri: detail_jadwal.id_jadwal,
+        kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
+    }
+      let head = {
+        headers: {
+            'X-AVATAR-KEY':'f3abeb0e61e6eee899082c1d1ead359ab458258dbcddac3647b4cd16f7a7812c',
+        }
+      }
+      axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_mancanegara, head)
+      .then((res) => {
+          if(res.data.code === 200){
+              axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_nusantara, head)
+              .then((rest) => {
+                if(rest.data.code == 200){
+                    //update jadwal status send
+                    setTitle("Kirim Jadwal Ke Atix Berhasil")
+                    setMessage("Data telah berhasil dikirim!")
+                    setColor("bg-success text-white")
+                    setModalSecond(!modalsec)
+                    fetchData();
+                    addToast()
+                }
+              })
+          }
+      })
+
+
+  }
+
 
 
   return(
     <>
     <Toast toasters={toasters} message={message} title={title} color={color}/>
-          <CButton
-              color="info"
-              variant="outline"
-              shape="square"
-              size="sm" 
-              style={{margin:'10px 0'}}
-              onClick={() => 
-                  {
-                      setTypeModal('Tambah')
-                      setModal(true)
-                  }}
-              >
-              Tambah Tiket keberangkatan
-          </CButton>
+          <div className='row'>
+              <div className='col-xs-6 col-sm-6 col-md-6'>
+                  <CButton
+                      color="info"
+                      variant="outline"
+                      shape="square"
+                      size="sm" 
+                      style={{margin:'10px 0'}}
+                      onClick={() => 
+                          {
+                              setTypeModal('Tambah')
+                              setModal(true)
+                          }}
+                      >
+                      Tambah Tiket keberangkatan
+                  </CButton>
+              </div>
+              <div className='col-xs-6 col-sm-6 col-md-6' style={{textAlign:'end'}}>
+                  {(() => {
+                    if(detail_jadwal.status_kirim_mitra === 0){
+                        return(
+                            <CButton
+                              color="success"
+                              variant="outline"
+                              shape="square"
+                              size="sm" 
+                              style={{margin:'10px 0'}}
+                              onClick={() => 
+                                  {
+                                      setModalSecond(true)
+                                  }}
+                              >
+                              Kirim Jadwal Ke Atix
+                          </CButton>
+                        )
+                      }
+                  })()}
+              </div>
+          </div>
+         
           <CCard style={{padding:'1rem 1rem'}}>
                            
                 <CDataTable
@@ -337,6 +433,25 @@ const TiketKeberangkatan = () => {
                                   <CButton color="secondary" onClick={() => setModalDelete(!delmodal)}>Cancel</CButton>
                               </CModalFooter>
                               </CForm>
+                          </CModal>
+                        
+                          <CModal 
+                          show={modalsec} 
+                          onClose={() => setModalSecond(!modalsec)}
+                          color='info'
+                          >
+                              <CModalHeader closeButton>
+                                  <CModalTitle>Konfirmasi</CModalTitle>
+                              </CModalHeader>
+                              <CModalBody>
+                                  <p>Apakah anda yakin untuk mengirim jadwal ini ke Atix?</p>
+                              </CModalBody>
+                              <CModalFooter>
+                                  <CButton type="submit" color="primary" onClick={() => sendAtixHandler()}>
+                                      <CIcon name="cil-scrubber" /> Ya
+                                  </CButton>{' '}
+                                  <CButton color="secondary" onClick={() => setModalSecond(!modalsec)}>Batalkan</CButton>
+                              </CModalFooter>
                           </CModal>
 
     </>
