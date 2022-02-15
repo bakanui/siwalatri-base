@@ -193,8 +193,9 @@ const TiketKeberangkatan = () => {
 
   const sendAtixHandler = (e) => { //send data to atix handler
       let tiket_mancanegara = _.filter(datas, {  'id_jns_penum': 2 });
-      // console.log(tiket_mancanegara)
+    //   // console.log(tiket_mancanegara)
       let tiket_domestik = _.filter(datas, {  'id_jns_penum': 1 });
+      if(tiket_mancanegara.length !== 0 && tiket_domestik !== 0){
       let data_mancanegara = {
           ticket_name: tiket_mancanegara[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
           ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
@@ -246,6 +247,14 @@ const TiketKeberangkatan = () => {
               })
           }
       })
+    }else{
+        setTitle("Kirim Jadwal Gagal")
+        setMessage("Data Tiket harus tersedia mancanegara dan domestik")
+        setColor("bg-danger text-white")
+        setModalSecond(!modalsec)
+        fetchData();
+        addToast()
+    }
 
 
   }
