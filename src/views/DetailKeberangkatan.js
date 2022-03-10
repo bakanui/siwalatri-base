@@ -417,7 +417,23 @@ const DetailKeberangkatan = () => {
                                             size="sm"
                                             onClick={()=>{
                                                 setTypeModal('Edit')
+                                                setIdJadwal(item.id_jadwal)
+                                                setIdPenumpang(item.id_penumpang)
+                                                setIdTiket(item.id_tiket)
+                                                setNama(item.nama_penumpang)
+                                                setAlamat(item.alamat)
+                                                setIdJenisPenum(item.id_jns_penum)
+                                                setIdTujuan(item.id_tujuan)
+                                                setJenisKelamin(item.jenis_kelamin)
+                                                setNoIdentitas(item.no_identitas)
+                                                setHargaTiket(item.harga_tiket)
+                                                setFreePass(item.freepass)
+                                                setKetFreePass(item.ket_freepass)
+                                                setStatusVerif(item.status_verif)
+                                                setTotalView(item.harga_tiket)
                                                 setModal(true)
+                                                setShowFreePass(item.freepass == 1 ? true : false)
+                                                setFreePassHarga(item.freepass == 1 ? item.harga_tiket : 0)
                                             }}
                                             >
                                             Edit
@@ -512,10 +528,10 @@ const DetailKeberangkatan = () => {
                                   <CLabel htmlFor="statusLabel">Status Penumpang</CLabel>
                                   <CSelect custom name="status_verif"  id={"statusLabel"} onChange={(e) => { setStatusVerif(e.target.value); }} required>
                                         {(() => {
-                                            if(status_verif && status_verif === 1){
+                                            if(status_verif == 1){
                                                 return(
                                                     <>
-                                                        <option value={1}>Sudah Bayar</option>
+                                                        <option value={1} selected>Sudah Bayar</option>
                                                         <option value={0}>Belum Bayar</option>  
                                                     </>
                                                 )
@@ -523,7 +539,7 @@ const DetailKeberangkatan = () => {
                                                 return(
                                                     <>
                                                         <option value={1}>Sudah Bayar</option>
-                                                        <option value={0}>Belum Bayar</option>  
+                                                        <option value={0} selected>Belum Bayar</option>  
                                                     </>
                                                 )
                                             }
