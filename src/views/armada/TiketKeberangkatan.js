@@ -193,7 +193,7 @@ const TiketKeberangkatan = () => {
 
   const sendAtixHandler = (e) => { //send data to atix handler
       let tiket_mancanegara = _.filter(datas, {  'id_jns_penum': 2 });
-    //   // console.log(tiket_mancanegara)
+      console.log('push to atix')
       let tiket_domestik = _.filter(datas, {  'id_jns_penum': 1 });
       if(tiket_mancanegara.length !== 0 && tiket_domestik !== 0){
       let data_mancanegara = {
@@ -204,7 +204,7 @@ const TiketKeberangkatan = () => {
           price_child: tiket_mancanegara[1].harga,
           label_child: "Anak-Anak",
           label_adult: "Dewasa",
-          id_merchant: detail_jadwal.jadwal_to_kapal.id_merchant_atix,
+          id_kapal_sw: detail_jadwal.jadwal_to_kapal.id_kapal,
           idtiket_siwalatri_adult: tiket_mancanegara[0].id,
           idtiket_siwalatri_child: tiket_mancanegara[1].id,
           idjadwal_siwalatri: detail_jadwal.id_jadwal,
@@ -219,7 +219,7 @@ const TiketKeberangkatan = () => {
         price_child: tiket_domestik[1].harga,
         label_child: "Anak-Anak",
         label_adult: "Dewasa",
-        id_merchant: detail_jadwal.jadwal_to_kapal.id_merchant_atix,
+        id_kapal_sw: detail_jadwal.jadwal_to_kapal.id_kapal,
         idtiket_siwalatri_adult: tiket_domestik[0].id,
         idtiket_siwalatri_child: tiket_domestik[1].id,
         idjadwal_siwalatri: detail_jadwal.id_jadwal,
@@ -232,10 +232,10 @@ const TiketKeberangkatan = () => {
       }
       axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_mancanegara, head)
       .then((res) => {
-          if(res.data.code === 200){
+          if(res.data.message === 'SUCCESS'){
               axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_nusantara, head)
               .then((rest) => {
-                if(rest.data.code == 200){
+                if(rest.data.message === 'SUCCESS'){
                     //update jadwal status send
                     setTitle("Kirim Jadwal Ke Atix Berhasil")
                     setMessage("Data telah berhasil dikirim!")
@@ -243,6 +243,7 @@ const TiketKeberangkatan = () => {
                     setModalSecond(!modalsec)
                     fetchData();
                     addToast()
+                    setTimeout(() =>{window.location.reload()},1500)
                 }
               })
           }
