@@ -179,7 +179,7 @@ export default function Login({ setToken }) {
 
         <div className='nav'>
               <div className='component-nav'>
-                      <div className='logo-component' style={{padding:'1rem 3.2rem'}}>
+                      <div className='logo-component' style={{padding:'1rem 3.2rem', maxWidth:'300px'}}>
                             <img alt="SIWALATRI" src={logos} style={{width:'100%',height:'35px'}}/>
                       </div>
                       <div className='auth-component'>
