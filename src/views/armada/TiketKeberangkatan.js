@@ -195,6 +195,7 @@ const TiketKeberangkatan = () => {
       let tiket_mancanegara = _.filter(datas, {  'id_jns_penum': 2 });
       console.log('push to atix')
       let tiket_domestik = _.filter(datas, {  'id_jns_penum': 1 });
+      console.log(detail_jadwal)
       if(tiket_mancanegara.length !== 0 && tiket_domestik !== 0){
       let data_mancanegara = {
           ticket_name: tiket_mancanegara[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
@@ -204,7 +205,7 @@ const TiketKeberangkatan = () => {
           price_child: tiket_mancanegara[1].harga,
           label_child: "Anak-Anak",
           label_adult: "Dewasa",
-          id_kapal_sw: detail_jadwal.jadwal_to_kapal.id_kapal,
+          id_kapal_sw: detail_jadwal.id_loket.toString(),
           idtiket_siwalatri_adult: tiket_mancanegara[0].id,
           idtiket_siwalatri_child: tiket_mancanegara[1].id,
           idjadwal_siwalatri: detail_jadwal.id_jadwal,
@@ -219,7 +220,7 @@ const TiketKeberangkatan = () => {
         price_child: tiket_domestik[1].harga,
         label_child: "Anak-Anak",
         label_adult: "Dewasa",
-        id_kapal_sw: detail_jadwal.jadwal_to_kapal.id_kapal,
+        id_kapal_sw: detail_jadwal.id_loket.toString(),
         idtiket_siwalatri_adult: tiket_domestik[0].id,
         idtiket_siwalatri_child: tiket_domestik[1].id,
         idjadwal_siwalatri: detail_jadwal.id_jadwal,
@@ -257,6 +258,9 @@ const TiketKeberangkatan = () => {
         addToast()
     }
 
+
+    // gangga tribuana = 92
+    // gangga sampalan = 93
 
   }
 

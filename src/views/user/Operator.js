@@ -28,7 +28,8 @@ import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
 // import { Link } from 'react-router-dom';
-
+import Toast from './../../reusable/toast';
+import ToastMaker from './../../reusable/toastMaker';
 Moment.globalTimezone = 'Asia/Makassar';
 
 const Operator = () => {
@@ -43,12 +44,19 @@ const Operator = () => {
     const [kontak, setKontak] = useState('')
     const [alamat, setAlamat] = useState('')
     const [deskripsi, setDeskripsi] = useState('')
+    const [id_user, setIdUser] = useState('')
     const [typeModal, setTypeModal] = useState()  
     const headers = {
       headers: {
         'Authorization': "bearer " + token 
       }
     }
+
+    //Toast
+    const { toasters, addToast } = ToastMaker()
+    const [title, setTitle] = useState("")
+    const [message, setMessage] = useState("")
+    const [color, setColor] = useState("")
 
     useEffect(() => {
         fetchData()
@@ -66,7 +74,6 @@ const Operator = () => {
           }
         })
         setOperator(operators.data)
-        // console.log(operators.data)
     }
 
     const submitHandler = (e) => {
@@ -82,28 +89,30 @@ const Operator = () => {
           .then((res) => {
             let data = {
                 id_user: res.data.user.id,
-                nama_armada: form.get('nama_armada'),
-                kontak: form.get('kontak'),
-                alamat: form.get('alamat'),
-                description: form.get('description'),
+                nama_armada: nama,
+                kontak: kontak,
+                alamat: alamat,
+                description: deskripsi,
               }
-
             axios.post(apiUrl + 'armada', data, headers)
             .then((res) => {
-                // console.log(res);
+                setTitle("Data Operator berhasil")
+                setMessage("Data telah berhasil!")
+                setColor("bg-success text-white")
                 setModal(!modal)
                 clearState();
                 fetchData()
+                 addToast()
             })
 
           }).catch((error) => {
-            // setTitle("An error occurred")
-            // setMessage(error?.response?.data?.message)
-            // setColor("bg-danger text-white")
+            setTitle("An error occurred")
+            setMessage(error?.response?.data?.message)
+            setColor("bg-danger text-white")
             setModal(!modal)
             clearState();
             fetchData()
-            // addToast()
+            addToast()
           })
         }else{
             // let datas = {
@@ -143,7 +152,7 @@ const Operator = () => {
 
     return(
         <>
-
+      <Toast toasters={toasters} message={message} title={title} color={color}/>
                     <div className='card grey-thead'>
                         <div className="left-right-component">
                             <CButton
@@ -205,8 +214,9 @@ const Operator = () => {
                                     onClick={()=>{
                                         setTypeModal('Edit')
                                         setNama(item.nama_armada)
-                                        // setEmail(item.email)
-                                        // setKontak(item.description)
+                                        setEmail(item.armada_to_user.email)
+                                        setIdUser(item.armada_to_user.id)
+                                        setKontak(item.kontak)
                                         setAlamat(item.alamat)
                                         setDeskripsi(item.description)
                                         setModal(!modal)

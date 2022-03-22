@@ -22,6 +22,8 @@ import Moment from 'react-moment';
 import { apiUrl } from './../../reusable/constants'
 import 'moment-timezone';
 import { Link } from 'react-router-dom';
+import Toast from './../../reusable/toast';
+import ToastMaker from './../../reusable/toastMaker';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
@@ -58,6 +60,12 @@ const Jadwal = () => {
           default: return 'primary'
         }
       }
+
+      //Toast
+      const { toasters, addToast } = ToastMaker()
+      const [title, setTitle] = useState("")
+      const [message, setMessage] = useState("")
+      const [color, setColor] = useState("")
     
       const fetchData = async () => {
           const jad = await axios.get(apiUrl + 'jadwal_keberangkatan/index/'+id, headers)
@@ -115,22 +123,21 @@ const Jadwal = () => {
           
           axios.post(apiUrl + 'jadwal_keberangkatan/'+id, datas, headers)
           .then((res) => {
-            // setTitle("Action completed")
-            // setMessage("Entry has successfully been posted!")
-            // setColor("bg-success text-white")
-            // setEdit(!edit)
+            setTitle("Action completed")
+            setMessage("Entry has successfully been posted!")
+            setColor("bg-success text-white")
             setModal(!modal)
             clearState()
             fetchData();
-            // addToast()
+            addToast()
           }).catch((error) => {
-            // setTitle("An error occurred")
-            // setMessage(error?.response?.data?.message)
-            // setColor("bg-danger text-white")
+            setTitle("An error occurred")
+            setMessage(error?.response?.data?.message)
+            setColor("bg-danger text-white")
             setModal(!modal)
             clearState()
             fetchData()
-            // addToast()
+            addToast()
           })
         }else if(typeModal === 'Edit'){
             let datas = {
@@ -146,42 +153,40 @@ const Jadwal = () => {
               
               axios.post(apiUrl + 'jadwal_keberangkatan/edit/'+id_jadwal, datas, headers)
               .then((res) => {
-                // setTitle("Action completed")
-                // setMessage("Entry has successfully been posted!")
-                // setColor("bg-success text-white")
-                // setEdit(!edit)
+                setTitle("Action completed")
+                setMessage("Update has successfully been posted!")
+                setColor("bg-success text-white")
                 setModal(!modal)
                 clearState()
                 fetchData();
-                // addToast()
+                addToast()
               }).catch((error) => {
-                // setTitle("An error occurred")
-                // setMessage(error?.response?.data?.message)
-                // setColor("bg-danger text-white")
+                setTitle("An error occurred")
+                setMessage(error?.response?.data?.message)
+                setColor("bg-danger text-white")
                 setModal(!modal)
                 clearState()
                 fetchData()
-                // addToast()
+                addToast()
               })
         }else if(typeModal === 'Delete'){
               axios.post(apiUrl + 'jadwal_keberangkatan/delete/'+id_jadwal, headers)
               .then((res) => {
-                // setTitle("Action completed")
-                // setMessage("Entry has successfully been posted!")
-                // setColor("bg-success text-white")
-                // setEdit(!edit)
-                setModal(!modal)
+                setTitle("Action completed")
+                setMessage("Delete has successfully been posted!")
+                setColor("bg-success text-white")
+                setModalDelete(!modal)
                 clearState()
                 fetchData();
-                // addToast()
+                addToast()
               }).catch((error) => {
-                // setTitle("An error occurred")
-                // setMessage(error?.response?.data?.message)
-                // setColor("bg-danger text-white")
-                setModal(!modal)
+                setTitle("An error occurred")
+                setMessage(error?.response?.data?.message)
+                setColor("bg-danger text-white")
+                setModalDelete(!modal)
                 clearState()
                 fetchData()
-                // addToast()
+                addToast()
               })
         }
       }
@@ -198,6 +203,7 @@ const Jadwal = () => {
 
     return(
         <>
+          <Toast toasters={toasters} message={message} title={title} color={color}/>
                       <h5 className="heading-text">List Jadwal Keberangkatan</h5>
                       <CButton
                                 color="info"
@@ -295,6 +301,7 @@ const Jadwal = () => {
                                                     setStatus(item.status)
                                                     setJadwal(item.jadwal)
                                                     setModal(true)
+                                                    console.log(item.id_nahkoda);
                                                 }}
                                                 >
                                                 Edit
@@ -355,7 +362,7 @@ const Jadwal = () => {
                                                 <CLabel htmlFor="nameLabel">Jenis Jadwal</CLabel>
                                                 <CSelect custom name="id_jenis_jadwal" id={"statusLabel"} onChange={(e) => { setIdJenisJadwal(e.target.value); }} required>
                                                 {(() => {
-                                                        if(id_jenis_jadwal === 0){
+                                                        if(id_jenis_jadwal == 0){
                                                             return(
                                                                 <>
                                                                 <option selected value="0">Umum</option>
@@ -394,7 +401,7 @@ const Jadwal = () => {
                                                 <CSelect custom name="id_kapal" id={"statusLabel"} onChange={(e) => { setIdKapal(e.target.value); }} required>
                                                 {
                                                        kapals.map((data,index) => {
-                                                        if(id_kapal && id_kapal === data.id_kapal){
+                                                        if(id_kapal && id_kapal == data.id_kapal){
                                                             return(
                                                                 <option key={index} selected value={data.id_kapal}>{data.nama_kapal}</option>
                                                             )
@@ -414,7 +421,7 @@ const Jadwal = () => {
                                                 <CSelect custom name="id_nahkoda" id={"statusLabel"} onChange={(e) => { setIdNahkoda(e.target.value); }} required>
                                                 {
                                                        nahkodas.map((data,index) => {
-                                                        if(id_nahkoda && id_nahkoda === data.id_nahkoda){
+                                                        if(id_nahkoda && id_nahkoda == data.id_nahkoda){
                                                             return(
                                                                 <option key={index} selected value={data.id_nahkoda}>{data.nama_nahkoda}</option>
                                                             )
@@ -434,7 +441,7 @@ const Jadwal = () => {
                                                 <CSelect custom name="id_rute" id={"statusLabel"} onChange={(e) => { setIdRute(e.target.value); }} required>
                                                 {
                                                        rutes.map((data,index) => {
-                                                        if(id_rute && id_rute === data.id_rute){
+                                                        if(id_rute && id_rute == data.id_rute){
                                                             return(
                                                                 <option key={index} selected value={data.id_rute}>{data.tujuan_awals.nama_dermaga} - {data.tujuan_akhirs.nama_dermaga}</option>
                                                             )
@@ -454,7 +461,7 @@ const Jadwal = () => {
                                                 <CSelect custom name="id_loket" id={"statusLabel"} onChange={(e) => { setIdLoket(e.target.value); }} required>
                                                 {
                                                        lokets.map((data,index) => {
-                                                        if(id_loket && id_loket === data.id_loket){
+                                                        if(id_loket && id_loket == data.id_loket){
                                                             return(
                                                                 <option key={index} selected value={data.id_loket}>{data.nama_loket}</option>
                                                             )

@@ -406,7 +406,7 @@ const FormTiket = () => {
                           <CFormGroup row>
                               <CCol xs="12" md="4">
                                   <CLabel htmlFor="nameLabel">Alamat</CLabel>
-                                  <CTextarea required rows="4" value={alamat} placeholder="...." name="alamat" onChange={(e) => { setAlamat(e.target.value); }} required>
+                                  <CTextarea required rows="4" value={alamat} placeholder="...." name="alamat" onChange={(e) => { setAlamat(e.target.value); }} >
                                   </CTextarea>
                               </CCol>
                               <CCol md="4">
