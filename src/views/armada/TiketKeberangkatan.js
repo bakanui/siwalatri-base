@@ -195,6 +195,7 @@ const TiketKeberangkatan = () => {
       let tiket_mancanegara = _.filter(datas, {  'id_jns_penum': 2 });
       console.log('push to atix')
       let tiket_domestik = _.filter(datas, {  'id_jns_penum': 1 });
+    console.log(datas)
       if(tiket_mancanegara.length !== 0 && tiket_domestik !== 0){
           let harga_tiket_dewasa_mancanegara = 0
           let harga_tiket_anak_mancanegara = 0
@@ -215,8 +216,8 @@ const TiketKeberangkatan = () => {
         }else{
             harga_tiket_dewasa_mancanegara = tiket_mancanegara[1].harga
             harga_tiket_anak_mancanegara = tiket_mancanegara[0].harga
-            tiket_mancanegara[0].id = tiket_mancanegara[1].id
-            tiket_mancanegara[1].id = tiket_mancanegara[0].id
+            id_tiket_dewasa_mancanegara = tiket_mancanegara[1].id
+            id_tiket_anak_mancanegara = tiket_mancanegara[0].id
         }
 
         if(tiket_domestik[0].nama_tiket == 'Dewasa'){
@@ -262,6 +263,9 @@ const TiketKeberangkatan = () => {
         idjadwal_siwalatri: detail_jadwal.id_jadwal,
         kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
     }
+    console.log(data_mancanegara)
+    console.log(data_nusantara)
+
       let head = {
         headers: {
             'X-AVATAR-KEY':'f3abeb0e61e6eee899082c1d1ead359ab458258dbcddac3647b4cd16f7a7812c',
