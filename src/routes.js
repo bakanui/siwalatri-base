@@ -32,6 +32,7 @@ const Logout = React.lazy(() => import('./views/pages/Logout'));
 const TiketView = React.lazy(() => import('./views/dashboard/TiketView'));
 const DetailApproval = React.lazy(() => import('./views/data/DetailApproval'));
 const DetailKeberangkatanOperator = React.lazy(() => import('./views/DetailKeberangkatanOperator'));
+const ManageAccount = React.lazy(() => import('./views/pages/ManageAccount'));
 
 
 const routes = [
@@ -71,6 +72,7 @@ const routes = [
   { path: '/list-jadwal/:id_operator', name: 'List Jadwal', component: TiketView, exact: true  },
   { path: '/detail-approval/:id_jadwal/:total_penumpang/:id_approval', name: 'Detail Approval', component: DetailApproval, exact: true  },
   { path: '/detail-keberangkatan-petugas/:id_keberangkatan/:fil_date', name: 'Detail Keberangkatan Petugas', component: DetailKeberangkatanOperator, exact: true  },
+  { path: '/manage-account', name: 'Manage Account', component: ManageAccount, exact: true },
 ];
 
 export default routes;

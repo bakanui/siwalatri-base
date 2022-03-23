@@ -195,19 +195,55 @@ const TiketKeberangkatan = () => {
       let tiket_mancanegara = _.filter(datas, {  'id_jns_penum': 2 });
       console.log('push to atix')
       let tiket_domestik = _.filter(datas, {  'id_jns_penum': 1 });
-      console.log(detail_jadwal)
       if(tiket_mancanegara.length !== 0 && tiket_domestik !== 0){
+          let harga_tiket_dewasa_mancanegara = 0
+          let harga_tiket_anak_mancanegara = 0
+          let id_tiket_dewasa_mancanegara = 0
+          let id_tiket_anak_mancanegara = 0
+
+          let harga_tiket_dewasa_domestik = 0
+          let harga_tiket_anak_domestik = 0
+          let id_tiket_dewasa_domestik = 0
+          let id_tiket_anak_domestik = 0
+
+        if(tiket_mancanegara[0].nama_tiket == 'Dewasa'){
+            harga_tiket_dewasa_mancanegara = tiket_mancanegara[0].harga
+            harga_tiket_anak_mancanegara = tiket_mancanegara[1].harga
+            id_tiket_dewasa_mancanegara = tiket_mancanegara[0].id
+            id_tiket_anak_mancanegara = tiket_mancanegara[1].id
+
+        }else{
+            harga_tiket_dewasa_mancanegara = tiket_mancanegara[1].harga
+            harga_tiket_anak_mancanegara = tiket_mancanegara[0].harga
+            tiket_mancanegara[0].id = tiket_mancanegara[1].id
+            tiket_mancanegara[1].id = tiket_mancanegara[0].id
+        }
+
+        if(tiket_domestik[0].nama_tiket == 'Dewasa'){
+            harga_tiket_dewasa_domestik = tiket_domestik[0].harga
+            harga_tiket_anak_domestik = tiket_domestik[1].harga
+            id_tiket_dewasa_domestik = tiket_domestik[0].id
+            id_tiket_anak_domestik = tiket_domestik[1].id
+
+        }else{
+            harga_tiket_dewasa_domestik = tiket_domestik[1].harga
+            harga_tiket_anak_domestik = tiket_domestik[0].harga
+            id_tiket_dewasa_domestik = tiket_domestik[1].id
+            id_tiket_anak_domestik = tiket_domestik[0].id
+        }
+
+
       let data_mancanegara = {
           ticket_name: tiket_mancanegara[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
           ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
           ticket_type: "mancanegara",
-          price_adult: tiket_mancanegara[0].harga,
-          price_child: tiket_mancanegara[1].harga,
+          price_adult: harga_tiket_dewasa_mancanegara,
+          price_child: harga_tiket_anak_mancanegara,
           label_child: "Anak-Anak",
           label_adult: "Dewasa",
           id_kapal_sw: detail_jadwal.id_loket.toString(),
-          idtiket_siwalatri_adult: tiket_mancanegara[0].id,
-          idtiket_siwalatri_child: tiket_mancanegara[1].id,
+          idtiket_siwalatri_adult: id_tiket_dewasa_mancanegara,
+          idtiket_siwalatri_child: id_tiket_anak_mancanegara,
           idjadwal_siwalatri: detail_jadwal.id_jadwal,
           kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
       }
@@ -216,13 +252,13 @@ const TiketKeberangkatan = () => {
         ticket_name: tiket_domestik[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
         ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
         ticket_type: "nusantara",
-        price_adult: tiket_domestik[0].harga,
-        price_child: tiket_domestik[1].harga,
+        price_adult: harga_tiket_dewasa_mancanegara,
+        price_child: harga_tiket_anak_mancanegara,
         label_child: "Anak-Anak",
         label_adult: "Dewasa",
         id_kapal_sw: detail_jadwal.id_loket.toString(),
-        idtiket_siwalatri_adult: tiket_domestik[0].id,
-        idtiket_siwalatri_child: tiket_domestik[1].id,
+        idtiket_siwalatri_adult: id_tiket_dewasa_domestik,
+        idtiket_siwalatri_child: id_tiket_anak_domestik,
         idjadwal_siwalatri: detail_jadwal.id_jadwal,
         kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
     }

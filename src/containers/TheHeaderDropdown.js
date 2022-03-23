@@ -8,6 +8,7 @@ import {
   CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import { Link } from "react-router-dom";
 
 const TheHeaderDropdown = () => {
 
@@ -70,6 +71,10 @@ const TheHeaderDropdown = () => {
         >
           <strong>Settings</strong>
         </CDropdownItem> */}
+        <CDropdownItem >
+          <CIcon name="cil-user" className="mfe-2" />
+            <Link className="link-black" style={{color:'#4f5d73'}} to="/manage-account">Manage Account</Link>
+        </CDropdownItem>
         <CDropdownItem onClick={logout}>
           <CIcon name="cil-lock-locked" className="mfe-2" />
           Logout Account
