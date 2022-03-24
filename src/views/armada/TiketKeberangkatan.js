@@ -253,8 +253,8 @@ const TiketKeberangkatan = () => {
         ticket_name: tiket_domestik[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
         ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
         ticket_type: "nusantara",
-        price_adult: harga_tiket_dewasa_mancanegara,
-        price_child: harga_tiket_anak_mancanegara,
+        price_adult: harga_tiket_dewasa_domestik,
+        price_child: harga_tiket_anak_domestik,
         label_child: "Anak-Anak",
         label_adult: "Dewasa",
         id_kapal_sw: detail_jadwal.id_loket.toString(),
@@ -263,9 +263,6 @@ const TiketKeberangkatan = () => {
         idjadwal_siwalatri: detail_jadwal.id_jadwal,
         kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
     }
-    console.log(data_mancanegara)
-    console.log(data_nusantara)
-
       let head = {
         headers: {
             'X-AVATAR-KEY':'f3abeb0e61e6eee899082c1d1ead359ab458258dbcddac3647b4cd16f7a7812c',
@@ -284,7 +281,7 @@ const TiketKeberangkatan = () => {
                     setModalSecond(!modalsec)
                     fetchData();
                     addToast()
-                    setTimeout(() =>{window.location.reload()},1500)
+                    // setTimeout(() =>{window.location.reload()},1500)
                 }
               })
           }
