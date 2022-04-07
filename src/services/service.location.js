@@ -7,7 +7,7 @@ export const getKeberangkatanDetail = async (
     onSuccess,
     onFailed
     ) => {
-        console.log(id_keberangkatan);
+        // console.log(id_keberangkatan);
     const result = await axios.get(apiUrl + 'detail-jadwal/'+id_keberangkatan, {
         headers: {
             'Authorization': "bearer " + token 

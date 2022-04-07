@@ -17,16 +17,23 @@ import CIcon from '@coreui/icons-react';
 import useToken from '../../useToken';
 import { apiUrl } from '../../reusable/constants'
 import axios from 'axios';
+import Toast from './../../reusable/toast';
+import ToastMaker from './../../reusable/toastMaker';
 
 const ManageAccount = () => {
-    // const [email, setEmail] = useState();
+    // const [emails, setEmail] = useState();
     const [password, setPassword] = useState();
     // const [idUser, setId] = useState()
     // const [data, setData] = useState({data : []})
-    const { token } = useToken();
+    const { email,token } = useToken();
     const [visible, setVisible] = useState(10)
     const [code, setCode] = useState()
 
+    //Toast
+    const { toasters, addToast } = ToastMaker()
+    const [title, setTitle] = useState("")
+    const [message, setMessage] = useState("")
+    const [color, setColor] = useState("")
 
     const [newPassword, setNewPassword] = useState();
     const [confirmNewPass, setConfirmNewPassword] = useState();
@@ -65,33 +72,24 @@ const ManageAccount = () => {
     
       const submitHandler = (e) => {
         // const form = new FormData(e.target);
-        e.preventDefault();
-        // if(email){
-        //     let datas = {
-        //         email: email,
-        //         // type: "admin"
-        //     } 
-
-        //     axios.put(apiUrl + 'users/' + idUser, datas,
-        //     {
-        //       headers: {
-        //         'Authorization': "bearer " + token 
-        //       }
-        //     })
-        //     .then((res) => {
-                if(password && newPassword && confirmNewPass){
+                e.preventDefault();
+                if(confirmNewPass && newPassword){
                     let pass = {
-                            password: password,
-                            new_password: newPassword,
-                            new_password_confirmation: confirmNewPass
+                            email: email,
+                            password:newPassword,
+                            password_confirmation: confirmNewPass,
                     }
-                    axios.post(apiUrl + 'auth/change-password', pass,headers)
+                    console.log(pass)
+                    axios.post(apiUrl + 'auth/change-password', pass ,headers)
                           .then(statusAPI)
                           .then(setVisible(10))
                           .then((res) => {
-                            setPassword('')
-                            setNewPassword('')
                             setConfirmNewPassword('')
+                            setNewPassword('')
+                            setTitle("Perubahan Password berhasil diupdate")
+                            setMessage("Perubahan Data telah berhasil diupdate!")
+                            setColor("bg-success text-white")
+                            addToast()
                           }).catch(function (error) {
                             if(error?.response?.status === 500){
                                 statusAPI(error.response);
@@ -193,6 +191,7 @@ const ManageAccount = () => {
   return (
       
     <>
+    <Toast toasters={toasters} message={message} title={title} color={color}/>
                 <div>
                     <CCol xs="12" sm="12">
                         {errorHandler(code)}
@@ -217,7 +216,7 @@ const ManageAccount = () => {
                                             <CIcon name="cil-lock-locked" />
                                         </CInputGroupText>
                                         </CInputGroupPrepend>
-                                        <CInput type="password" onChange={(e) => { setPassword(e.target.value); }}  id="password" placeholder="Current Password" value={password} autoComplete="current-password" required/>
+                                        <CInput type="password" onChange={(e) => { setNewPassword(e.target.value); }}  id="password" placeholder="New Password" value={newPassword} autoComplete="new-password" required/>
                                     </CInputGroup>
                                     <CInputGroup className="mb-4">
                                         <CInputGroupPrepend>
@@ -225,15 +224,7 @@ const ManageAccount = () => {
                                             <CIcon name="cil-lock-locked" />
                                         </CInputGroupText>
                                         </CInputGroupPrepend>
-                                        <CInput type="password" onChange={(e) => { setNewPassword(e.target.value); }}  id="password" placeholder="New Password" value={newPassword} autoComplete="current-password" required/>
-                                    </CInputGroup>
-                                    <CInputGroup className="mb-4">
-                                        <CInputGroupPrepend>
-                                        <CInputGroupText>
-                                            <CIcon name="cil-lock-locked" />
-                                        </CInputGroupText>
-                                        </CInputGroupPrepend>
-                                        <CInput type="password" onChange={(e) => { setConfirmNewPassword(e.target.value); }}  id="password" placeholder="Confirm Password" value={confirmNewPass} autoComplete="current-password" required/>
+                                        <CInput type="password" onChange={(e) => { setConfirmNewPassword(e.target.value); }}  id="password" placeholder="Confirm New Password" value={confirmNewPass} autoComplete="confrim-password" required/>
                                     </CInputGroup>
                                 </CCardBody>
                                 <CCardFooter>

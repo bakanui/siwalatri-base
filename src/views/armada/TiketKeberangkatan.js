@@ -193,111 +193,114 @@ const TiketKeberangkatan = () => {
 
   const sendAtixHandler = (e) => { //send data to atix handler
       let tiket_mancanegara = _.filter(datas, {  'id_jns_penum': 2 });
-      console.log('push to atix')
       let tiket_domestik = _.filter(datas, {  'id_jns_penum': 1 });
-    console.log(datas)
-      if(tiket_mancanegara.length !== 0 && tiket_domestik !== 0){
-          let harga_tiket_dewasa_mancanegara = 0
-          let harga_tiket_anak_mancanegara = 0
-          let id_tiket_dewasa_mancanegara = 0
-          let id_tiket_anak_mancanegara = 0
+      if(detail_jadwal.id_loket){
+        if(tiket_mancanegara.length !== 0 && tiket_domestik !== 0){
+            let harga_tiket_dewasa_mancanegara = 0
+            let harga_tiket_anak_mancanegara = 0
+            let id_tiket_dewasa_mancanegara = 0
+            let id_tiket_anak_mancanegara = 0
 
-          let harga_tiket_dewasa_domestik = 0
-          let harga_tiket_anak_domestik = 0
-          let id_tiket_dewasa_domestik = 0
-          let id_tiket_anak_domestik = 0
+            let harga_tiket_dewasa_domestik = 0
+            let harga_tiket_anak_domestik = 0
+            let id_tiket_dewasa_domestik = 0
+            let id_tiket_anak_domestik = 0
 
-        if(tiket_mancanegara[0].nama_tiket == 'Dewasa'){
-            harga_tiket_dewasa_mancanegara = tiket_mancanegara[0].harga
-            harga_tiket_anak_mancanegara = tiket_mancanegara[1].harga
-            id_tiket_dewasa_mancanegara = tiket_mancanegara[0].id
-            id_tiket_anak_mancanegara = tiket_mancanegara[1].id
+            if(tiket_mancanegara[0].nama_tiket == 'Dewasa'){
+                harga_tiket_dewasa_mancanegara = tiket_mancanegara[0].harga
+                harga_tiket_anak_mancanegara = tiket_mancanegara[1].harga
+                id_tiket_dewasa_mancanegara = tiket_mancanegara[0].id
+                id_tiket_anak_mancanegara = tiket_mancanegara[1].id
 
+            }else{
+                harga_tiket_dewasa_mancanegara = tiket_mancanegara[1].harga
+                harga_tiket_anak_mancanegara = tiket_mancanegara[0].harga
+                id_tiket_dewasa_mancanegara = tiket_mancanegara[1].id
+                id_tiket_anak_mancanegara = tiket_mancanegara[0].id
+            }
+
+            if(tiket_domestik[0].nama_tiket == 'Dewasa'){
+                harga_tiket_dewasa_domestik = tiket_domestik[0].harga
+                harga_tiket_anak_domestik = tiket_domestik[1].harga
+                id_tiket_dewasa_domestik = tiket_domestik[0].id
+                id_tiket_anak_domestik = tiket_domestik[1].id
+
+            }else{
+                harga_tiket_dewasa_domestik = tiket_domestik[1].harga
+                harga_tiket_anak_domestik = tiket_domestik[0].harga
+                id_tiket_dewasa_domestik = tiket_domestik[1].id
+                id_tiket_anak_domestik = tiket_domestik[0].id
+            }
+
+
+        let data_mancanegara = {
+            ticket_name: tiket_mancanegara[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
+            ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
+            ticket_type: "mancanegara",
+            price_adult: harga_tiket_dewasa_mancanegara,
+            price_child: harga_tiket_anak_mancanegara,
+            label_child: "Anak-Anak",
+            label_adult: "Dewasa",
+            id_kapal_sw: detail_jadwal.id_loket.toString(),
+            idtiket_siwalatri_adult: id_tiket_dewasa_mancanegara,
+            idtiket_siwalatri_child: id_tiket_anak_mancanegara,
+            idjadwal_siwalatri: detail_jadwal.id_jadwal,
+            kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
+        }
+
+        let data_nusantara = {
+            ticket_name: tiket_domestik[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
+            ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
+            ticket_type: "nusantara",
+            price_adult: harga_tiket_dewasa_domestik,
+            price_child: harga_tiket_anak_domestik,
+            label_child: "Anak-Anak",
+            label_adult: "Dewasa",
+            id_kapal_sw: detail_jadwal.id_loket.toString(),
+            idtiket_siwalatri_adult: id_tiket_dewasa_domestik,
+            idtiket_siwalatri_child: id_tiket_anak_domestik,
+            idjadwal_siwalatri: detail_jadwal.id_jadwal,
+            kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
+        }
+        let head = {
+            headers: {
+                'X-AVATAR-KEY':'f3abeb0e61e6eee899082c1d1ead359ab458258dbcddac3647b4cd16f7a7812c',
+            }
+        }
+        axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_mancanegara, head)
+        .then((res) => {
+            if(res.data.message === 'SUCCESS'){
+                axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_nusantara, head)
+                .then((rest) => {
+                    if(rest.data.message === 'SUCCESS'){
+                        //update jadwal status send
+                        setTitle("Kirim Jadwal Ke Atix Berhasil")
+                        setMessage("Data telah berhasil dikirim!")
+                        setColor("bg-success text-white")
+                        setModalSecond(!modalsec)
+                        fetchData();
+                        addToast()
+                        // setTimeout(() =>{window.location.reload()},1500)
+                    }
+                })
+            }
+        })
         }else{
-            harga_tiket_dewasa_mancanegara = tiket_mancanegara[1].harga
-            harga_tiket_anak_mancanegara = tiket_mancanegara[0].harga
-            id_tiket_dewasa_mancanegara = tiket_mancanegara[1].id
-            id_tiket_anak_mancanegara = tiket_mancanegara[0].id
+            setTitle("Kirim Jadwal Gagal")
+            setMessage("Data Tiket harus tersedia mancanegara dan domestik")
+            setColor("bg-danger text-white")
+            setModalSecond(!modalsec)
+            fetchData();
+            addToast()
         }
-
-        if(tiket_domestik[0].nama_tiket == 'Dewasa'){
-            harga_tiket_dewasa_domestik = tiket_domestik[0].harga
-            harga_tiket_anak_domestik = tiket_domestik[1].harga
-            id_tiket_dewasa_domestik = tiket_domestik[0].id
-            id_tiket_anak_domestik = tiket_domestik[1].id
-
-        }else{
-            harga_tiket_dewasa_domestik = tiket_domestik[1].harga
-            harga_tiket_anak_domestik = tiket_domestik[0].harga
-            id_tiket_dewasa_domestik = tiket_domestik[1].id
-            id_tiket_anak_domestik = tiket_domestik[0].id
-        }
-
-
-      let data_mancanegara = {
-          ticket_name: tiket_mancanegara[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
-          ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
-          ticket_type: "mancanegara",
-          price_adult: harga_tiket_dewasa_mancanegara,
-          price_child: harga_tiket_anak_mancanegara,
-          label_child: "Anak-Anak",
-          label_adult: "Dewasa",
-          id_kapal_sw: detail_jadwal.id_loket.toString(),
-          idtiket_siwalatri_adult: id_tiket_dewasa_mancanegara,
-          idtiket_siwalatri_child: id_tiket_anak_mancanegara,
-          idjadwal_siwalatri: detail_jadwal.id_jadwal,
-          kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
-      }
-
-      let data_nusantara = {
-        ticket_name: tiket_domestik[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
-        ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
-        ticket_type: "nusantara",
-        price_adult: harga_tiket_dewasa_domestik,
-        price_child: harga_tiket_anak_domestik,
-        label_child: "Anak-Anak",
-        label_adult: "Dewasa",
-        id_kapal_sw: detail_jadwal.id_loket.toString(),
-        idtiket_siwalatri_adult: id_tiket_dewasa_domestik,
-        idtiket_siwalatri_child: id_tiket_anak_domestik,
-        idjadwal_siwalatri: detail_jadwal.id_jadwal,
-        kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
-    }
-      let head = {
-        headers: {
-            'X-AVATAR-KEY':'f3abeb0e61e6eee899082c1d1ead359ab458258dbcddac3647b4cd16f7a7812c',
-        }
-      }
-      axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_mancanegara, head)
-      .then((res) => {
-          if(res.data.message === 'SUCCESS'){
-              axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_nusantara, head)
-              .then((rest) => {
-                if(rest.data.message === 'SUCCESS'){
-                    //update jadwal status send
-                    setTitle("Kirim Jadwal Ke Atix Berhasil")
-                    setMessage("Data telah berhasil dikirim!")
-                    setColor("bg-success text-white")
-                    setModalSecond(!modalsec)
-                    fetchData();
-                    addToast()
-                    // setTimeout(() =>{window.location.reload()},1500)
-                }
-              })
-          }
-      })
     }else{
-        setTitle("Kirim Jadwal Gagal")
-        setMessage("Data Tiket harus tersedia mancanegara dan domestik")
-        setColor("bg-danger text-white")
-        setModalSecond(!modalsec)
-        fetchData();
-        addToast()
+            setTitle("Loket Belum Diregistrasi pada jadwal ini!")
+            setMessage("Mohon untuk memilih loket di jadwal keberangkatan ini!")
+            setColor("bg-warning text-white")
+            setModalSecond(!modalsec)
+            fetchData();
+            addToast()
     }
-
-
-    // gangga tribuana = 92
-    // gangga sampalan = 93
 
   }
 

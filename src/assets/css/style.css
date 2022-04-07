@@ -2,11 +2,13 @@
 
 .cards {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
 }
 
 .cards-custom {
-  margin: 0 20px;
+  flex-basis: calc((100% - 6rem)/ 2);
+  margin: 1rem;
   padding: 20px;
   width: 100%;
   min-height: 200px;
@@ -76,7 +78,6 @@
 
 .card-1 {
   background: radial-gradient(#1fe4f5, #3fbafe);
-  margin-left: 0;
 }
 
 .card-2 {
@@ -85,6 +86,10 @@
 
 .card-4 {
   background: radial-gradient(#ef60d7, #b858d5);
+}
+
+.card-5 {
+  background: radial-gradient(#efbd60, #d58658);
 }
 /*   
   .primary{

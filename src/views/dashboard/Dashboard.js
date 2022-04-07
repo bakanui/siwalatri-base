@@ -501,13 +501,13 @@ const Dashboard = () => {
               <p>Nahkoda atas nama <span className='font-weight-bold'>{emergencyDataActive && emergencyDataActive.nahkoda ? emergencyDataActive.nahkoda : '-'}</span> telah mengirim kode darurat:</p>
               <p className='danger-code'>{emergencyDataActive && emergencyDataActive.kode ? emergencyDataActive.kode : '-'}</p>
               <p className='danger-time'>{emergencyDataActive && emergencyDataActive.date ? emergencyDataActive.date : '-'}</p>
-              <p className='danger-time-subtitle no-line-height font-weight-bold text-danger'>(1 Menit yang lalu)</p>
+              {/* <p className='danger-time-subtitle no-line-height font-weight-bold text-danger'>(1 Menit yang lalu)</p> */}
               <hr className='hr-1 mb-4'/>
-              <div className='d-flex flex-row justify-content-between w-50 no-line-height'>
+              <div className='d-flex flex-row justify-content-between  no-line-height'>
                 <p>Armada</p>
                 <p>{emergencyDataActive && emergencyDataActive.armada ? emergencyDataActive.armada : ''}</p>
               </div>
-              <div className='d-flex flex-row justify-content-between w-50'>
+              <div className='d-flex flex-row justify-content-between '>
                 <p>Kapal</p>
                 <p>{emergencyDataActive && emergencyDataActive.nama_kapal ? emergencyDataActive.nama_kapal : '-'}</p>
               </div>
