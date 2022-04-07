@@ -69,7 +69,27 @@ const Jadwal = () => {
     
       const fetchData = async () => {
           const jad = await axios.get(apiUrl + 'jadwal_keberangkatan/index/'+id, headers)
-          setJadwalnya(jad.data.jadwal)
+          let jads = []
+          jad.data.jadwal.map(jadd => {
+            let put = jadd
+            jad.data.lokets.map(lok => {
+              if(lok.id_loket === jadd.id_loket){
+                put = {...put, nama_loket: lok.nama_loket}
+              }
+              return (
+                <></>
+              )
+            })
+            jads.push(put)
+            return (
+              <></>
+            )
+         })
+         let ultimate = {
+          data: jads
+        }
+          setJadwalnya(ultimate.data)
+
           setLoket(jad.data.lokets)
 
           const kap = await axios.get(apiUrl + 'kapal/'+id, headers)
@@ -229,6 +249,7 @@ const Jadwal = () => {
                                 { key: 'nama_kapal', _style: { width: '10%'} },
                                 { key: 'tujuan_awal', _style: { width: '20%'} },
                                 { key: 'tujuan_akhir', _style: { width: '10%'} },
+                                { key: 'nama_loket', _style: { width: '10%'} },
                                 { key: 'status', _style: { width: '5%'} },
                                 { key: 'edit', _style: { width: '1%'}, sorter: false, filter: false  },
                                 { key: 'tiket', _style: { width: '1%'}, sorter: false, filter: false  },
@@ -272,6 +293,12 @@ const Jadwal = () => {
                                     (item)=> (
                                       <td>
                                         {item.jadwal_to_rute.tujuan_akhirs.nama_dermaga} - {item.jadwal_to_rute.tujuan_akhirs.lokasi}
+                                      </td>
+                                    ),
+                                    'nama_loket':
+                                    (item)=>(
+                                      <td>
+                                        {item.nama_loket == undefined ? <CBadge color='danger'>Loket belum dipilih</CBadge> : item.nama_loket}
                                       </td>
                                     ),
                                     'status': 
