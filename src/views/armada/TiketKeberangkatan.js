@@ -194,8 +194,11 @@ const TiketKeberangkatan = () => {
   const sendAtixHandler = (e) => { //send data to atix handler
       let tiket_mancanegara = _.filter(datas, {  'id_jns_penum': 2 });
       let tiket_domestik = _.filter(datas, {  'id_jns_penum': 1 });
+      let tiket_pp = _.filter(datas, {  'id_jns_penum': 5 });
+    //   console.log(pp);
+
       if(detail_jadwal.id_loket){
-        if(tiket_mancanegara.length !== 0 && tiket_domestik !== 0){
+        if(tiket_mancanegara.length !== 0 && tiket_domestik !== 0 && tiket_pp !== 0){
             let harga_tiket_dewasa_mancanegara = 0
             let harga_tiket_anak_mancanegara = 0
             let id_tiket_dewasa_mancanegara = 0
@@ -262,29 +265,84 @@ const TiketKeberangkatan = () => {
             idjadwal_siwalatri: detail_jadwal.id_jadwal,
             kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
         }
+
+        //tiket pp initial
+        let harga_tiket_dewasa_pp = 0
+        let harga_tiket_anak_pp = 0
+        let id_tiket_dewasa_pp = 0
+        let id_tiket_anak_pp = 0
+
+        if(tiket_pp[0].nama_tiket == 'Dewasa'){
+            harga_tiket_dewasa_pp = tiket_pp[0].harga
+            harga_tiket_anak_pp = tiket_pp[1].harga
+            id_tiket_dewasa_pp = tiket_pp[0].id
+            id_tiket_anak_pp = tiket_pp[1].id
+
+        }else{
+            harga_tiket_dewasa_pp = tiket_pp[1].harga
+            harga_tiket_anak_pp = tiket_pp[0].harga
+            id_tiket_dewasa_pp = tiket_pp[1].id
+            id_tiket_anak_pp = tiket_pp[0].id
+        }
+
+        let data_pp = {
+            ticket_name: tiket_pp[0].nama_jns_penum + " " + detail_jadwal.jadwal + " " + detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga + " - " + detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga,
+            ticket_desc: "<p>tujuan_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.nama_dermaga+"</p>\r\r<p>lokasi_awal : "+detail_jadwal.jadwal_to_rute.tujuan_awals.lokasi+"</p>\r\r<p>tujuan_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.nama_dermaga+"</p>\r\r<p>lokasi_akhir : "+detail_jadwal.jadwal_to_rute.tujuan_akhirs.lokasi+"</p>",
+            ticket_type: "PP",
+            price_adult: harga_tiket_dewasa_pp,
+            price_child: harga_tiket_anak_pp,
+            label_child: "Anak-Anak",
+            label_adult: "Dewasa",
+            id_kapal_sw: detail_jadwal.id_loket.toString(),
+            idtiket_siwalatri_adult: id_tiket_dewasa_pp,
+            idtiket_siwalatri_child: id_tiket_anak_pp,
+            idjadwal_siwalatri: detail_jadwal.id_jadwal,
+            kapasitas: detail_jadwal.jadwal_to_kapal.kapasitas_penumpang
+        }
+
+
         let head = {
             headers: {
                 'X-AVATAR-KEY':'f3abeb0e61e6eee899082c1d1ead359ab458258dbcddac3647b4cd16f7a7812c',
             }
         }
-        axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_mancanegara, head)
-        .then((res) => {
-            if(res.data.message === 'SUCCESS'){
-                axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_nusantara, head)
-                .then((rest) => {
-                    if(rest.data.message === 'SUCCESS'){
-                        //update jadwal status send
-                        setTitle("Kirim Jadwal Ke Atix Berhasil")
-                        setMessage("Data telah berhasil dikirim!")
-                        setColor("bg-success text-white")
-                        setModalSecond(!modalsec)
-                        fetchData();
-                        addToast()
-                        // setTimeout(() =>{window.location.reload()},1500)
-                    }
-                })
-            }
-        })
+            axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_mancanegara, head)
+            .then((res) => {
+                if(res.data.message === 'SUCCESS'){
+                    axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_nusantara, head)
+                    .then((rest) => {
+                        if(rest.data.message === 'SUCCESS'){
+                                axios.post('http://dev.avatarsoftware.id:3007/api/tickets',data_pp, head)
+                                .then((rest2) => {
+                                    if(rest2.data.message === 'SUCCESS'){
+                                        //update jadwal status send
+                                        setTitle("Kirim Jadwal Ke Atix Berhasil")
+                                        setMessage("Data telah berhasil dikirim!")
+                                        setColor("bg-success text-white")
+                                        setModalSecond(!modalsec)
+                                        fetchData();
+                                        addToast()
+                                    }else{
+                                        setTitle("Kirim Jadwal PP Gagal")
+                                        setMessage("Data Tiket PP Gagal terkirim ke ATIX")
+                                        setColor("bg-danger text-white")
+                                        setModalSecond(!modalsec)
+                                        fetchData();
+                                        addToast()
+                                    }
+                                })
+                            // setTimeout(() =>{window.location.reload()},1500)
+                        }else{
+                            setTitle("Kirim Jadwal Domestik Gagal!")
+                            setMessage("Data Tiket Domestik Gagal terkirim ke ATIX!")
+                            setColor("bg-warning text-white")
+                            setModalSecond(!modalsec)
+                            fetchData();
+                            addToast()
+                        }
+                    })
+                }
+            })
         }else{
             setTitle("Kirim Jadwal Gagal")
             setMessage("Data Tiket harus tersedia mancanegara dan domestik")
