@@ -62,6 +62,7 @@ const MasterRute = () => {
           }
         })
         setRute(rute.data)
+        console.log(rute.data)
 
         const dermaga = await axios.get(apiUrl + 'dermaga', headers)
         .catch(function (error) {
@@ -79,9 +80,9 @@ const MasterRute = () => {
         // console.log(id);
         if(typeModal === 'Tambah'){
           let datas = {
-            tujuan_awal: form.get('tujuan_awal'),
-            tujuan_akhir: form.get('tujuan_akhir'),
-            jarak: form.get('jarak'),
+            tujuan_awal: awal,
+            tujuan_akhir: akhir,
+            jarak: jarak,
           }
           
 
@@ -110,9 +111,9 @@ const MasterRute = () => {
           })
         }else{
             let datas = {
-                tujuan_awal: form.get('tujuan_awal'),
-                tujuan_akhir: form.get('tujuan_akhir'),
-                jarak: form.get('jarak'),
+                tujuan_awal: awal,
+                tujuan_akhir: akhir,
+                jarak: jarak,
               }
               
 

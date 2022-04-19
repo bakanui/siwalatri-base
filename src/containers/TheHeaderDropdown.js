@@ -14,8 +14,7 @@ const TheHeaderDropdown = () => {
 
   const logout = () => {
     localStorage.removeItem('access_token')
-    window.location.reload()
-    window.location = "/";
+    // window.location.reload()
   }
 
   
