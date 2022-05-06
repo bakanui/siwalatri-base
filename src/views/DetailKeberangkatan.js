@@ -125,7 +125,7 @@ const DetailKeberangkatan = () => {
         setLinkPdf(links)
         console.log(links)
 
-        let links2 = apiUrl + 'laporan/harian_armada/detail-non-history2/'+id_keberangkatan+'?tanggal='+fil_date
+        let links2 = apiUrl + 'laporan/penjualan?tanggal='+fil_date+'&id_jadwal='+id_keberangkatan
         setLinkPdf2(links2)
   }
 
@@ -281,7 +281,7 @@ const DetailKeberangkatan = () => {
     return(
         <>
           <Toast toasters={toasters} message={message} title={title} color={color}/>
-          <div style={{textAlign:'end', margin:'10px 0'}}><a href={link_pdf} target="_blank"  className="btn c-link-pdf">Export Manifest</a><a href={link_pdf2} target="_blank"  className="btn c-link-pdf">Export Manifest Loket</a></div>
+          <div style={{textAlign:'end', margin:'10px 0'}}><a href={link_pdf} target="_blank"  className="btn c-link-pdf">Export Manifest</a><a href={link_pdf2} target="_blank"  className="btn c-link-pdf">Export Manifest Loket</a><a href={link_pdf2} target="_blank"  className="btn c-link-pdf">Export Laporan Penjualan</a></div>
           <div>
                   <CRow>
                         {
@@ -551,7 +551,7 @@ const DetailKeberangkatan = () => {
                        <CFormGroup row> 
                             <CCol xs="12" md="6">
                                   <CLabel htmlFor="statusLabel">Alamat</CLabel>
-                                  <CTextarea required rows="3" value={alamat} placeholder="...." name="alamat" onChange={(e) => { setAlamat(e.target.value); }} required>
+                                  <CTextarea required rows="3" value={alamat} placeholder="...." name="alamat" onChange={(e) => { setAlamat(e.target.value); }} >
                                   </CTextarea>
                             </CCol>
                             <CCol xs="12" md="6">

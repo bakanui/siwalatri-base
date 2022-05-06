@@ -1,1 +1,1 @@
-export const apiUrl = 'http://maiharta.com/api-simpel/api/' 
+export const apiUrl = 'https://maiharta.com/api-simpel/api/' 
