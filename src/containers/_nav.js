@@ -9,6 +9,12 @@ const _nav =  [
     icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>
   },
   {
+    _tag: 'CSidebarNavItem',
+    name: 'Jadwal',
+    to: '/jadwal',
+    icon: <CIcon name="cil-calendar" customClasses="c-sidebar-nav-icon"/>
+  },
+  {
     _tag: 'CSidebarNavDropdown',
     name: 'Master',
     route: '/master',

@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
+const JadwalEB = React.lazy(() => import('./views/jadwal/Jadwal'));
 const MasterKapal = React.lazy(() => import('./views/master/MasterKapal'));
 const MasterPenumpang = React.lazy(() => import('./views/master/MasterPenumpang'));
 const MasterDermaga = React.lazy(() => import('./views/master/MasterDermaga'));
@@ -39,6 +40,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/logout', exact: true, name: 'Out', component: Logout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/jadwal', name: 'Jadwal', component: JadwalEB },
   { path: '/master-kapal', name: 'Master Kapal', component: MasterKapal },
   { path: '/master-penumpang', name: 'Master Penumpang', component: MasterPenumpang },
   { path: '/master-dermaga', name: 'Master Dermaga', component: MasterDermaga },
