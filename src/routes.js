@@ -40,7 +40,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/logout', exact: true, name: 'Out', component: Logout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/jadwal', name: 'Jadwal', component: JadwalEB },
+  { path: '/laporan-manifest', name: 'Jadwal', component: JadwalEB },
   { path: '/master-kapal', name: 'Master Kapal', component: MasterKapal },
   { path: '/master-penumpang', name: 'Master Penumpang', component: MasterPenumpang },
   { path: '/master-dermaga', name: 'Master Dermaga', component: MasterDermaga },

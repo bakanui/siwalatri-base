@@ -46,7 +46,7 @@ const Jadwal = () => {
     setLoad(true)
     let departDate = format(date, 'yyyy-MM-dd')
     let query =
-      'http://ebkferryidapi.easybook.com/api/FerryManifest?cttId=' +
+      'https://ebkferryidapi.easybook.com/api/FerryManifest?cttId=' +
       ctt +
       '&spId=' +
       spId +
@@ -84,175 +84,175 @@ const Jadwal = () => {
             <CToastBody>{message}</CToastBody>
           </CToast>
         )
-        const dummy = [
-          {
-              ScheduleID: 1969488,
-              DepartureDate: "2022-07-12",
-              DepartureTime: "07:00",
-              Departure: "Pelabuhan Buyuk",
-              Destination: "Pelabuhan Tribuana",
-              CompanyName: "Gangga Express",
-              ShipName: "Gangga Express 7",
-              Nakhoda: [],
-              Passengers: [
-              {
-              Name: "KD KAESA (1BT)",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1968072
-              },
-              {
-              Name: "KD SUASTAWAN (1BT)",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1968088
-              },
-              {
-              Name: "KD LASTRA (1BT)",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1968099
-              },
-              {
-              Name: "INDRA (2PP)",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1968107
-              },
-              {
-              Name: "INDRA (2PP)",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1968108
-              }
-              ]
-          },
-          {
-              ScheduleID: 1969426,
-              DepartureDate: "2022-07-12",
-              DepartureTime: "16:00",
-              Departure: "Pelabuhan Buyuk",
-              Destination: "Pelabuhan Tribuana",
-              CompanyName: "Gangga Express",
-              ShipName: "Gangga Express",
-              Nakhoda: [],
-              Passengers: [
-              {
-              Name: "wawan ( 3 pax )",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1975747
-              },
-              {
-              Name: "wawan ( 3 pax )",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1975748
-              },
-              {
-              Name: "wawan ( 3 pax )",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1975749
-              },
-              {
-              Name: "diana ( 5 pax )",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1975750
-              },
-              {
-              Name: "diana ( 5 pax )",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1975751
-              },
-              {
-              Name: "diana ( 5 pax )",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1975752
-              },
-              {
-              Name: "diana ( 5 pax )",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1975753
-              },
-              {
-              Name: "diana ( 5 pax )",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
+      //   const dummy = [
+      //     {
+      //         ScheduleID: 1969488,
+      //         DepartureDate: "2022-07-12",
+      //         DepartureTime: "07:00",
+      //         Departure: "Pelabuhan Buyuk",
+      //         Destination: "Pelabuhan Tribuana",
+      //         CompanyName: "Gangga Express",
+      //         ShipName: "Gangga Express 7",
+      //         Nakhoda: [],
+      //         Passengers: [
+      //         {
+      //         Name: "KD KAESA (1BT)",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1968072
+      //         },
+      //         {
+      //         Name: "KD SUASTAWAN (1BT)",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1968088
+      //         },
+      //         {
+      //         Name: "KD LASTRA (1BT)",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1968099
+      //         },
+      //         {
+      //         Name: "INDRA (2PP)",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1968107
+      //         },
+      //         {
+      //         Name: "INDRA (2PP)",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1968108
+      //         }
+      //         ]
+      //     },
+      //     {
+      //         ScheduleID: 1969426,
+      //         DepartureDate: "2022-07-12",
+      //         DepartureTime: "16:00",
+      //         Departure: "Pelabuhan Buyuk",
+      //         Destination: "Pelabuhan Tribuana",
+      //         CompanyName: "Gangga Express",
+      //         ShipName: "Gangga Express",
+      //         Nakhoda: [],
+      //         Passengers: [
+      //         {
+      //         Name: "wawan ( 3 pax )",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1975747
+      //         },
+      //         {
+      //         Name: "wawan ( 3 pax )",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1975748
+      //         },
+      //         {
+      //         Name: "wawan ( 3 pax )",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1975749
+      //         },
+      //         {
+      //         Name: "diana ( 5 pax )",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1975750
+      //         },
+      //         {
+      //         Name: "diana ( 5 pax )",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1975751
+      //         },
+      //         {
+      //         Name: "diana ( 5 pax )",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1975752
+      //         },
+      //         {
+      //         Name: "diana ( 5 pax )",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1975753
+      //         },
+      //         {
+      //         Name: "diana ( 5 pax )",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
               
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1975754
-              },
-              {
-              Name: "dsk gd siti",
-              Contact: "",
-              NRIC: "",
-              Passport: "",
-              Category: "ADULT",
-              Nationality: "ID",
-              Gender: " ",
-              TicketId: 1975760
-              }
-              ]
-          }
-      ]
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1975754
+      //         },
+      //         {
+      //         Name: "dsk gd siti",
+      //         Contact: "",
+      //         NRIC: "",
+      //         Passport: "",
+      //         Category: "ADULT",
+      //         Nationality: "ID",
+      //         Gender: " ",
+      //         TicketId: 1975760
+      //         }
+      //         ]
+      //     }
+      // ]
         addToast(errorToast)
-        setTableData(dummy)
+        // setTableData(dummy)
       })
   }
 

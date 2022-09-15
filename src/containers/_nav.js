@@ -9,12 +9,6 @@ const _nav =  [
     icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>
   },
   {
-    _tag: 'CSidebarNavItem',
-    name: 'Jadwal',
-    to: '/jadwal',
-    icon: <CIcon name="cil-calendar" customClasses="c-sidebar-nav-icon"/>
-  },
-  {
     _tag: 'CSidebarNavDropdown',
     name: 'Master',
     route: '/master',
@@ -119,6 +113,11 @@ const _nav =  [
           _tag: 'CSidebarNavItem',
           name: 'Laporan Penumpang Bulanan',
           to: '/laporan-bulanan-penumpang',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Laporan Manifest',
+          to: '/laporan-manifest',
         },
     ]
   },
