@@ -106,20 +106,26 @@ const _nav =  [
         // },
         {
           _tag: 'CSidebarNavItem',
-          name: 'Laporan Penumpang Harian',
+          name: 'Penumpang Harian',
           to: '/laporan-harian-penumpang',
         },
         {
           _tag: 'CSidebarNavItem',
-          name: 'Laporan Penumpang Bulanan',
+          name: 'Penumpang Bulanan',
           to: '/laporan-bulanan-penumpang',
         },
         {
           _tag: 'CSidebarNavItem',
-          name: 'Laporan Manifest',
+          name: 'Manifest',
           to: '/laporan-manifest',
         },
     ]
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Rekonsiliasi',
+    to: '/rekonsiliasi',
+    icon: 'cil-excerpt'
   },
 ]
 

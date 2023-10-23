@@ -208,12 +208,12 @@ const DetailKeberangkatanOperator = () => {
                                 <dl className="row no-margin-bottom">
                                     <dt className="col-sm-4">Total Penumpang</dt>
                                     <dd className="col-sm-8 no-margin-bottom">
-                                        : {data_keberangakatan.total ? data_keberangakatan.total : 0}
+                                        : {undatas ? undatas.length : 0}
                                     </dd>
                                 </dl>    
                             </div> 
                     </div>
-                    <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    {/* <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div className='card' style={{padding:'15px'}}>
                                 <dl className="row no-margin-bottom">
                                     <dt className="col-sm-4">Resume Perjalanan</dt>
@@ -227,10 +227,10 @@ const DetailKeberangkatanOperator = () => {
                                     </dd>
                                 </dl>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
               
-                  <CRow>
+                  {/* <CRow>
                         {
                         tujuan.map((data,index) =>
                             {
@@ -249,8 +249,8 @@ const DetailKeberangkatanOperator = () => {
                                 )
                             })
                         }
-                </CRow>
-                <CRow>
+                </CRow> */}
+                {/* <CRow>
                         {
                         jenis.map((data,index) =>
                             {
@@ -269,13 +269,13 @@ const DetailKeberangkatanOperator = () => {
                                 )
                             })
                         }
-                </CRow>
+                </CRow> */}
                 <CRow>
                     <CCol>
                         <CCard style={{padding:'1rem 1rem'}}>
                             <h5 className="heading-text">List Penumpang</h5>
                             <CDataTable
-                                items={datas}
+                                items={undatas}
                                 fields={fields2}
                                 hover
                                 striped
