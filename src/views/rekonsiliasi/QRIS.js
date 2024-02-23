@@ -17,9 +17,9 @@ import {
   CSelect
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import useToken from '../../../src/useToken';
+import useToken from '../../useToken';
 import Moment from 'react-moment';
-import { apiUrl } from './../../reusable/constants'
+import { apiUrl } from '../../reusable/constants'
 import 'moment-timezone';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -35,7 +35,7 @@ import CsvDownloader from 'react-csv-downloader';
 
 Moment.globalTimezone = 'Asia/Makassar';
 
-const Rekonsiliasi = () => {
+const QRIS = () => {
 
     const { token } = useToken();
     const today = new Date()
@@ -45,20 +45,20 @@ const Rekonsiliasi = () => {
         endDate: today,
         key: 'selection'
       }
-    ]); 
-
-    const [reports, setReport] = useState([]);
-    const [totalPages, setTotalPages] = useState(1);
-    const [curPage, setCurPage] = useState(1);
-    const [pembayaran, setPembayaran] = useState("va")
+    ])
+    const [reports, setReport] = useState([])
+    const [exports, setExport] = useState([])
+    const [totalPages, setTotalPages] = useState(1)
+    const [curPage, setCurPage] = useState(1)
     const [limit, setLimit] = useState(10)
     const [orderBy, setOrderBy] = useState("id")
-    const [order, setOrder] = useState(false)
-    const [dateFilter, setDateFilter] = useState(new Date());
+    const [order, setOrder] = useState(true)
+    const [status, setStatus] = useState("semua")
+    const [armada, setArmada] = useState("semua")
     const [exporter, setExporter] = useState(false)
 
     useEffect(() => {
-        fetchData(pembayaran, limit, curPage, selectionRange[0], orderBy, order)
+        fetchData(limit, curPage, selectionRange[0], orderBy, order, status, armada)
         // eslint-disable-next-line
     }, [])
 
@@ -68,23 +68,23 @@ const Rekonsiliasi = () => {
             .replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
 
-    function ExportAsCSV(status, expdata){
-        // if(status === false){
+    function ExportAsCSV(sts, expdata){
+        // if(sts === false){
         //   return(
-        //     <CButton color="primary" onClick={() => {
-        //         fetchData(pembayaran, limit, curPage, selectionRange[0]);
+        //     <CButton style={{marginTop: "28px", marginLeft: "5px"}} color="primary" onClick={() => {
+        //         fetchDataReport(orderBy, order, status, reversal);
         //         setExporter(true)
         //     }}>Export as .csv</CButton>
         //   )
         // }
-        // else if(status === true){
+        // else if(sts === true){
         //   if(expdata.length === undefined){
         //     return(
-        //       <CButton color="secondary" disabled>Please wait...</CButton>
+        //       <CButton style={{marginTop: "28px", marginLeft: "5px"}} color="secondary" disabled>Please wait...</CButton>
         //     )
         //   }else{
             if(expdata.length > 0){
-                let name = "Rekonsiliasi_" + pembayaran + "_" + format(new Date(selectionRange[0].startDate), 'MMMddyyyy') + "-" + format(new Date(selectionRange[0].endDate), 'MMMddyyyy')
+                let name = "Rekonsiliasi_VA" + format(new Date(selectionRange[0].startDate), 'MMMddyyyy') + "-" + format(new Date(selectionRange[0].endDate), 'MMMddyyyy')
               return(
                 <CsvDownloader
                 filename={name}
@@ -93,36 +93,44 @@ const Rekonsiliasi = () => {
                 wrapColumnChar=""
                 columns={[
                     {
-                        id: 'id',
-                        displayName: 'Invoice ID',
+                        id: 'billNumber',
+                        displayName: 'Bill Number',
                     },
                     {
-                        id: 'email',
-                        displayName: 'Email',
+                        id: 'productCode',
+                        displayName: 'Product Code',
                     },
                     {
-                        id: 'grandtotal',
-                        displayName: 'Grand Total',
+                        id: 'nmid',
+                        displayName: 'nmid',
+                    },
+                    {
+                        id: 'merchantName',
+                        displayName: 'Merchant Name',
+                    },
+                    {
+                        id: 'expiredDate',
+                        displayName: 'Expired Date',
+                    },
+                    {
+                        id: 'amount',
+                        displayName: 'Amount',
+                    },
+                    {
+                        id: 'totalAmount',
+                        displayName: 'Total Amount',
                     },
                     {
                         id: 'status',
                         displayName: 'Status',
                     },
                     {
-                        id: 'status_reversal',
-                        displayName: 'Reversal',
-                    },
-                    {
                         id: 'created_at',
-                        displayName: 'Created At',
-                    },
-                    {
-                        id: 'expiredDate',
-                        displayName: 'Expired Date',
-                    },
+                        displayName: 'Tanggal Pembelian',
+                    }
                 ]}
                 datas={expdata}>
-                  <CButton style={{marginTop: "28px", marginLeft: "5px"}} color="danger" onClick={(e) => {setExporter(false)}}>Download .csv</CButton>
+                  <CButton style={{marginTop: "28px", marginLeft: "5px"}} color="danger" onClick={() => {setExporter(false)}}>Download .csv</CButton>
                 </CsvDownloader>
               )
             }
@@ -130,7 +138,7 @@ const Rekonsiliasi = () => {
         // }
       }
 
-    const fetchData = async (pembayaran, limit, curPage, date, orderBy, order) => {
+    const fetchData = async (limit, curPage, date, orderBy, order, status, armada) => {
         let ord = ''
         if(order === true){
             ord = 'asc'
@@ -142,17 +150,18 @@ const Rekonsiliasi = () => {
                 'Authorization': "bearer " + token 
             },
             params: {
-                payment: pembayaran,
                 orderBy: orderBy,
                 order: ord,
                 limit: limit,
                 page: curPage,
                 fromDate: format(new Date(date.startDate), 'yyyy-MM-dd'),
-                endDate: format(new Date(date.endDate), 'yyyy-MM-dd')
+                endDate: format(new Date(date.endDate), 'yyyy-MM-dd'),
+                status: status,
+                merchantName: armada
             },
         }
         
-        const result = await axios.get(apiUrl + 'invoice', head)
+        const result = await axios.get(apiUrl + 'invoice/qris', head)
         .catch(function (error) {
           if(error.response?.status === 401){
               localStorage.removeItem('access_token')
@@ -161,34 +170,62 @@ const Rekonsiliasi = () => {
         })
         setCurPage(result.data.current_page)
         setTotalPages(result.data.last_page)
-        if(result.data.data.length > 0){
-            let final = []
-            result.data.data.map((r)=>{
-                let drand = r.grandtotal.split(".")
-                let insert = r
-                insert = {...insert, grandtotal: drand[0]}
-                final.push(insert)
-            })
-            setReport(final)
-        }else{
-            setReport(result.data.data)
-        }
+        console.log(result.data)
+        setReport(result.data.data)
+        
     }
 
-    function handleDateChange(date){
-        setDateFilter(date);
-        fetchData(date,true)
-    }
+    // const fetchDataReport = async (date, orderBy, order, status, reversal) => {
+    //     let ord = ''
+    //     if(order === true){
+    //         ord = 'asc'
+    //     }else{
+    //         ord = 'desc'
+    //     }
+    //     let head = {
+    //         headers: {
+    //             'Authorization': "bearer " + token 
+    //         },
+    //         params: {
+    //             orderBy: orderBy,
+    //             order: ord,
+    //             fromDate: format(new Date(date.startDate), 'yyyy-MM-dd'),
+    //             endDate: format(new Date(date.endDate), 'yyyy-MM-dd'),
+    //             status: status,
+    //             reversal: reversal
+    //         },
+    //     }
+        
+    //     const result = await axios.get(apiUrl + 'invoice/va', head)
+    //     .catch(function (error) {
+    //       if(error.response?.status === 401){
+    //           localStorage.removeItem('access_token')
+    //           window.location.reload()
+    //       }
+    //     })
+    //     if(result.data.data.length > 0){
+    //         let final = []
+    //         result.data.data.map((r)=>{
+    //             let drand = r.tagihan.split(".")
+    //             let insert = r
+    //             insert = {...insert, tagihan: drand[0]}
+    //             final.push(insert)
+    //         })
+    //         setExport(final)
+    //     }else{
+    //         setExport(result.data.data)
+    //     }
+    // }
 
     function handlePageChange(page){
         setCurPage(page)
-        fetchData(pembayaran, limit, page, selectionRange[0], orderBy, order)
+        fetchData(limit, page, selectionRange[0], orderBy, order, status, armada)
     }
 
     function handleSorterChange(sort){
         setOrderBy(sort.column)
         setOrder(sort.asc)
-        fetchData(pembayaran, limit, curPage, selectionRange[0], sort.column, sort.asc)
+        fetchData(limit, curPage, selectionRange[0], sort.column, sort.asc, status, armada)
     }
 
     const getBadge = (status)=>{
@@ -201,18 +238,9 @@ const Rekonsiliasi = () => {
 
     const getBadgeReversal = (status)=>{
         switch (status) {
-          case 0: return 'secondary'
-          case 1: return 'danger'
+          case "0": return 'secondary'
+          case "1": return 'danger'
           default: return 'secondary'
-        }
-    }
-
-    const getPembayaran = (status)=>{
-        switch (status) {
-          case 'va': return 'Virtual Account'
-          case 'qris': return 'QRIS'
-          case 'cash': return 'Tunai'
-          default: return '-'
         }
     }
 
@@ -224,7 +252,7 @@ const Rekonsiliasi = () => {
                         <CLabel htmlFor="tahun">Pilih Tanggal</CLabel>
                         <CDropdown>
                         <CDropdownToggle className="form-control" color="secondary">
-                            {format(new Date(selectionRange[0].startDate), 'MMM dd, yyyy') + " - " + format(new Date(selectionRange[0].endDate), 'MMM dd, yyyy')}
+                            {format(new Date(selectionRange[0].startDate), 'dd/MM')+' - '+format(new Date(selectionRange[0].endDate), 'dd/MM')}
                         </CDropdownToggle>
                         <CDropdownMenu>
                             <DateRangePicker
@@ -244,11 +272,18 @@ const Rekonsiliasi = () => {
                     </div>
                 </CCol>
                 <CCol>
-                    <CLabel htmlFor="pembayaran">Metode Pembayaran</CLabel>
-                    <CSelect onChange={(e)=>{setPembayaran(e.target.value)}} value={pembayaran} custom name="pembayaran" id="pembayaran">
-                        <option value="va">Virtual Account</option>
-                        <option value="qris">QRIS</option>
-                        <option value="cash">Tunai</option>
+                    <CLabel htmlFor="status">Status</CLabel>
+                    <CSelect onChange={(e)=>{setStatus(e.target.value)}} value={status} custom name="status" id="status">
+                        <option value="semua">Semua</option>
+                        <option value="1">Terbayar</option>
+                        <option value="0">Belum Terbayar</option>
+                    </CSelect>
+                </CCol>
+                <CCol>
+                    <CLabel htmlFor="armada">Armada</CLabel>
+                    <CSelect onChange={(e)=>{setArmada(e.target.value)}} value={armada} custom name="armada" id="armada">
+                        <option value="semua">Semua</option>
+                        <option value="Gangga Express">Gangga Express</option>
                     </CSelect>
                 </CCol>
                 <CCol>
@@ -266,44 +301,29 @@ const Rekonsiliasi = () => {
                         style={{marginTop: "28px"}}
                         color="primary"
                         onClick={()=> {
-                            fetchData(pembayaran, limit, curPage, selectionRange[0], orderBy, order);
+                            fetchData(limit, curPage, selectionRange[0], orderBy, order, status, armada);
                         }}
                     >Filter
                     </CButton>
-                    <CButton
-                        style={{marginTop: "28px",marginLeft: "5px"}}
-                        color="secondary"
-                        onClick={()=> {
-                            let empty = [
-                                {
-                                startDate: today,
-                                endDate: today,
-                                key: 'selection'
-                                }
-                            ]
-                            setSelectionRange(empty)
-                            fetchData(pembayaran, limit, curPage, empty[0], orderBy, order);
-                        }}
-                    >Reset
-                    </CButton>
-                    {/* <CButton style={{marginTop: "28px", marginLeft: "5px"}} color="danger">Download</CButton> */}
                 </CCol>
                 <CCol style={{textAlign: "right"}}>
                     {ExportAsCSV(exporter,reports)}
-                    {/* <CButton style={{marginTop: "28px"}} color="danger">Download</CButton> */}
                 </CCol>
             </CRow>
             <CRow>
                 <CDataTable
                     items={reports}
                     fields={[
-                    { key: 'no', label:'No. ', _style: { width: '1%'} },   
-                    { key: 'email', _style: { width: '10%'}},
-                    { key: 'grandtotal', label:'Grand Total', _style: { width: '10%'} },
+                    { key: 'id', label:'No. ', _style: { width: '1%'} },  
+                    { key: 'productCode', _style: { width: '10%'}}, 
+                    { key: 'nmid', label:"NMID", _style: { width: '10%'}},   
+                    { key: 'merchantName', _style: { width: '10%'}},
+                    { key: 'expiredDate', _style: { width: '10%'}},
+                    { key: 'amount', _style: { width: '10%'}},
+                    { key: 'totalAmount', label:'Grand Total', _style: { width: '10%'} },
                     { key: 'status', _style: { width: '1%'} },
-                    { key: 'status_reversal', label:"Reversal", _style: { width: '1%'} },
-                    { key: 'created_at', _style: { width: '10%'} },
-                    { key: 'expiredDate', _style: { width: '10%'} },
+                    { key: 'billNumber', label:"Bill Number", _style: { width: '1%'} },
+                    { key: 'created_at', label:"Tanggal Pembelian", _style: { width: '10%'} },
                     // { key: 'aksi', label:'#', _style: { width: '1%'} },
                     ]}
                     button
@@ -315,12 +335,6 @@ const Rekonsiliasi = () => {
                     sorter
                     itemsPerPage={limit}
                     scopedSlots = {{
-                        'no':
-                        (item, index)=>(
-                            <td key={index}>
-                                {index + 1}
-                            </td>
-                        ),
                         'status':
                         (item)=>(
                             <td>
@@ -329,32 +343,36 @@ const Rekonsiliasi = () => {
                                 </CBadge>
                             </td>
                         ),
-                        'status_reversal':
+                        'amount':
                         (item)=>(
                             <td>
-                                <CBadge color={getBadgeReversal(item.status_reversal)}>
-                                    {item.status_reversal == 1 ? "Ya" : "Tidak"}
-                                </CBadge>
+                                Rp {money(item.amount)}
                             </td>
                         ),
-                        'grandtotal':
+                        'totalAmount':
                         (item)=>(
                             <td>
-                                Rp {money(item.grandtotal)}
-                            </td>
-                        ),
-                        'created_at':
-                        (item)=>(
-                            <td>
-                                <Moment format="D/MM/Y H:mm:ss">{item.created_at}</Moment>
+                                Rp {money(item.totalAmount)}
                             </td>
                         ),
                         'expiredDate':
                         (item)=>(
                             <td>
-                                {item.expiredDate !== null ? item.expiredDate : "N/A"}
+                                {item.expiredDate} WITA
                             </td>
                         ),
+                        'created_at':
+                        (item)=>(
+                            <td>
+                                <Moment format="D-MM-Y H:mm:ss">{item.created_at}</Moment> WITAn
+                            </td>
+                        ),
+                        // 'tanggal_pembelian_tiket':
+                        // (item)=>(
+                        //     <td>
+                        //         <Moment format="D-MM-Y H:mm:ss">{item.created_at}</Moment>
+                        //     </td>
+                        // ),
                         // 'aksi':
                         // (item)=>(
                         //     <td>
@@ -383,4 +401,4 @@ const Rekonsiliasi = () => {
     )
 }
 
-export default Rekonsiliasi
+export default QRIS

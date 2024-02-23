@@ -208,7 +208,7 @@ const DetailKeberangkatanOperator = () => {
                                 <dl className="row no-margin-bottom">
                                     <dt className="col-sm-4">Total Penumpang</dt>
                                     <dd className="col-sm-8 no-margin-bottom">
-                                        : {undatas ? undatas.length : 0}
+                                        : {datas ? datas.length : 0}
                                     </dd>
                                 </dl>    
                             </div> 
@@ -275,7 +275,7 @@ const DetailKeberangkatanOperator = () => {
                         <CCard style={{padding:'1rem 1rem'}}>
                             <h5 className="heading-text">List Penumpang</h5>
                             <CDataTable
-                                items={undatas}
+                                items={datas}
                                 fields={fields2}
                                 hover
                                 striped

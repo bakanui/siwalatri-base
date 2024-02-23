@@ -60,6 +60,7 @@ const DetailManifest = () => {
           }
         })
         setDatas(result.data.datas)
+        console.log(result.data.datas)
         setDetails(result.data.detail[0])
         setJenis(result.data.jenis)
         let links = apiUrl + 'laporan/harian_armada/detail-non-history/'+id_jadwals+'?tanggal='+fil_date

@@ -122,10 +122,27 @@ const _nav =  [
     ]
   },
   {
-    _tag: 'CSidebarNavItem',
+    _tag: 'CSidebarNavDropdown',
     name: 'Rekonsiliasi',
-    to: '/rekonsiliasi',
-    icon: 'cil-excerpt'
+    route: '/rekonsiliasi',
+    icon: 'cil-excerpt',
+    _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Virtual Account',
+          to: '/rekonsiliasi/va',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'QRIS',
+          to: '/rekonsiliasi/qris',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Tunai',
+          to: '/rekonsiliasi/tunai',
+        },
+    ]
   },
 ]
 

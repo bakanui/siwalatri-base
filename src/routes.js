@@ -34,8 +34,9 @@ const TiketView = React.lazy(() => import('./views/dashboard/TiketView'));
 const DetailApproval = React.lazy(() => import('./views/data/DetailApproval'));
 const DetailKeberangkatanOperator = React.lazy(() => import('./views/DetailKeberangkatanOperator'));
 const ManageAccount = React.lazy(() => import('./views/pages/ManageAccount'));
-const Rekonsiliasi = React.lazy(() => import('./views/rekonsiliasi/Rekonsiliasi'));
-
+const Cash = React.lazy(() => import('./views/rekonsiliasi/Cash'));
+const VA = React.lazy(() => import('./views/rekonsiliasi/VA'));
+const QRIS = React.lazy(() => import('./views/rekonsiliasi/QRIS'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -76,7 +77,9 @@ const routes = [
   { path: '/detail-approval/:id_jadwal/:total_penumpang/:id_approval', name: 'Detail Approval', component: DetailApproval, exact: true  },
   { path: '/detail-keberangkatan-petugas/:id_keberangkatan/:fil_date', name: 'Detail Keberangkatan Petugas', component: DetailKeberangkatanOperator, exact: true  },
   { path: '/manage-account', name: 'Manage Account', component: ManageAccount, exact: true },
-  { path: '/rekonsiliasi', name: 'Rekonsiliasi', component: Rekonsiliasi, exact: true },
+  { path: '/rekonsiliasi/tunai', name: 'Tunai', component: Cash, exact: true },
+  { path: '/rekonsiliasi/va', name: 'Virtual Account', component: VA, exact: true },
+  { path: '/rekonsiliasi/qris', name: 'QRIS', component: QRIS, exact: true },
 ];
 
 export default routes;
